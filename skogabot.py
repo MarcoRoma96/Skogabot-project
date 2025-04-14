@@ -65,7 +65,7 @@ STATIC_ITINERARY = {
     )
 }
 
-CalendarioCacca = {
+CALENDARIO_CACCA = {
     1: "19/04🟡 - Solo in caso di emergenza!💩",
     2: "20/04🔴 - No no no!💩",
     3: "21/04🟢 - Via liberaaa💩",
@@ -190,7 +190,7 @@ def get_cal_cacca(day) -> str:
     """
     Recupera il calendario cacca per il giorno specificato.
     """
-    return calendario_cacca(day)
+    return CALENDARIO_CACCA.get(day)
 
 # Comandi del Bot
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -308,13 +308,13 @@ def load_token(file_path='token.json', env_var='TOKEN'):
     except (FileNotFoundError, json.JSONDecodeError):
         pass  # Ignora e prova con la variabile d'ambiente
 
-    # Prova a caricare il token dalla variabile d'ambiente (quando esegui online)
+    # Prova a caricare il token dalla variabile d'ambiente (per server production)
     load_dotenv(dotenv_path="/home/abertagnon/skogabot/.env")
     token = os.getenv("TOKEN")
     if token:
         return token
 
-    raise ValueError(f"Token non trovato.")
+    raise ValueError(f"Token non trovato. Assicurati che '{file_path}' esista o che la variabile d'ambiente '{env_var}' sia impostata.")
 
 def main() -> None:
     """
