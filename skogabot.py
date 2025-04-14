@@ -22,8 +22,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         "Ciao! Sono il bot del viaggio in Islanda 😎.\n\n"
         "Per conoscere tutte le funzionalità, usa il comando /help."
     )
-    await update.message.reply_text(welcome_text)
-
+    await update.message.reply_text(welcome_text, parse_mode='markdown')
 
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """
@@ -38,10 +37,9 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
         "/weather <città>    - Mostra le previsioni meteo per la città richiesta (default: Reykjavik).\n"
         "/volcano            - Controlla lo stato vulcanico attuale.\n"
         "/curiosita          - Ricevi una curiosità divertente del giorno."
-        "/subscribe          - Iscriviti per ricevere automaticamente le ricette del giorno (dal 19/04 al 27/04).\n"
+        "/subscribe_recipe   - Iscriviti per ricevere automaticamente le ricette del giorno (dal 19/04 al 27/04).\n"
     )
-    await update.message.reply_text(help_text)
-
+    await update.message.reply_text(help_text, parse_mode='markdown')
 
 async def piano(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """
@@ -58,31 +56,8 @@ async def piano(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         reply_text = f"🚀 Ehi, ecco il piano per il Giorno {day_requested}:\n\n" + message
     else:
         reply_text = f"Ops, non ho trovato il piano per il Giorno {day_requested}. Controlla il numero e riprova!"
-
-    await update.message.reply_text(reply_text)
-
-
-async def weather(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """
-    Comando /weather: fornisce le previsioni meteo per la città specificata (default: Reykjavik).
-    """
-    location = "Reykjavik"
-    if context.args:
-        location = " ".join(context.args)
-        print(f"Location: {location}")
-    forecast = get_weather_forecast(city=location)
-    print(f"Forecast: {forecast}")
-    print(type(update.message))
-    await update.message.reply_text(forecast)
-
-
-async def volcano(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """
-    Comando /volcano: restituisce lo stato vulcanico attuale.
-    """
-    status = get_volcano_status()
-    await update.message.reply_text(status)
-
+    
+    await update.message.reply_text(reply_text, parse_mode='markdown')
 
 async def cacca(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """
@@ -102,32 +77,34 @@ async def cacca(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     except ValueError as ve:
         status = "Stai cercando di fare dei danni 😡"
 
-    await update.message.reply_text(status)
+    await update.message.reply_text(status, parse_mode='markdown')
 
+async def weather(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """
+    Comando /weather: fornisce le previsioni meteo per la città specificata (default: Reykjavik).
+    """
+    location = "Reykjavik"
+    if context.args:
+        location = " ".join(context.args)
+        print(f"Location: {location}")
+    forecast = get_weather_forecast(city=location)
+    print(f"Forecast: {forecast}")
+    print(type(update.message))
+    await update.message.reply_text(forecast, parse_mode='markdown')
+
+async def volcano(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """
+    Comando /volcano: restituisce lo stato vulcanico attuale.
+    """
+    status = get_volcano_status()
+    await update.message.reply_text(status, parse_mode='markdown')
 
 async def curiosita(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """
     Comando /curiosita: invia una curiosità divertente del giorno.
     """
-    curiosities = [
-        "Lo sapevi che in Islanda il sole di mezzanotte può riscaldare anche il cuore più freddo?",
-        "Le eruzioni vulcaniche in Islanda sono quasi come concerti rock della natura!",
-        "Il vento in Islanda sembra sussurrare antiche leggende… e magari qualche segreto!",
-        "🌋 L’Islanda è giovane... geologicamente parlando. È uno dei territori più giovani del pianeta, nato circa 16-18 milioni di anni fa grazie all’attività vulcanica. E ancora oggi, ha circa 130 vulcani attivi!",
-        "💡 Energia al 100% rinnovabile. L’Islanda produce quasi tutta la sua energia da fonti rinnovabili: geotermica e idroelettrica. È uno dei paesi più “green” al mondo.",
-        "🧊 Non ci sono zanzare! Sì, hai letto bene. In Islanda non vivono zanzare. Nessuno è del tutto sicuro del motivo, ma si pensa che sia dovuto al clima e ai cicli di congelamento/scongelamento del suolo.",
-        "📬 Puoi spedire una lettera anche se non conosci l’indirizzo. In Islanda è successo davvero: una lettera con una mappa disegnata al posto dell’indirizzo è arrivata a destinazione. Le persone sono poche, quindi… ci si conosce un po’ tutti!",
-        "❄️ Hanno una parola solo per 'neve portata dal vento'. La lingua islandese è piena di parole poetiche: ad esempio, “snjófoka” indica la neve che il vento spazza via.",
-        "👶 I nomi sono regolati dal governo. In Islanda esiste un Comitato per i Nomi che approva o rifiuta i nuovi nomi dati ai bambini, per assicurarsi che siano compatibili con la grammatica islandese.",
-        "📖 Il Natale è magico e un po’ strano. Invece di Babbo Natale, ci sono 13 Jólasveinar (gli “Yule Lads”), ognuno con un comportamento bizzarro — come rubare cibo o spiare i bambini. Compaiono uno alla volta, dal 12 dicembre fino a Natale."
-    ]
     reply = random.choice(curiosities)
-    await update.message.reply_text(f"🌋 Curiosità del giorno: {reply}")
-
-
-# Indice globale per inviare la ricetta successiva
-RECIPE_INDEX = 0
-
+    await update.message.reply_text(f"🌋 Curiosità del giorno: {reply}", parse_mode='markdown')
 
 async def scheduled_recipe(context: ContextTypes.DEFAULT_TYPE):
     """
@@ -145,37 +122,48 @@ async def scheduled_recipe(context: ContextTypes.DEFAULT_TYPE):
         return
     if RECIPE_INDEX >= len(RECIPES):
         RECIPE_INDEX = 0  # oppure potresti decidere di non ripetere le ricette
-    chat_id = context.job.context  # il job context contiene l'ID della chat
+    chat_id = context.job.data  # il job data contiene l'ID della chat
+    print(f"chat: {chat_id}\n")
     recipe_text = RECIPES[RECIPE_INDEX]
     RECIPE_INDEX += 1
-    await context.bot.send_message(chat_id=chat_id, text=f"🍽️ **Ricetta del momento:**\n\n{recipe_text}")
+    await context.bot.send_message(chat_id=chat_id, text=f"🍽️ *Ricetta del momento:*\n\n{recipe_text}")
 
-
-async def subscribe(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+async def subscribe_recipe(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """
-    Comando /subscribe: iscrive la chat corrente per ricevere automaticamente i messaggi programmati
+    Comando /subscribe_recipe: iscrive la chat corrente per ricevere automaticamente i messaggi programmati
     (ricette a mezzogiorno e alle 19:30 dal 19/04 al 27/04).
     """
     chat_id = update.effective_chat.id
     job_queue = context.job_queue
     # Pianifica il job per mezzogiorno (12:00)
-    job_queue.run_daily(scheduled_recipe, time=datetime.time(
-        12, 0), context=chat_id, name=f"recipe_noon_{chat_id}")
+    job_queue.run_daily(
+        callback=scheduled_recipe,
+        time=datetime.time(12, 0, tzinfo=TIMEZONE),
+        data=chat_id,
+        name=f"recipe_noon_{chat_id}"
+    )
     # Pianifica il job per le 19:30
-    job_queue.run_daily(scheduled_recipe, time=datetime.time(
-        18, 43), context=chat_id, name=f"recipe_evening_{chat_id}")
-    # debug: pianifica tra 1 minuto
-    job_queue.run_daily(scheduled_recipe, time=datetime.time(datetime.datetime.now(
-    ) + datetime.timedelta(minutes=1)), context=chat_id, name=f"recipe_evening_{chat_id}")
-    await update.message.reply_text("Iscrizione avvenuta! Riceverai le ricette programmate a mezzogiorno e alle 19:30 dal 19/04 al 27/04.")
+    job_queue.run_daily(
+        callback=scheduled_recipe,
+        time=datetime.time(19, 30, tzinfo=TIMEZONE),
+        data=chat_id,
+        name=f"recipe_evening_{chat_id}"
+    )
 
+    job_queue.run_daily(
+        callback=scheduled_recipe,
+        time=datetime.time(20, 5, tzinfo=TIMEZONE),
+        data=chat_id,
+        name=f"recipe_evening_{chat_id}"
+    )
+
+    await update.message.reply_text("Iscrizione avvenuta! Riceverai le ricette programmate a mezzogiorno e alle 19:30 dal 19/04 al 27/04.")
 
 async def unknown(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """
     Gestisce comandi sconosciuti.
     """
     await update.message.reply_text("Comando non riconosciuto. Usa /help per vedere i comandi disponibili.")
-
 
 def load_token(file_path='token.json', env_var='TOKEN'):
     # Prova a caricare il token da file (per lavorare in locale)
@@ -217,9 +205,9 @@ def main() -> None:
     application.add_handler(CommandHandler("weather", weather))
     application.add_handler(CommandHandler("volcano", volcano))
     application.add_handler(CommandHandler("curiosita", curiosita))
-    # subscription recipe of the day
-    application.add_handler(CommandHandler("subscribe", subscribe))
-
+    #subscription recipe of the day
+    application.add_handler(CommandHandler("subscribe_recipe", subscribe_recipe))
+    
     # Handler per comandi sconosciuti
     application.add_handler(MessageHandler(filters.COMMAND, unknown))
 

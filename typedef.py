@@ -65,6 +65,20 @@ PREDEFINED_COORDINATES = {
     "reykjavik": (64.1466, -21.9426)
 }
 
+
+curiosities = [
+    "Lo sapevi che in Islanda il sole di mezzanotte può riscaldare anche il cuore più freddo?",
+    "Le eruzioni vulcaniche in Islanda sono quasi come concerti rock della natura!",
+    "Il vento in Islanda sembra sussurrare antiche leggende… e magari qualche segreto!",
+    "🌋 L’Islanda è giovane... geologicamente parlando. È uno dei territori più giovani del pianeta, nato circa 16-18 milioni di anni fa grazie all’attività vulcanica. E ancora oggi, ha circa 130 vulcani attivi!",
+    "💡 Energia al 100% rinnovabile. L’Islanda produce quasi tutta la sua energia da fonti rinnovabili: geotermica e idroelettrica. È uno dei paesi più “green” al mondo.",
+    "🧊 Non ci sono zanzare! Sì, hai letto bene. In Islanda non vivono zanzare. Nessuno è del tutto sicuro del motivo, ma si pensa che sia dovuto al clima e ai cicli di congelamento/scongelamento del suolo.",
+    "📬 Puoi spedire una lettera anche se non conosci l’indirizzo. In Islanda è successo davvero: una lettera con una mappa disegnata al posto dell’indirizzo è arrivata a destinazione. Le persone sono poche, quindi… ci si conosce un po’ tutti!",
+    "❄️ Hanno una parola solo per 'neve portata dal vento'. La lingua islandese è piena di parole poetiche: ad esempio, “snjófoka” indica la neve che il vento spazza via.",
+    "👶 I nomi sono regolati dal governo. In Islanda esiste un Comitato per i Nomi che approva o rifiuta i nuovi nomi dati ai bambini, per assicurarsi che siano compatibili con la grammatica islandese.",
+    "📖 Il Natale è magico e un po’ strano. Invece di Babbo Natale, ci sono 13 Jólasveinar (gli “Yule Lads”), ognuno con un comportamento bizzarro — come rubare cibo o spiare i bambini. Compaiono uno alla volta, dal 12 dicembre fino a Natale."
+]
+
 weather_code_mapping = {
     0: "Cielo sereno (si va beh ma impossibile)",
     1: "Cielo per lo più sereno",
@@ -95,6 +109,9 @@ weather_code_mapping = {
     96: "Temporale con grandine leggera",
     99: "Temporale con grandine intensa"
 }
+
+# Indice globale per inviare la ricetta successiva
+RECIPE_INDEX = 0
 
 # Lista di 20 ricette islandesi (le più strane per un italiano)
 RECIPES = [

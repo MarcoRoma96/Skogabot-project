@@ -1,6 +1,7 @@
 import random
 import requests
 import logging
+import pytz
 from typedef import *
 
 # Configurazione logging
@@ -9,6 +10,7 @@ logging.basicConfig(
     level=logging.INFO
 )
 logger = logging.getLogger(__name__)
+TIMEZONE = pytz.timezone('Europe/Rome')
 
 def get_coordinates(city: str):
     """
@@ -83,3 +85,4 @@ def get_volcano_status() -> str:
     ]
     status = random.choice(status_list)
     return f"Stato vulcanico: {status}"
+
