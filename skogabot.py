@@ -4,9 +4,12 @@ import random
 import requests
 import datetime
 import json
+import pytz
 from telegram import Update
 from dotenv import load_dotenv
 from telegram.ext import Application, CommandHandler, ContextTypes, MessageHandler, filters
+
+TIMEZONE = pytz.timezone('Europe/Rome')
 
 # Configurazione logging
 logging.basicConfig(
@@ -210,7 +213,7 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
         "/weather <città>    - Mostra le previsioni meteo per la città richiesta (default: Reykjavik).\n"
         "/volcano            - Controlla lo stato vulcanico attuale.\n"
         "/curiosita          - Ricevi una curiosità divertente del giorno."
-        "/subscribe          - Iscriviti per ricevere automaticamente le ricette del giorno (dal 19/04 al 27/04).\n"
+        "/subscribe_recipe          - Iscriviti per ricevere automaticamente le ricette del giorno (dal 19/04 al 27/04).\n"
     )
     await update.message.reply_text(help_text)
 
@@ -336,24 +339,41 @@ async def scheduled_recipe(context: ContextTypes.DEFAULT_TYPE):
         return
     if RECIPE_INDEX >= len(RECIPES):
         RECIPE_INDEX = 0  # oppure potresti decidere di non ripetere le ricette
-    chat_id = context.job.context  # il job context contiene l'ID della chat
+    chat_id = context.job.data  # il job data contiene l'ID della chat
+    print(f"chat: {chat_id}\n")
     recipe_text = RECIPES[RECIPE_INDEX]
     RECIPE_INDEX += 1
     await context.bot.send_message(chat_id=chat_id, text=f"🍽️ **Ricetta del momento:**\n\n{recipe_text}")
 
-async def subscribe(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+async def subscribe_recipe(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """
-    Comando /subscribe: iscrive la chat corrente per ricevere automaticamente i messaggi programmati
+    Comando /subscribe_recipe: iscrive la chat corrente per ricevere automaticamente i messaggi programmati
     (ricette a mezzogiorno e alle 19:30 dal 19/04 al 27/04).
     """
     chat_id = update.effective_chat.id
     job_queue = context.job_queue
     # Pianifica il job per mezzogiorno (12:00)
-    job_queue.run_daily(scheduled_recipe, time=datetime.time(12, 0), context=chat_id, name=f"recipe_noon_{chat_id}")
+    job_queue.run_daily(
+        callback=scheduled_recipe,
+        time=datetime.time(12, 0, tzinfo=TIMEZONE),
+        data=chat_id,
+        name=f"recipe_noon_{chat_id}"
+    )
     # Pianifica il job per le 19:30
-    job_queue.run_daily(scheduled_recipe, time=datetime.time(18, 43), context=chat_id, name=f"recipe_evening_{chat_id}")
-    #debug: pianifica tra 1 minuto
-    job_queue.run_daily(scheduled_recipe, time=datetime.time(datetime.datetime.now() + datetime.timedelta(minutes=1)), context=chat_id, name=f"recipe_evening_{chat_id}")
+    job_queue.run_daily(
+        callback=scheduled_recipe,
+        time=datetime.time(19, 30, tzinfo=TIMEZONE),
+        data=chat_id,
+        name=f"recipe_evening_{chat_id}"
+    )
+
+    job_queue.run_daily(
+        callback=scheduled_recipe,
+        time=datetime.time(20, 5, tzinfo=TIMEZONE),
+        data=chat_id,
+        name=f"recipe_evening_{chat_id}"
+    )
+
     await update.message.reply_text("Iscrizione avvenuta! Riceverai le ricette programmate a mezzogiorno e alle 19:30 dal 19/04 al 27/04.")
 
 
@@ -402,7 +422,7 @@ def main() -> None:
     application.add_handler(CommandHandler("volcano", volcano))
     application.add_handler(CommandHandler("curiosita", curiosita))
     #subscription recipe of the day
-    application.add_handler(CommandHandler("subscribe", subscribe))
+    application.add_handler(CommandHandler("subscribe_recipe", subscribe_recipe))
     
     # Handler per comandi sconosciuti
     application.add_handler(MessageHandler(filters.COMMAND, unknown))
