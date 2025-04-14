@@ -1,9 +1,11 @@
+import os
 import logging
 import random
 import requests
-import datatime
+import datetime
 import json
 from telegram import Update
+from dotenv import load_dotenv
 from telegram.ext import Application, CommandHandler, ContextTypes, MessageHandler, filters
 
 # Configurazione logging
@@ -295,17 +297,32 @@ async def unknown(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """
     await update.message.reply_text("Comando non riconosciuto. Usa /help per vedere i comandi disponibili.")
 
+def load_token(file_path='token.json', env_var='TOKEN'):
+    # Prova a caricare il token da file (per lavorare in locale)
+    try:
+        with open(file_path, 'r') as file:
+            data = json.load(file)
+            token = data.get('token')
+            if token is not None and token != "INSERT-YOUR-TOKEN-FROM-BOTFATHER-HERE":
+                return token
+    except (FileNotFoundError, json.JSONDecodeError):
+        pass  # Ignora e prova con la variabile d'ambiente
+
+    # Prova a caricare il token dalla variabile d'ambiente (quando esegui online)
+    load_dotenv(dotenv_path="/home/abertagnon/skogabot/.env")
+    token = os.getenv("TOKEN")
+    if token:
+        return token
+
+    raise ValueError(f"Token non trovato.")
+
 def main() -> None:
     """
     Funzione principale per avviare il bot.
     Sostituisci 'YOUR_TELEGRAM_BOT_TOKEN' con il token fornito da BotFather.
     """
 
-    # lettura token da file json separato
-    with open('token.json', 'r') as file:
-        token = json.load(file).get('token')
-    if not token:   
-        raise ValueError("Token non trovato nel file token.json")
+    token = load_token()
     
     # Crea l'istanza dell'applicazione Telegram
     application = Application.builder().token(token).build()
