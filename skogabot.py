@@ -66,15 +66,15 @@ STATIC_ITINERARY = {
 }
 
 CALENDARIO_CACCA = {
-    "1": "19/04🟡 - Solo in caso di emergenza!💩",
-    "2": "20/04🔴 - No no no!💩",
-    "3": "21/04🟢 - Via liberaaa💩",
-    "4": "22/04🟢 - Corri che il bagno è libero!💩",
-    "5": "23/04🟢 - Libera tutto oggi, che domani c'è il bollino rosso💩",
-    "6": "24/04🔴 - Niente bagno oggi!💩",
-    "7": "25/04🟢 - Vai vai vaii💩",
-    "8": "26/04🔴 - Viva la stitichezza💩",
-    "9": "27/04🔴 - Solo Bianca è autorizzata oggi, per prepararsi al viaggio💩",
+    "1": "19/04 🟡 - Solo in caso di emergenza!💩",
+    "2": "20/04 🔴 - No no no!💩",
+    "3": "21/04 🟢 - Via liberaaa💩",
+    "4": "22/04 🟢 - Corri che il bagno è libero!💩",
+    "5": "23/04 🟢 - Libera tutto oggi, che domani c'è il bollino rosso💩",
+    "6": "24/04 🔴 - Niente bagno oggi!💩",
+    "7": "25/04 🟢 - Vai vai vaii💩",
+    "8": "26/04 🔴 - Viva la stitichezza💩",
+    "9": "27/04 🔴 - Solo Bianca è autorizzata oggi, per prepararsi al viaggio💩",
 }
 
 # Mappatura di alcune città a coordinate (latitudine, longitudine)
@@ -290,6 +290,70 @@ async def curiosita(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     reply = random.choice(curiosities)
     await update.message.reply_text(f"🌋 Curiosità del giorno: {reply}")
 
+
+
+# Lista di 20 ricette islandesi (le più strane per un italiano)
+RECIPES = [
+    "1. Hákarl – Carne di squalo fermentata, dal sapore fortemente ammoniacale.",
+    "2. Svið – Testa di pecora bollita, con orecchie e pelle.",
+    "3. Slátur – Salsiccia di sangue islandese.",
+    "4. Súrsaðir hrútspungar – Testicoli di montone fermentati.",
+    "5. Harðfiskur – Pesce secco, solitamente eglefino o merluzzo, tradizionale e gustato con burro.",
+    "6. Þorramatur – Piatto misto tradizionale servito durante il Þorrablót.",
+    "7. Brennivín – Schnapps islandese, detto anche “Black Death”.",
+    "8. Rúgbrauð – Pane di segale geotermico, dolce e denso.",
+    "9. Kjötsúpa – Zuppa rustica d’agnello islandese.",
+    "10. Pylsur – Hot dog islandese con agnello, maiale e manzo.",
+    "11. Skyr – Latticino simile a uno yogurt denso, tradizionale e antichissimo.",
+    "12. Fiskisúpa islandese – Zuppa di pesce locale ricca di aromi marini.",
+    "13. Hvalkjötsúpa – Zuppa di carne di balena (piatto controverso).",
+    "14. Hvalhjarta – Fette sottili di cuore di balena.",
+    "15. Cozze geotermiche – Cozze cotte sfruttando il calore naturale.",
+    "16. Blóðmör – Pudding di sangue d’agnello.",
+    "17. Ferszt lamm – Agnello locale servito crudo o poco cotto.",
+    "18. Marinated Whale Liver – Fegato di balena marinato con erbe.",
+    "19. Súrmjólk – Latte fermentato tradizionale, acidulo ed inusuale.",
+    "20. Særsuð fiskur – Pesce sottaceto con tradizione antica."
+]
+
+# Indice globale per inviare la ricetta successiva
+RECIPE_INDEX = 0
+
+async def scheduled_recipe(context: ContextTypes.DEFAULT_TYPE):
+    """
+    Funzione schedulata per inviare una ricetta dalla lista RECIPES.
+    Viene eseguita giornalmente alle ore 12:00 e alle 19:30 solo dal 19/04 al 27/04.
+    """
+    global RECIPE_INDEX
+    today = datetime.date.today()
+    start_date = datetime.date(2025, 4, 14)
+    end_date = datetime.date(2025, 4, 27)
+    if today < start_date or today > end_date:
+        # Se siamo fuori dal range, se siamo dopo il 27 aprile, il job può rimuoversi.
+        if today > end_date:
+            context.job.schedule_removal()
+        return
+    if RECIPE_INDEX >= len(RECIPES):
+        RECIPE_INDEX = 0  # oppure potresti decidere di non ripetere le ricette
+    chat_id = context.job.context  # il job context contiene l'ID della chat
+    recipe_text = RECIPES[RECIPE_INDEX]
+    RECIPE_INDEX += 1
+    await context.bot.send_message(chat_id=chat_id, text=f"🍽️ **Ricetta del momento:**\n\n{recipe_text}")
+
+async def subscribe(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """
+    Comando /subscribe: iscrive la chat corrente per ricevere automaticamente i messaggi programmati
+    (ricette a mezzogiorno e alle 19:30 dal 19/04 al 27/04).
+    """
+    chat_id = update.effective_chat.id
+    job_queue = context.job_queue
+    # Pianifica il job per mezzogiorno (12:00)
+    job_queue.run_daily(scheduled_recipe, time=datetime.time(12, 0), context=chat_id, name=f"recipe_noon_{chat_id}")
+    # Pianifica il job per le 19:30
+    job_queue.run_daily(scheduled_recipe, time=datetime.time(18, 43), context=chat_id, name=f"recipe_evening_{chat_id}")
+    await update.message.reply_text("Iscrizione avvenuta! Riceverai le ricette programmate a mezzogiorno e alle 19:30 dal 19/04 al 27/04.")
+
+
 async def unknown(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """
     Gestisce comandi sconosciuti.
@@ -334,6 +398,8 @@ def main() -> None:
     application.add_handler(CommandHandler("weather", weather))
     application.add_handler(CommandHandler("volcano", volcano))
     application.add_handler(CommandHandler("curiosita", curiosita))
+    #subscription recipe of the day
+    application.add_handler(CommandHandler("subscribe", subscribe))
     
     # Handler per comandi sconosciuti
     application.add_handler(MessageHandler(filters.COMMAND, unknown))
