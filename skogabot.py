@@ -186,12 +186,6 @@ def get_volcano_status() -> str:
     status = random.choice(status_list)
     return f"Stato vulcanico: {status}"
 
-def get_cal_cacca(day) -> str:
-    """
-    Recupera il calendario cacca per il giorno specificato.
-    """
-    return CALENDARIO_CACCA.get(day)
-
 # Comandi del Bot
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """
@@ -262,14 +256,15 @@ async def cacca(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     Comando /cacca: restituisce il calendario Cacca per il giorno selezionato (o il giorno attuale).
     """
     day = 0
-    if not context.args:
-        day = datetime.datetime.now().day - 18        
-    else:
-        day = context.args[0]
     try:
-        status = get_cal_cacca(day)
-    except exception as e:
+        if not context.args:
+            day = datetime.datetime.now().day - 18        
+        else:
+            day = context.args[0]
+        status = CALENDARIO_CACCA.get(day)
+    except Exception as e:
         status = "Errore! Giorno: " + str(day) + " non trovato!"
+
     await update.message.reply_text(status)
 
 async def curiosita(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
