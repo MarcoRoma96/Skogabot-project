@@ -66,15 +66,15 @@ STATIC_ITINERARY = {
 }
 
 CALENDARIO_CACCA = {
-    1: "19/04🟡 - Solo in caso di emergenza!💩",
-    2: "20/04🔴 - No no no!💩",
-    3: "21/04🟢 - Via liberaaa💩",
-    4: "22/04🟢 - Corri che il bagno è libero!💩",
-    5: "23/04🟢 - Libera tutto oggi, che domani c'è il bollino rosso💩",
-    6: "24/04🔴 - Niente bagno oggi!💩",
-    7: "25/04🟢 - Vai vai vaii💩",
-    8: "26/04🔴 - Viva la stitichezza💩",
-    9: "27/04🔴 - Solo Bianca è autorizzata oggi, per prepararsi al viaggio💩",
+    "1": "19/04🟡 - Solo in caso di emergenza!💩",
+    "2": "20/04🔴 - No no no!💩",
+    "3": "21/04🟢 - Via liberaaa💩",
+    "4": "22/04🟢 - Corri che il bagno è libero!💩",
+    "5": "23/04🟢 - Libera tutto oggi, che domani c'è il bollino rosso💩",
+    "6": "24/04🔴 - Niente bagno oggi!💩",
+    "7": "25/04🟢 - Vai vai vaii💩",
+    "8": "26/04🔴 - Viva la stitichezza💩",
+    "9": "27/04🔴 - Solo Bianca è autorizzata oggi, per prepararsi al viaggio💩",
 }
 
 # Mappatura di alcune città a coordinate (latitudine, longitudine)
@@ -258,7 +258,7 @@ async def cacca(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     day = 0
     try:
         if not context.args:
-            day = datetime.datetime.now().day - 18        
+            day = str(datetime.datetime.now().day - 18)        
         else:
             day = context.args[0]
         status = CALENDARIO_CACCA.get(day)
