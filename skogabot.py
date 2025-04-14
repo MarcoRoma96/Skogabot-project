@@ -255,15 +255,19 @@ async def cacca(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """
     Comando /cacca: restituisce il calendario Cacca per il giorno selezionato (o il giorno attuale).
     """
-    day = 0
     try:
         if not context.args:
-            day = str(datetime.datetime.now().day - 18)        
+            day = datetime.datetime.now().day - 18
         else:
-            day = context.args[0]
-        status = CALENDARIO_CACCA.get(day)
-    except Exception as e:
-        status = "Errore! Giorno: " + str(day) + " non trovato!"
+            day = int(context.args[0])
+
+        if day < 1 or day > 9:
+            status = "Non sei ancora in viaggio o hai scelto un giorno non valido! Non puoi usare il calendario Cacca!💩"  
+        else:
+            status = CALENDARIO_CACCA.get(str(day))
+            
+    except ValueError as ve:
+        status = "Stai cercando di fare dei danni 😡"
 
     await update.message.reply_text(status)
 
