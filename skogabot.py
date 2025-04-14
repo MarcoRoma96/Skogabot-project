@@ -1,7 +1,5 @@
 import os
-import logging
 import random
-import requests
 import datetime
 import json
 from telegram import Update
