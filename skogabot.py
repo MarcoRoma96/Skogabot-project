@@ -210,6 +210,7 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
         "/weather <città>    - Mostra le previsioni meteo per la città richiesta (default: Reykjavik).\n"
         "/volcano            - Controlla lo stato vulcanico attuale.\n"
         "/curiosita          - Ricevi una curiosità divertente del giorno."
+        "/subscribe          - Iscriviti per ricevere automaticamente le ricette del giorno (dal 19/04 al 27/04).\n"
     )
     await update.message.reply_text(help_text)
 
@@ -351,6 +352,8 @@ async def subscribe(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     job_queue.run_daily(scheduled_recipe, time=datetime.time(12, 0), context=chat_id, name=f"recipe_noon_{chat_id}")
     # Pianifica il job per le 19:30
     job_queue.run_daily(scheduled_recipe, time=datetime.time(18, 43), context=chat_id, name=f"recipe_evening_{chat_id}")
+    #debug: pianifica tra 1 minuto
+    job_queue.run_daily(scheduled_recipe, time=datetime.time(datetime.datetime.now() + datetime.timedelta(minutes=1)), context=chat_id, name=f"recipe_evening_{chat_id}")
     await update.message.reply_text("Iscrizione avvenuta! Riceverai le ricette programmate a mezzogiorno e alle 19:30 dal 19/04 al 27/04.")
 
 
