@@ -23,6 +23,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     )
     await update.message.reply_text(welcome_text, parse_mode='markdown')
 
+
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """
     Comando /help: mostra le funzionalità disponibili.
@@ -37,10 +38,13 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
         "/weather <città> - Mostra le previsioni meteo per la città richiesta (default: Reykjavik).\n"
         "/volcano - Controlla lo stato vulcanico attuale.\n"
         "/curiosita - Ricevi una curiosità divertente del giorno.\n"
+        "/ahah - Battutina cringina di ChatGPT\n"
+        "/car_game1 [stat] - Inizia uno stupendo gioco da macchina!\n"
         "/subscribe_recipe - Iscriviti per ricevere automaticamente le ricette del giorno (dal 19/04 al 27/04).\n"
         "/leggi_storia - Leggi una storia del folklore islandese.\n"
     )
     await update.message.reply_text(help_text)
+
 
 async def piano(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """
@@ -57,8 +61,9 @@ async def piano(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         reply_text = f"🚀 Ehi, ecco il piano per il Giorno {day_requested}:\n\n" + message
     else:
         reply_text = f"Ops, non ho trovato il piano per il Giorno {day_requested}. Controlla il numero e riprova!"
-    
+
     await update.message.reply_text(reply_text, parse_mode='markdown')
+
 
 async def nanna(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """
@@ -80,6 +85,7 @@ async def nanna(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
     await update.message.reply_text(status, parse_mode='markdown')
 
+
 async def cacca(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """
     Comando /cacca: restituisce il calendario Cacca per il giorno selezionato (o il giorno attuale).
@@ -100,6 +106,7 @@ async def cacca(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
     await update.message.reply_text(status, parse_mode='markdown')
 
+
 async def weather(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """
     Comando /weather: fornisce le previsioni meteo per la città specificata (default: Reykjavik).
@@ -113,6 +120,7 @@ async def weather(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     print(type(update.message))
     await update.message.reply_text(forecast, parse_mode='markdown')
 
+
 async def volcano(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """
     Comando /volcano: restituisce lo stato vulcanico attuale.
@@ -120,12 +128,20 @@ async def volcano(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     status = get_volcano_status()
     await update.message.reply_text(status, parse_mode='markdown')
 
+
 async def curiosita(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """
     Comando /curiosita: invia una curiosità divertente del giorno.
     """
     reply = random.choice(curiosities)
     await update.message.reply_text(f"🌋 Curiosità del giorno: {reply}", parse_mode='markdown')
+
+async def ahah(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """
+    Comando /curiosita: invia una curiosità divertente del giorno.
+    """
+    reply = random.choice(BATTUTE_CRINGINE_DI_CHATGPT)
+    await update.message.reply_text(f"{reply}", parse_mode='markdown')
 
 async def scheduled_recipe(context: ContextTypes.DEFAULT_TYPE):
     """
@@ -148,6 +164,7 @@ async def scheduled_recipe(context: ContextTypes.DEFAULT_TYPE):
     recipe_text = RECIPES[RECIPE_INDEX]
     RECIPE_INDEX += 1
     await context.bot.send_message(chat_id=chat_id, text=f"🍽️ *Ricetta del momento:*\n\n{recipe_text}")
+
 
 async def subscribe_recipe(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """
@@ -180,60 +197,64 @@ async def subscribe_recipe(update: Update, context: ContextTypes.DEFAULT_TYPE) -
 
     await update.message.reply_text("Iscrizione avvenuta! Riceverai le ricette programmate a mezzogiorno e alle 19:30 dal 19/04 al 27/04.")
 
+
 async def car_game1(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    global VOTI_GIOCHINO_AUTO1
     if len(context.args) > 0:
-        if context.args[0] == "statistiche":
+        if context.args[0].startswith("stat"):
             # Mostra statistiche
             stats_text = "Statistiche del gioco:\n"
             for player, score in PUNTEGGI_STUPIDINI.items():
-                stats_text += f"{player}: {score} punti\n"        
-            update.message.reply_text(stats_text)
+                stats_text += f"{player}: {score} punti\n"
+            await update.message.reply_text(stats_text)
     else:
         domanda = random.choice(CARGAMES_STUPIDINI_DI_CHATGPT)
-        VOTI_GIOCHINO_AUTO1 = {} # Reset: necessario?
+        VOTI_GIOCHINO_AUTO1 = {}  # Reset: necessario?
         # Bottoni per la risposta
         keyboard = [
-            [InlineKeyboardButton("AleB", callback_data="AleB")],
-            [InlineKeyboardButton("AleD", callback_data="AleD")],
-            [InlineKeyboardButton("B",    callback_data="B")],
-            [InlineKeyboardButton("D",    callback_data="D")],
-            [InlineKeyboardButton("F",    callback_data="F")],
-            [InlineKeyboardButton("MG",   callback_data="MG")],
-            [InlineKeyboardButton("MR",   callback_data="MR")],
-            [InlineKeyboardButton("V",    callback_data="V")],
+            [InlineKeyboardButton("AleB", callback_data="cargame1_AleB"),
+             InlineKeyboardButton("AleD", callback_data="cargame1_AleD"),
+             InlineKeyboardButton("Bianca",    callback_data="cargame1_B")
+             ],
+            [InlineKeyboardButton("Dalia",    callback_data="cargame1_D"),
+             InlineKeyboardButton("Filippo",    callback_data="cargame1_F"),
+             InlineKeyboardButton("Marco2",   callback_data="cargame1_MG")
+             ],
+            [InlineKeyboardButton("MR",   callback_data="cargame1_MR"),
+             InlineKeyboardButton("Viola",    callback_data="cargame1_V")
+             ],
         ]
         reply_markup = InlineKeyboardMarkup(keyboard)
         # Invia la domanda e i bottoni
-        update.message.reply_text(f"{domanda}\n", reply_markup=reply_markup)
+        await update.message.reply_text(f"{domanda}\n", reply_markup=reply_markup)
 
-async def button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+async def car_game1_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    global VOTI_GIOCHINO_AUTO1
     query = update.callback_query
     await query.answer()
 
     chat_id = query.message.chat_id
     user_id = query.from_user.id
+    print(chat_id, user_id)
 
     if user_id in VOTI_GIOCHINO_AUTO1:
         await query.answer("Hai già votato! " + str(VOTI_GIOCHINO_AUTO1[user_id]), show_alert=True)
         return
-    VOTI_GIOCHINO_AUTO1[user_id] = query.data
+    VOTI_GIOCHINO_AUTO1[user_id] = query.data.split('_')[1]
+    print(query.data)
 
     # Controlla se tutti hanno votato
-    chat_members = await context.bot.get_chat_administrators(chat_id)
+
+    # chat_members = await context.bot.get_chat_administrators(chat_id)
+    # print(chat_members)
     total_members = await context.bot.get_chat_member_count(chat_id)
-    total_users = total_members - sum(1 for member in chat_members if member.user.is_bot)
-    
+    print(total_members)
+    # total_users = total_members - sum(1 for member in total_members if member.user.is_bot)
+    # print(total_users)
+    total_users = total_members - 1
     if len(VOTI_GIOCHINO_AUTO1) >= total_users:
-        # AleB = sum(1 for v in VOTI_GIOCHINO_AUTO1.values() if v == "AleB")
-        # AleD = sum(1 for v in VOTI_GIOCHINO_AUTO1.values() if v == "AleD")
-        # B =    sum(1 for v in VOTI_GIOCHINO_AUTO1.values() if v == "B")
-        # D =    sum(1 for v in VOTI_GIOCHINO_AUTO1.values() if v == "D")
-        # F =    sum(1 for v in VOTI_GIOCHINO_AUTO1.values() if v == "F")
-        # MG =   sum(1 for v in VOTI_GIOCHINO_AUTO1.values() if v == "MG")
-        # MR =   sum(1 for v in VOTI_GIOCHINO_AUTO1.values() if v == "MR")
-        # V =    sum(1 for v in VOTI_GIOCHINO_AUTO1.values() if v == "V")
-        # voti = max([AleB, AleD, B, D, F, MG, MR, V])
         order = Counter(VOTI_GIOCHINO_AUTO1.values()).most_common(8)
+        max = -1
         winner = []
         for el in order:
             if el[1] >= max:
@@ -241,20 +262,16 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
                 max = el[1]
         reply = "Congratulazioni a: \n"
         for w in winner:
-            reply += "〰️" + str(w[0]) + " (" + str(w[1]) + " punti)"
+            reply += "〰️ " + str(w[0]) + " (" + str(w[1]) + " punti)"
             PUNTEGGI_STUPIDINI[w[0]] += 1
         await context.bot.send_message(chat_id, reply)
 
 
-
-
-# --- Funzioni per il menu interattivo ---
-
-# Funzione che risponde al comando per leggere le storie.
 async def leggi_storia(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     keyboard = []
     for story_id, story in STORIES.items():
-        keyboard.append([InlineKeyboardButton(story["title"], callback_data=f"select_{story_id}_0")])
+        keyboard.append([InlineKeyboardButton(
+            story["title"], callback_data=f"select_{story_id}_0")])
     reply_markup = InlineKeyboardMarkup(keyboard)
     await update.message.reply_text("Scegli la storia che vuoi ascoltare:", reply_markup=reply_markup)
 
@@ -262,45 +279,48 @@ async def leggi_storia(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
 async def story_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     query = update.callback_query
     await query.answer()
-    
+
     # Il callback_data è strutturato così: "select_<story_id>_<page_number>" o "page_<story_id>_<page_number>"
     data = query.data.split('_')
     if len(data) < 3:
         return
     mode, story_id, page_str = data[0], data[1], data[2]
     page_number = int(page_str)
-    
+
     # Verifica che la storia esista
     if story_id not in STORIES:
         await query.edit_message_text("Storia non trovata.")
         return
-    
+
     story = STORIES[story_id]
     pages = story["pages"]
     total_pages = len(pages)
-    
+
     # Costruisci il testo e l'immagine per la "slide"
     text = f"*{story['title']}* (Pagina {page_number+1}/{total_pages})\n\n"
     text += pages[page_number]
-    
+
     # Se abbiamo un'immagine per la pagina (opzionale)
     image_path = None
     if "images" in story and len(story["images"]) > page_number:
         image_path = story["images"][page_number]
-    
+
     # Costruisci i pulsanti per navigare
     buttons = []
     if page_number > 0:
-        buttons.append(InlineKeyboardButton("◀ Indietro", callback_data=f"select_{story_id}_{page_number-1}"))
+        buttons.append(InlineKeyboardButton(
+            "◀ Indietro", callback_data=f"select_{story_id}_{page_number-1}"))
     if page_number < total_pages - 1:
-        buttons.append(InlineKeyboardButton("Avanti ▶", callback_data=f"select_{story_id}_{page_number+1}"))
+        buttons.append(InlineKeyboardButton(
+            "Avanti ▶", callback_data=f"select_{story_id}_{page_number+1}"))
     reply_markup = InlineKeyboardMarkup([buttons])
-    
+
     # Modifica il messaggio in base alla presenza dell'immagine:
     if image_path:
         with open(image_path, 'rb') as img:
-        # Se si vuole usare un media group, è necessario usare l'editMessageMedia che accetta InputMediaPhoto.
-            new_media = InputMediaPhoto(media=img, caption=text, parse_mode="Markdown")
+            # Se si vuole usare un media group, è necessario usare l'editMessageMedia che accetta InputMediaPhoto.
+            new_media = InputMediaPhoto(
+                media=img, caption=text, parse_mode="Markdown")
         try:
             await query.edit_message_media(new_media, reply_markup=reply_markup)
         except Exception as e:
@@ -311,15 +331,12 @@ async def story_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         await query.edit_message_text(text=text, parse_mode="Markdown", reply_markup=reply_markup)
 
 
-
-
-
-
 async def unknown(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """
     Gestisce comandi sconosciuti.
     """
     await update.message.reply_text("Comando non riconosciuto. Usa /help per vedere i comandi disponibili.")
+
 
 def load_token(file_path='token.json', env_var='TOKEN'):
     # Prova a caricare il token da file (per lavorare in locale)
@@ -362,14 +379,18 @@ def main() -> None:
     application.add_handler(CommandHandler("weather", weather))
     application.add_handler(CommandHandler("volcano", volcano))
     application.add_handler(CommandHandler("curiosita", curiosita))
+    application.add_handler(CommandHandler("ahah", ahah))
     application.add_handler(CommandHandler("car_game1", car_game1))
-    #subscription recipe of the day
-    application.add_handler(CommandHandler("subscribe_recipe", subscribe_recipe))
+    application.add_handler(CallbackQueryHandler(
+        car_game1_callback, pattern=r"^(cargame1_).*"))
+    # subscription recipe of the day
+    application.add_handler(CommandHandler(
+        "subscribe_recipe", subscribe_recipe))
 
     application.add_handler(CommandHandler("leggi_storia", leggi_storia))
-    application.add_handler(CallbackQueryHandler(story_callback, pattern=r"^(select_).*"))
+    application.add_handler(CallbackQueryHandler(
+        story_callback, pattern=r"^(select_).*"))
 
-    
     # Handler per comandi sconosciuti
     application.add_handler(MessageHandler(filters.COMMAND, unknown))
 

@@ -395,14 +395,14 @@ CARGAMES_STUPIDINI_DI_CHATGPT = [
 ]
 
 PUNTEGGI_STUPIDINI = {
-    "D": 0,
+    "AleB": 0,
+    "AleD": 0,
     "B": 0,
-    "V": 0,
+    "D": 0,
+    "F": 0,
+    "MG": 0,
     "MR": 0,
-    "A1": 0,
-    "A2": 0,
-    "M": 0,
-    "F": 0
+    "V": 0
 }
 
 VOTI_GIOCHINO_AUTO1 = {}
