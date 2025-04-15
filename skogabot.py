@@ -4,7 +4,8 @@ import random
 import requests
 import datetime
 import json
-from telegram import Update
+from collections import Counter
+from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from dotenv import load_dotenv
 from telegram.ext import Application, CommandHandler, ContextTypes, MessageHandler, filters
 
@@ -33,6 +34,7 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
         "/start              - Avvia il bot e mostra il messaggio di benvenuto.\n"
         "/help               - Mostra questo messaggio di aiuto.\n"
         "/piano <num_giorno> - Visualizza il piano del giorno specifico (es.: /piano 1).\n"
+        "/nanna <num_giorno> - Visualizza info sulla notte attuale.\n"
         "/cacca <num_giorno> - Visualizza il calendario Cacca.\n"
         "/weather <città>    - Mostra le previsioni meteo per la città richiesta (default: Reykjavik).\n"
         "/volcano            - Controlla lo stato vulcanico attuale.\n"
@@ -58,6 +60,26 @@ async def piano(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         reply_text = f"Ops, non ho trovato il piano per il Giorno {day_requested}. Controlla il numero e riprova!"
     
     await update.message.reply_text(reply_text, parse_mode='markdown')
+
+async def nanna(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """
+    Comando /nanna: restituisce le info per la notte per il giorno selezionato (o il giorno attuale).
+    """
+    try:
+        if not context.args:
+            day = datetime.datetime.now().day - 18
+        else:
+            day = int(context.args[0])
+
+        if day < 1 or day > 9:
+            status = "Non sei ancora in viaggio o hai scelto un giorno non valido! Dormi a casa tua!😴"
+        else:
+            status = SLEEPING_PLACES.get(str(day))
+
+    except ValueError as ve:
+        status = "Stai cercando di fare dei danni 😡"
+
+    await update.message.reply_text(status, parse_mode='markdown')
 
 async def cacca(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """
@@ -159,6 +181,71 @@ async def subscribe_recipe(update: Update, context: ContextTypes.DEFAULT_TYPE) -
 
     await update.message.reply_text("Iscrizione avvenuta! Riceverai le ricette programmate a mezzogiorno e alle 19:30 dal 19/04 al 27/04.")
 
+async def car_game1(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    if len(context.args) > 0:
+        if context.args[0] == "statistiche":
+            # Mostra statistiche
+            stats_text = "Statistiche del gioco:\n"
+            for player, score in PUNTEGGI_STUPIDINI.items():
+                stats_text += f"{player}: {score} punti\n"        
+            update.message.reply_text(stats_text)
+    else:
+        domanda = random.choice(CARGAMES_STUPIDINI_DI_CHATGPT)
+        VOTI_GIOCHINO_AUTO1 = {} # Reset: necessario?
+        # Bottoni per la risposta
+        keyboard = [
+            [InlineKeyboardButton("AleB", callback_data="AleB")],
+            [InlineKeyboardButton("AleD", callback_data="AleD")],
+            [InlineKeyboardButton("B",    callback_data="B")],
+            [InlineKeyboardButton("D",    callback_data="D")],
+            [InlineKeyboardButton("F",    callback_data="F")],
+            [InlineKeyboardButton("MG",   callback_data="MG")],
+            [InlineKeyboardButton("MR",   callback_data="MR")],
+            [InlineKeyboardButton("V",    callback_data="V")],
+        ]
+        reply_markup = InlineKeyboardMarkup(keyboard)
+        # Invia la domanda e i bottoni
+        update.message.reply_text(f"{domanda}\n", reply_markup=reply_markup)
+
+async def button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    query = update.callback_query
+    await query.answer()
+
+    chat_id = query.message.chat_id
+    user_id = query.from_user.id
+
+    if user_id in VOTI_GIOCHINO_AUTO1:
+        await query.answer("Hai già votato! " + str(VOTI_GIOCHINO_AUTO1[user_id]), show_alert=True)
+        return
+    VOTI_GIOCHINO_AUTO1[user_id] = query.data
+
+    # Controlla se tutti hanno votato
+    chat_members = await context.bot.get_chat_administrators(chat_id)
+    total_members = await context.bot.get_chat_member_count(chat_id)
+    total_users = total_members - sum(1 for member in chat_members if member.user.is_bot)
+    
+    if len(VOTI_GIOCHINO_AUTO1) >= total_users:
+        # AleB = sum(1 for v in VOTI_GIOCHINO_AUTO1.values() if v == "AleB")
+        # AleD = sum(1 for v in VOTI_GIOCHINO_AUTO1.values() if v == "AleD")
+        # B =    sum(1 for v in VOTI_GIOCHINO_AUTO1.values() if v == "B")
+        # D =    sum(1 for v in VOTI_GIOCHINO_AUTO1.values() if v == "D")
+        # F =    sum(1 for v in VOTI_GIOCHINO_AUTO1.values() if v == "F")
+        # MG =   sum(1 for v in VOTI_GIOCHINO_AUTO1.values() if v == "MG")
+        # MR =   sum(1 for v in VOTI_GIOCHINO_AUTO1.values() if v == "MR")
+        # V =    sum(1 for v in VOTI_GIOCHINO_AUTO1.values() if v == "V")
+        # voti = max([AleB, AleD, B, D, F, MG, MR, V])
+        order = Counter(VOTI_GIOCHINO_AUTO1.values()).most_common(8)
+        winner = []
+        for el in order:
+            if el[1] >= max:
+                winner.append(el)
+                max = el[1]
+        reply = "Congratulazioni a: \n"
+        for w in winner:
+            reply += "〰️" + str(w[0]) + " (" + str(w[1]) + " punti)"
+            PUNTEGGI_STUPIDINI[w[0]] += 1
+        await context.bot.send_message(chat_id, reply)
+
 async def unknown(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """
     Gestisce comandi sconosciuti.
@@ -201,10 +288,12 @@ def main() -> None:
     application.add_handler(CommandHandler("start", start))
     application.add_handler(CommandHandler("help", help_command))
     application.add_handler(CommandHandler("piano", piano))
+    application.add_handler(CommandHandler("nanna", nanna))
     application.add_handler(CommandHandler("cacca", cacca))
     application.add_handler(CommandHandler("weather", weather))
     application.add_handler(CommandHandler("volcano", volcano))
     application.add_handler(CommandHandler("curiosita", curiosita))
+    application.add_handler(CommandHandler("car_game1", car_game1))
     #subscription recipe of the day
     application.add_handler(CommandHandler("subscribe_recipe", subscribe_recipe))
     

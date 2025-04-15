@@ -46,6 +46,8 @@ def get_weather_forecast(city: str = "Reykjavik") -> str:
     """
     if city.endswith("goro"):
         return ("ah-ah so funny")
+    if city == "Ferrara" or city == "ferrara":
+        return ("Mah ci sarà la nebbia, hai nostalgia di casa?")
     lat, lon = get_coordinates(city)
     url = f"https://api.open-meteo.com/v1/forecast?latitude={lat}&longitude={lon}&current_weather=true"
     try:
