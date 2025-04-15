@@ -1,13 +1,11 @@
 import os
-import logging
 import random
-import requests
 import datetime
 import json
 from collections import Counter
-from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
+from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup, InputMediaPhoto
 from dotenv import load_dotenv
-from telegram.ext import Application, CommandHandler, ContextTypes, MessageHandler, filters
+from telegram.ext import Application, CommandHandler, CallbackQueryHandler, ContextTypes, MessageHandler, filters
 
 # Custom libs
 from typedef import *
@@ -31,17 +29,18 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
     """
     help_text = (
         "Ecco cosa posso fare per te:\n\n"
-        "/start              - Avvia il bot e mostra il messaggio di benvenuto.\n"
-        "/help               - Mostra questo messaggio di aiuto.\n"
+        "/start - Avvia il bot e mostra il messaggio di benvenuto.\n"
+        "/help - Mostra questo messaggio di aiuto.\n"
         "/piano <num_giorno> - Visualizza il piano del giorno specifico (es.: /piano 1).\n"
         "/nanna <num_giorno> - Visualizza info sulla notte attuale.\n"
         "/cacca <num_giorno> - Visualizza il calendario Cacca.\n"
-        "/weather <città>    - Mostra le previsioni meteo per la città richiesta (default: Reykjavik).\n"
-        "/volcano            - Controlla lo stato vulcanico attuale.\n"
-        "/curiosita          - Ricevi una curiosità divertente del giorno."
-        "/subscribe_recipe   - Iscriviti per ricevere automaticamente le ricette del giorno (dal 19/04 al 27/04).\n"
+        "/weather <città> - Mostra le previsioni meteo per la città richiesta (default: Reykjavik).\n"
+        "/volcano - Controlla lo stato vulcanico attuale.\n"
+        "/curiosita - Ricevi una curiosità divertente del giorno.\n"
+        "/subscribe_recipe - Iscriviti per ricevere automaticamente le ricette del giorno (dal 19/04 al 27/04).\n"
+        "/leggi_storia - Leggi una storia del folklore islandese.\n"
     )
-    await update.message.reply_text(help_text, parse_mode='markdown')
+    await update.message.reply_text(help_text)
 
 async def piano(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """
@@ -246,6 +245,76 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
             PUNTEGGI_STUPIDINI[w[0]] += 1
         await context.bot.send_message(chat_id, reply)
 
+
+
+
+# --- Funzioni per il menu interattivo ---
+
+# Funzione che risponde al comando per leggere le storie.
+async def leggi_storia(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    keyboard = []
+    for story_id, story in STORIES.items():
+        keyboard.append([InlineKeyboardButton(story["title"], callback_data=f"select_{story_id}_0")])
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    await update.message.reply_text("Scegli la storia che vuoi ascoltare:", reply_markup=reply_markup)
+
+# Callback per gestire la selezione della storia e la navigazione tra le pagine.
+async def story_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    query = update.callback_query
+    await query.answer()
+    
+    # Il callback_data è strutturato così: "select_<story_id>_<page_number>" o "page_<story_id>_<page_number>"
+    data = query.data.split('_')
+    if len(data) < 3:
+        return
+    mode, story_id, page_str = data[0], data[1], data[2]
+    page_number = int(page_str)
+    
+    # Verifica che la storia esista
+    if story_id not in STORIES:
+        await query.edit_message_text("Storia non trovata.")
+        return
+    
+    story = STORIES[story_id]
+    pages = story["pages"]
+    total_pages = len(pages)
+    
+    # Costruisci il testo e l'immagine per la "slide"
+    text = f"*{story['title']}* (Pagina {page_number+1}/{total_pages})\n\n"
+    text += pages[page_number]
+    
+    # Se abbiamo un'immagine per la pagina (opzionale)
+    image_path = None
+    if "images" in story and len(story["images"]) > page_number:
+        image_path = story["images"][page_number]
+    
+    # Costruisci i pulsanti per navigare
+    buttons = []
+    if page_number > 0:
+        buttons.append(InlineKeyboardButton("◀ Indietro", callback_data=f"select_{story_id}_{page_number-1}"))
+    if page_number < total_pages - 1:
+        buttons.append(InlineKeyboardButton("Avanti ▶", callback_data=f"select_{story_id}_{page_number+1}"))
+    reply_markup = InlineKeyboardMarkup([buttons])
+    
+    # Modifica il messaggio in base alla presenza dell'immagine:
+    if image_path:
+        with open(image_path, 'rb') as img:
+        # Se si vuole usare un media group, è necessario usare l'editMessageMedia che accetta InputMediaPhoto.
+            new_media = InputMediaPhoto(media=img, caption=text, parse_mode="Markdown")
+        try:
+            await query.edit_message_media(new_media, reply_markup=reply_markup)
+        except Exception as e:
+            logger.error("Errore nell'edit della media: %s", e)
+            # Se l'edit non funziona, manda un nuovo messaggio
+            await query.message.reply_photo(photo=image_path, caption=text, parse_mode="Markdown", reply_markup=reply_markup)
+    else:
+        await query.edit_message_text(text=text, parse_mode="Markdown", reply_markup=reply_markup)
+
+
+
+
+
+
 async def unknown(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """
     Gestisce comandi sconosciuti.
@@ -296,6 +365,10 @@ def main() -> None:
     application.add_handler(CommandHandler("car_game1", car_game1))
     #subscription recipe of the day
     application.add_handler(CommandHandler("subscribe_recipe", subscribe_recipe))
+
+    application.add_handler(CommandHandler("leggi_storia", leggi_storia))
+    application.add_handler(CallbackQueryHandler(story_callback, pattern=r"^(select_).*"))
+
     
     # Handler per comandi sconosciuti
     application.add_handler(MessageHandler(filters.COMMAND, unknown))

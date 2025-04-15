@@ -10,7 +10,7 @@ logging.basicConfig(
     level=logging.INFO
 )
 logger = logging.getLogger(__name__)
-TIMEZONE = pytz.timezone('Europe/Rome')
+TIMEZONE = pytz.timezone('Atlantic/Reykjavik')
 
 def get_coordinates(city: str):
     """
