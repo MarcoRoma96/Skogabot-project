@@ -31,17 +31,18 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
     help_text = (
         "Ecco cosa posso fare per te:\n\n"
         "/start - Avvia il bot e mostra il messaggio di benvenuto.\n"
-        "/help - Mostra questo messaggio di aiuto.\n"
-        "/piano <num_giorno> - Visualizza il piano del giorno specifico (es.: /piano 1).\n"
+        "/help  - Mostra questo messaggio di aiuto.\n"
+        "/piano <num_giorno> - Visualizza il piano del giorno specifico.\n"
         "/nanna <num_giorno> - Visualizza info sulla notte attuale.\n"
         "/cacca <num_giorno> - Visualizza il calendario Cacca.\n"
-        "/weather <città> - Mostra le previsioni meteo per la città richiesta (default: Reykjavik).\n"
-        "/volcano - Controlla lo stato vulcanico attuale.\n"
+        "/weather <città>    - Mostra le previsioni meteo per la città richiesta (default: Reykjavik).\n"
+        "/volcano   - Controlla lo stato vulcanico attuale.\n"
         "/curiosita - Ricevi una curiosità divertente del giorno.\n"
-        "/ahah - Battutina cringina di ChatGPT\n"
-        "/car_game1 [stat] - Inizia uno stupendo gioco da macchina!\n"
-        "/subscribe_recipe - Iscriviti per ricevere automaticamente le ricette del giorno (dal 19/04 al 27/04).\n"
-        "/leggi_storia - Leggi una storia del folklore islandese.\n"
+        "/ahah      - Battutina cringina di ChatGPT\n"
+        "/car1 [stat] [reset] - Inizia uno stupendo gioco da macchina!\n"
+        "/car2                - Inizia uno stupendo gioco da macchina!\n"
+        "/subscribe_recipe    - Iscriviti per ricevere automaticamente le ricette del giorno (dal 19/04 al 27/04).\n"
+        "/leggi_storia        - Leggi una storia del folklore islandese.\n"
     )
     await update.message.reply_text(help_text)
 
@@ -136,12 +137,14 @@ async def curiosita(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     reply = random.choice(curiosities)
     await update.message.reply_text(f"🌋 Curiosità del giorno: {reply}", parse_mode='markdown')
 
+
 async def ahah(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """
     Comando /curiosita: invia una curiosità divertente del giorno.
     """
     reply = random.choice(BATTUTE_CRINGINE_DI_CHATGPT)
     await update.message.reply_text(f"{reply}", parse_mode='markdown')
+
 
 async def scheduled_recipe(context: ContextTypes.DEFAULT_TYPE):
     """
@@ -198,15 +201,18 @@ async def subscribe_recipe(update: Update, context: ContextTypes.DEFAULT_TYPE) -
     await update.message.reply_text("Iscrizione avvenuta! Riceverai le ricette programmate a mezzogiorno e alle 19:30 dal 19/04 al 27/04.")
 
 
-async def car_game1(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+async def car1(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     global VOTI_GIOCHINO_AUTO1
     if len(context.args) > 0:
         if context.args[0].startswith("stat"):
             # Mostra statistiche
             stats_text = "Statistiche del gioco:\n"
             for player, score in PUNTEGGI_STUPIDINI.items():
-                stats_text += f"{player}: {score} punti\n"
+                stats_text += f"🥇 {player}: {score} punti\n"
             await update.message.reply_text(stats_text)
+        elif context.args[0] == "reset":
+            for k in PUNTEGGI_STUPIDINI.keys():
+                PUNTEGGI_STUPIDINI[k] = 0
     else:
         domanda = random.choice(CARGAMES_STUPIDINI_DI_CHATGPT)
         VOTI_GIOCHINO_AUTO1 = {}  # Reset: necessario?
@@ -228,29 +234,23 @@ async def car_game1(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         # Invia la domanda e i bottoni
         await update.message.reply_text(f"{domanda}\n", reply_markup=reply_markup)
 
-async def car_game1_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+
+async def car1_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     global VOTI_GIOCHINO_AUTO1
     query = update.callback_query
     await query.answer()
 
     chat_id = query.message.chat_id
     user_id = query.from_user.id
-    print(chat_id, user_id)
 
     if user_id in VOTI_GIOCHINO_AUTO1:
         await query.answer("Hai già votato! " + str(VOTI_GIOCHINO_AUTO1[user_id]), show_alert=True)
         return
     VOTI_GIOCHINO_AUTO1[user_id] = query.data.split('_')[1]
-    print(query.data)
 
     # Controlla se tutti hanno votato
 
-    # chat_members = await context.bot.get_chat_administrators(chat_id)
-    # print(chat_members)
     total_members = await context.bot.get_chat_member_count(chat_id)
-    print(total_members)
-    # total_users = total_members - sum(1 for member in total_members if member.user.is_bot)
-    # print(total_users)
     total_users = total_members - 1
     if len(VOTI_GIOCHINO_AUTO1) >= total_users:
         order = Counter(VOTI_GIOCHINO_AUTO1.values()).most_common(8)
@@ -262,8 +262,48 @@ async def car_game1_callback(update: Update, context: ContextTypes.DEFAULT_TYPE)
                 max = el[1]
         reply = "Congratulazioni a: \n"
         for w in winner:
-            reply += "〰️ " + str(w[0]) + " (" + str(w[1]) + " punti)"
+            reply += "🥇 " + str(w[0]) + " (" + str(w[1]) + " punti)\n"
             PUNTEGGI_STUPIDINI[w[0]] += 1
+        await context.bot.send_message(chat_id, reply)
+
+
+async def car2(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    global VOTI_GIOCHINO_AUTO2
+    VOTI_GIOCHINO_AUTO2 = {}
+    domanda = random.choice(LO_SAI_CHE)
+    protagonista = random.choice(NOMI_VIAGGIATORI)
+    # Bottoni per la risposta
+    keyboard = [
+        [InlineKeyboardButton("0%",     callback_data="cargame2_0"),
+         InlineKeyboardButton("20%",    callback_data="cargame2_20"),
+         InlineKeyboardButton("40%",    callback_data="cargame2_40"),
+         InlineKeyboardButton("60%",    callback_data="cargame2_60"),
+         InlineKeyboardButton("80%",    callback_data="cargame2_80"),
+         InlineKeyboardButton("100%",   callback_data="cargame2_100")]
+    ]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    # Invia la domanda e i bottoni
+    domanda = domanda.replace("[NOME]", protagonista)
+    await update.message.reply_text(f"{domanda}\n", reply_markup=reply_markup)
+
+
+async def car2_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    query = update.callback_query
+    await query.answer()
+
+    chat_id = query.message.chat_id
+    user_id = query.from_user.id
+
+    VOTI_GIOCHINO_AUTO2[user_id] = query.data.split('_')[1]
+
+    total_members = await context.bot.get_chat_member_count(chat_id)
+    total_users = total_members - 1
+    if len(VOTI_GIOCHINO_AUTO2) >= total_users:
+        sum = 0
+        for el in VOTI_GIOCHINO_AUTO2.values():
+            sum += int(el)
+        reply = "Congratulazioni!💥\nSecondo i tuoi amici, rispecchi questa frase al " + \
+            str(sum) + "%!\n"
         await context.bot.send_message(chat_id, reply)
 
 
@@ -276,6 +316,8 @@ async def leggi_storia(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
     await update.message.reply_text("Scegli la storia che vuoi ascoltare:", reply_markup=reply_markup)
 
 # Callback per gestire la selezione della storia e la navigazione tra le pagine.
+
+
 async def story_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     query = update.callback_query
     await query.answer()
@@ -380,9 +422,12 @@ def main() -> None:
     application.add_handler(CommandHandler("volcano", volcano))
     application.add_handler(CommandHandler("curiosita", curiosita))
     application.add_handler(CommandHandler("ahah", ahah))
-    application.add_handler(CommandHandler("car_game1", car_game1))
+    application.add_handler(CommandHandler("car1", car1))
     application.add_handler(CallbackQueryHandler(
-        car_game1_callback, pattern=r"^(cargame1_).*"))
+        car1_callback, pattern=r"^(cargame1_).*"))
+    application.add_handler(CommandHandler("car2", car2))
+    application.add_handler(CallbackQueryHandler(
+        car2_callback, pattern=r"^(cargame2_).*"))
     # subscription recipe of the day
     application.add_handler(CommandHandler(
         "subscribe_recipe", subscribe_recipe))
