@@ -1,4 +1,7 @@
 # Itinerario statico: messaggi definiti a mano (hard-coded)
+import os
+
+
 STATIC_ITINERARY = {
     "1": (
         "*Giorno 1 (19/04/2025):*\n"
@@ -436,3 +439,28 @@ RECIPES = [
     "  4. Cuocere su una piastra ben calda o su una padella antiaderente fino a doratura.\n"
     "  5. Servire tiepido o a temperatura ambiente, magari accompagnato da burro.\n"
 ]
+
+
+# this folder
+THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
+
+# Definisco un dizionario di storie, ciascuna divisa in "pagine" (ovvero paragrafi).
+STORIES = {
+    "selkie": {
+        "title": "La Leggenda della Selkie",
+        "pages": [
+            "Una volta, nella parte orientale di Mýrdalur, un uomo percorse le scogliere lungo la riva del mare all'alba. Giunse all'ingresso di una caverna e udì il suono dei festeggiamenti e delle danze che vi riecheggiavano. Vicino vide numerose pelli di foca. Ne prese una e la portò a casa, chiudendola in un baule.",
+            "Durante il giorno, ritornò alla caverna e trovò una giovane donna nuda in lacrime. Ella era la foca della quale aveva rubato la pelle. L'uomo le permise di vestirsi, la consolò e la portò a casa. Presto si affezionò a lui, benché il suo sguardo fosse sempre rivolto al mare.",
+            "Poco tempo dopo la sposò e insieme ebbero dei figli. Il contadino custodiva la pelle nel baule e portava la chiave sempre con sé. Ma un giorno, dimenticando la chiave, al suo ritorno trovò il baule aperto – la donna e la sua pelle erano sparite.",
+            "La donna, trovata la chiave, vide la sua pelle e, incapace di resistere, si la indossò e scomparve nel mare. Prima di andarsene, sussurrò: 'Dov’io fuggire? Ho sette figli nel mare e sette figli sulla terra.' Da quel giorno, si dice che il pescatore, pur avendo avuto fortuna nel pescato, porti nel cuore la tristezza di quella perdita."
+        ],
+        # Per ogni pagina si potrebbe associare anche un'immagine (qui come URL di esempio)
+        "images": [
+            os.path.join(THIS_FOLDER, "figures", "story-selkie-pag1.png"),
+            os.path.join(THIS_FOLDER, "figures", "story-selkie-pag2.png"),
+            os.path.join(THIS_FOLDER, "figures", "story-selkie-pag3.png"),
+            os.path.join(THIS_FOLDER, "figures", "story-selkie-pag4.png")
+        ]
+    }
+    # Altre storie possono essere aggiunte con una struttura simile, ad es. "kopakonan": { ... }
+}
