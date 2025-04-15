@@ -207,12 +207,12 @@ async def car1(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         if context.args[0].startswith("stat"):
             # Mostra statistiche
             stats_text = "Statistiche del gioco:\n"
-            for player, score in PUNTEGGI_STUPIDINI.items():
+            for player, score in PUNTEGGI_STUPIDINI1.items():
                 stats_text += f"🥇 {player}: {score} punti\n"
             await update.message.reply_text(stats_text)
         elif context.args[0] == "reset":
-            for k in PUNTEGGI_STUPIDINI.keys():
-                PUNTEGGI_STUPIDINI[k] = 0
+            for k in PUNTEGGI_STUPIDINI1.keys():
+                PUNTEGGI_STUPIDINI1[k] = 0
     else:
         domanda = random.choice(CARGAMES_STUPIDINI_DI_CHATGPT)
         VOTI_GIOCHINO_AUTO1 = {}  # Reset: necessario?
@@ -263,7 +263,7 @@ async def car1_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> N
         reply = "Congratulazioni a: \n"
         for w in winner:
             reply += "🥇 " + str(w[0]) + " (" + str(w[1]) + " punti)\n"
-            PUNTEGGI_STUPIDINI[w[0]] += 1
+            PUNTEGGI_STUPIDINI1[w[0]] += 1
         await context.bot.send_message(chat_id, reply)
 
 
@@ -304,6 +304,89 @@ async def car2_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> N
             sum += int(el)
         reply = "Congratulazioni!💥\nSecondo i tuoi amici, rispecchi questa frase al " + \
             str(sum) + "%!\n"
+        await context.bot.send_message(chat_id, reply)
+
+
+async def car3(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    global VOTI_GIOCHINO_AUTO3, USER_SEGRETO3
+    if len(context.args) > 0:
+        if context.args[0].startswith("stat"):
+            # Mostra statistiche
+            stats_text = "Statistiche del gioco:\n"
+            for player, score in PUNTEGGI_STUPIDINI3.items():
+                stats_text += f"🥇 {player}: {score} punti\n"
+            await update.message.reply_text(stats_text)
+        elif context.args[0] == "reset":
+            for k in PUNTEGGI_STUPIDINI3.keys():
+                PUNTEGGI_STUPIDINI3[k] = 0
+        else:
+            segreto = ' '.join(context.args)
+            USER_SEGRETO3 = update.message.from_user.name[-2:]
+            VOTI_GIOCHINO_AUTO3 = {}  # Reset: necessario?
+            # Bottoni per la risposta
+            keyboard = [
+                [InlineKeyboardButton("Vero", callback_data="cargame3_vero"),
+                InlineKeyboardButton("Falso", callback_data="cargame3_falso"),
+                ]
+            ]
+            reply_markup = InlineKeyboardMarkup(keyboard)
+            # Invia la domanda e i bottoni
+            await update.message.reply_text(f"Interessante! Voi che ne dite? Vero o Falso?\n", reply_markup=reply_markup)
+    else:
+        await update.message.reply_text(f"Errore! Indica un segreto🤫\n")
+
+
+async def car3_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    global VOTI_GIOCHINO_AUTO3
+    query = update.callback_query
+    await query.answer()
+
+    chat_id = query.message.chat_id
+    user_id = query.from_user.id
+    user_code = query.from_user.name[-2:]
+
+    if user_id in VOTI_GIOCHINO_AUTO3:
+        await query.answer("Hai già votato! " + str(VOTI_GIOCHINO_AUTO3[user_id]), show_alert=True)
+        return
+    VOTI_GIOCHINO_AUTO3[user_code] = query.data.split('_')[1]
+
+    total_members = await context.bot.get_chat_member_count(chat_id)
+    total_users = total_members - 1
+    if len(VOTI_GIOCHINO_AUTO3) >= total_users:
+        t = 0
+        f = 0
+        for el in VOTI_GIOCHINO_AUTO3.values():
+            if el == "vero":
+                t += 1
+            else:
+                f += 1
+        sol = VOTI_GIOCHINO_AUTO3[USER_SEGRETO3]
+
+        if sol == "vero" and (t-1) > f:
+            reply = "Congratulazioni! Il segreto era vero!\n" + \
+                str(t) + " persone hanno indovinato!\n"
+            for u, r in VOTI_GIOCHINO_AUTO3.items():
+                if r == "vero" and u != USER_SEGRETO3:
+                    PUNTEGGI_STUPIDINI3[CONV[u]] += 1
+        elif sol == "vero" and (t-1) < f:
+            reply = "Oh no! Il segreto era vero ma non ci avete creduto! In " + \
+                str(t) + " avete sbagliato."
+            PUNTEGGI_STUPIDINI3[CONV[USER_SEGRETO3]] += f
+        elif sol == "vero" and (t-1) == f:
+            reply = "Nessuna maggioranza! Questo non dovrebbe mai succedere..."
+        elif sol == "falso" and (f-1) > t:
+            reply = "Congratulazioni! Il segreto era Falso!\n" + \
+                str(f) + " persone hanno indovinato!\n"
+            for u, r in VOTI_GIOCHINO_AUTO3.items():
+                if r == "falso" and u != USER_SEGRETO3:
+                    PUNTEGGI_STUPIDINI3[CONV[u]] += 1
+        elif sol == "falso" and (f-1) < t:
+            reply = "Oh no! Il segreto era falso e ci siete cascati! In " + \
+                str(f) + " avete sbagliato."
+            PUNTEGGI_STUPIDINI3[CONV[USER_SEGRETO3]] += t
+        elif sol == "falso" and (f-1) == t:
+            reply = "Nessuna maggioranza! Questo non dovrebbe mai succedere..."
+        # TODO: se tutti indovinano, l'user sergreto perde punti!
         await context.bot.send_message(chat_id, reply)
 
 
@@ -428,6 +511,9 @@ def main() -> None:
     application.add_handler(CommandHandler("car2", car2))
     application.add_handler(CallbackQueryHandler(
         car2_callback, pattern=r"^(cargame2_).*"))
+    application.add_handler(CommandHandler("car3", car3))
+    application.add_handler(CallbackQueryHandler(
+        car3_callback, pattern=r"^(cargame3_).*"))
     # subscription recipe of the day
     application.add_handler(CommandHandler(
         "subscribe_recipe", subscribe_recipe))

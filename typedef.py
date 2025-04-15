@@ -520,7 +520,7 @@ LO_SAI_CHE = [
 NOMI_VIAGGIATORI = ["Ale B", "Ale D", "Bianca",
                     "Dalia", "Filippo", "Marco2", "MarcoRoma", "Viola"]
 
-PUNTEGGI_STUPIDINI = {
+PUNTEGGI_STUPIDINI1 = {
     "AleB": 0,
     "AleD": 0,
     "B": 0,
@@ -531,8 +531,33 @@ PUNTEGGI_STUPIDINI = {
     "V": 0
 }
 
+PUNTEGGI_STUPIDINI3 = {
+    "AleB": 0,
+    "AleD": 0,
+    "B": 0,
+    "D": 0,
+    "F": 0,
+    "MG": 0,
+    "MR": 0,
+    "V": 0
+}
+USER_SEGRETO3 = -1
+
+CONV = {
+    "on": "AleB",
+    "96": "AleD",
+    "24": "B",
+    "0k": "D",
+    "lo": "F",
+    "se": "MG",
+    "co": "MR",
+    "ni": "V",
+}
+
+
 VOTI_GIOCHINO_AUTO1 = {}
 VOTI_GIOCHINO_AUTO2 = {}
+VOTI_GIOCHINO_AUTO3 = {}
 
 # Lista di 20 ricette islandesi (le più strane per un italiano)
 RECIPES = [
