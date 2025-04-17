@@ -543,6 +543,28 @@ PUNTEGGI_STUPIDINI3 = {
 }
 USER_SEGRETO3 = -1
 
+
+FANTA_DICT = {
+    0: ["test1", 5],
+    1: ["test2", 10],
+}
+
+
+PUNTEGGI_STUPIDINI_FANTA = {
+    "AleB": [0] * len(FANTA_DICT),
+    "AleD": [0] * len(FANTA_DICT),
+    "B": [0] * len(FANTA_DICT),
+    "D": [0] * len(FANTA_DICT),
+    "F": [0] * len(FANTA_DICT),
+    "MG": [0] * len(FANTA_DICT),
+    "MR": [0] * len(FANTA_DICT),
+    "V": [0] * len(FANTA_DICT)
+}
+
+FANTA_USER_CHOSEN = ""
+FANTA_EVENT_CHOSEN = "" # Oggetto "Evento" (elemento di FANTA_DICT)
+fanta_1, fanta_2 = range(2)
+
 CONV = {
     "on": "AleB",
     "96": "AleD",
@@ -801,7 +823,7 @@ STORIES = {
             os.path.join(THIS_FOLDER, "figures", "story-selkie-pag4.png")
         ]
     },
-    "huldufolk":{
+    "huldufolk": {
         "title": "La Leggenda del Popolo Nascosto (Huldufólk)",
         "pages": [
             "In Islanda, si narra di esseri misteriosi chiamati Huldufólk, ovvero 'popolo nascosto'. Queste creature, simili agli elfi, vivono in armonia con la natura, nascoste agli occhi umani. Abitano tra le rocce, le colline e i paesaggi incontaminati dell'isola, conducendo una vita parallela alla nostra. Si dice che siano visibili solo a pochi fortunati o in momenti particolari, come durante il solstizio d'estate. ",
@@ -821,12 +843,12 @@ STORIES = {
         ]
     },
     "draugr": {
-    "title": "Draugr – Il Non-Morto Vendicativo",
-    "pages": [
-        "*Il guardiano della tomba* \nNelle gelide terre d'Islanda, si racconta di creature non morte chiamate Draugar. Questi esseri, una volta uomini, si rifiutano di trovare pace nella morte. Restano nei loro tumuli, vigilando sui tesori sepolti e tormentando chi osa avvicinarsi. Non sono semplici spiriti: i Draugar possiedono corpi fisici, spesso gonfi e maleodoranti, con una forza sovrumana e la capacità di crescere di dimensioni a piacimento. ",
-        "*Poteri oscuri* \nI Draugar non si limitano a custodire le loro tombe. Sono noti per la loro abilità nel cambiare forma, diventando animali o nebbia, e per la loro capacità di entrare nei sogni dei vivi, portando follia e morte. Alcuni racconti narrano di Draugar che escono dalle loro tombe per attaccare i vivi, spinti da invidia o desiderio di vendetta. La loro presenza è spesso annunciata da un odore nauseabondo e da un senso opprimente di terrore.",
-        "*Protezioni e rituali* \nPer proteggersi dai Draugar, gli islandesi adottavano vari rituali. Si credeva che seppellire i morti con le mani legate o con oggetti sacri potesse impedire loro di tornare. Alcuni tumuli venivano circondati da pietre magiche o rune protettive. Inoltre, era pratica comune seppellire i defunti lontano dalle abitazioni, per evitare che i Draugar potessero tornare a tormentare i vivi. "
-    ],
+        "title": "Draugr – Il Non-Morto Vendicativo",
+        "pages": [
+            "*Il guardiano della tomba* \nNelle gelide terre d'Islanda, si racconta di creature non morte chiamate Draugar. Questi esseri, una volta uomini, si rifiutano di trovare pace nella morte. Restano nei loro tumuli, vigilando sui tesori sepolti e tormentando chi osa avvicinarsi. Non sono semplici spiriti: i Draugar possiedono corpi fisici, spesso gonfi e maleodoranti, con una forza sovrumana e la capacità di crescere di dimensioni a piacimento. ",
+            "*Poteri oscuri* \nI Draugar non si limitano a custodire le loro tombe. Sono noti per la loro abilità nel cambiare forma, diventando animali o nebbia, e per la loro capacità di entrare nei sogni dei vivi, portando follia e morte. Alcuni racconti narrano di Draugar che escono dalle loro tombe per attaccare i vivi, spinti da invidia o desiderio di vendetta. La loro presenza è spesso annunciata da un odore nauseabondo e da un senso opprimente di terrore.",
+            "*Protezioni e rituali* \nPer proteggersi dai Draugar, gli islandesi adottavano vari rituali. Si credeva che seppellire i morti con le mani legate o con oggetti sacri potesse impedire loro di tornare. Alcuni tumuli venivano circondati da pietre magiche o rune protettive. Inoltre, era pratica comune seppellire i defunti lontano dalle abitazioni, per evitare che i Draugar potessero tornare a tormentare i vivi. "
+        ],
         "images": [
             os.path.join(THIS_FOLDER, "figures", "story-draugr.jpg"),
             os.path.join(THIS_FOLDER, "figures", "story-draugr.jpg"),
@@ -848,22 +870,22 @@ STORIES = {
         ]
     },
     "strega_barca_pietra": {
-    "title": "Skessan á Steinnökkvanum – La Strega sulla Barca di Pietra",
-    "pages": [
-        "*Il viaggio e l'inganno*\nIl principe Sigurd, dopo aver sposato una principessa straniera e aver avuto un figlio, decide di tornare nel suo regno. Durante la traversata, una calma improvvisa ferma la nave. Mentre Sigurd riposa sottocoperta, una strega su una barca di pietra si avvicina silenziosamente, rapisce la regina e il bambino, e assume l'aspetto della regina grazie a un incantesimo. La vera regina viene spedita, priva di sensi, verso il regno sotterraneo del fratello della strega. :contentReference[oaicite:1]{index=1}",
-        "*Sospetti e scoperte*\nLa falsa regina, ora a bordo della nave, cerca di calmare il bambino in lacrime, ma senza successo. Sigurd nota un cambiamento nel comportamento della moglie: è diventata fredda e distante. Al loro arrivo, Sigurd assume il trono, ma il figlio continua a piangere inconsolabilmente. Una nutrice viene incaricata di prendersi cura del bambino, e sotto la sua custodia, il piccolo finalmente trova pace.",
-        "*La verità emerge*\nDue giovani cortigiani, giocando a scacchi vicino alla stanza della regina, sentono strani rumori. Spiando attraverso una fessura, vedono la regina trasformarsi in una mostruosa trolla mentre sbadiglia. Un gigante a tre teste emerge dal pavimento, le porta un trogolo di carne, che lei divora avidamente. Dopo il pasto, la regina ritorna al suo aspetto umano. I giovani, terrorizzati, decidono di non rivelare ciò che hanno visto.",
-        "*Il ritorno della vera regina*\nNel frattempo, la nutrice del principe nota un evento straordinario: ogni notte, una donna vestita di bianco emerge dal pavimento, abbraccia il bambino e scompare. La terza notte, la donna sussurra: 'Due sono passate, ne resta una sola.' La nutrice informa Sigurd, che decide di affrontare la situazione. La notte seguente, armato di spada, attende la misteriosa figura. Quando la donna appare, lui riconosce la vera regina e spezza la catena che la lega. Un tremore scuote il palazzo: il gigante, legato all'altra estremità della catena, cade nel suo regno sotterraneo.",
-        "*Giustizia e riconciliazione*\nLa vera regina racconta a Sigurd l'inganno della strega e la sua prigionia. Sigurd ordina l'arresto della falsa regina, che viene condannata a morte per i suoi crimini. La vera regina riprende il suo posto accanto al re, e il regno celebra il ritorno dell'armonia."
-    ],
-    "images": [
-        os.path.join(THIS_FOLDER, "figures", "story-strega.jpg"),
-        os.path.join(THIS_FOLDER, "figures", "story-strega.jpg"),
-        os.path.join(THIS_FOLDER, "figures", "story-strega.jpg"),
-        os.path.join(THIS_FOLDER, "figures", "story-strega.jpg"),
-        os.path.join(THIS_FOLDER, "figures", "story-strega.jpg")
-    ]
-}
+        "title": "Skessan á Steinnökkvanum – La Strega sulla Barca di Pietra",
+        "pages": [
+            "*Il viaggio e l'inganno*\nIl principe Sigurd, dopo aver sposato una principessa straniera e aver avuto un figlio, decide di tornare nel suo regno. Durante la traversata, una calma improvvisa ferma la nave. Mentre Sigurd riposa sottocoperta, una strega su una barca di pietra si avvicina silenziosamente, rapisce la regina e il bambino, e assume l'aspetto della regina grazie a un incantesimo. La vera regina viene spedita, priva di sensi, verso il regno sotterraneo del fratello della strega. :contentReference[oaicite:1]{index=1}",
+            "*Sospetti e scoperte*\nLa falsa regina, ora a bordo della nave, cerca di calmare il bambino in lacrime, ma senza successo. Sigurd nota un cambiamento nel comportamento della moglie: è diventata fredda e distante. Al loro arrivo, Sigurd assume il trono, ma il figlio continua a piangere inconsolabilmente. Una nutrice viene incaricata di prendersi cura del bambino, e sotto la sua custodia, il piccolo finalmente trova pace.",
+            "*La verità emerge*\nDue giovani cortigiani, giocando a scacchi vicino alla stanza della regina, sentono strani rumori. Spiando attraverso una fessura, vedono la regina trasformarsi in una mostruosa trolla mentre sbadiglia. Un gigante a tre teste emerge dal pavimento, le porta un trogolo di carne, che lei divora avidamente. Dopo il pasto, la regina ritorna al suo aspetto umano. I giovani, terrorizzati, decidono di non rivelare ciò che hanno visto.",
+            "*Il ritorno della vera regina*\nNel frattempo, la nutrice del principe nota un evento straordinario: ogni notte, una donna vestita di bianco emerge dal pavimento, abbraccia il bambino e scompare. La terza notte, la donna sussurra: 'Due sono passate, ne resta una sola.' La nutrice informa Sigurd, che decide di affrontare la situazione. La notte seguente, armato di spada, attende la misteriosa figura. Quando la donna appare, lui riconosce la vera regina e spezza la catena che la lega. Un tremore scuote il palazzo: il gigante, legato all'altra estremità della catena, cade nel suo regno sotterraneo.",
+            "*Giustizia e riconciliazione*\nLa vera regina racconta a Sigurd l'inganno della strega e la sua prigionia. Sigurd ordina l'arresto della falsa regina, che viene condannata a morte per i suoi crimini. La vera regina riprende il suo posto accanto al re, e il regno celebra il ritorno dell'armonia."
+        ],
+        "images": [
+            os.path.join(THIS_FOLDER, "figures", "story-strega.jpg"),
+            os.path.join(THIS_FOLDER, "figures", "story-strega.jpg"),
+            os.path.join(THIS_FOLDER, "figures", "story-strega.jpg"),
+            os.path.join(THIS_FOLDER, "figures", "story-strega.jpg"),
+            os.path.join(THIS_FOLDER, "figures", "story-strega.jpg")
+        ]
+    }
 
 
 
