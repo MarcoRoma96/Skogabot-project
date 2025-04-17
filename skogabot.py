@@ -410,11 +410,12 @@ async def fanta(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
             else:
                 # Reset [user] [key]
                 user = context.args[1]
-            try:
-                key = int(context.args[2])
-            except Exception as e:
-                await update.message.reply_text(f"Errore! Se vuoi annullare un evento del FantaIslanda usa la sintassi: /fanta reset [nome_utente] [numero_evento]\n")
-            PUNTEGGI_STUPIDINI_FANTA[user][key] = 0
+                try:
+                    key = int(context.args[2])
+                    PUNTEGGI_STUPIDINI_FANTA[user][key] = 0
+                    await update.message.reply_text(f"Rimossi punti assegnati a {user} per {key}\n")
+                except Exception as e:
+                    await update.message.reply_text(f"Errore! Se vuoi annullare un evento del FantaIslanda usa la sintassi: /fanta reset [nome_utente] [numero_evento]\n")
         elif context.args[0] == "show":
             text = "Ecco tutti i Bonus e i Malus!\n"
             for item in list(FANTA_DICT.items()):
