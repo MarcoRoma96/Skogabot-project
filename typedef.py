@@ -930,11 +930,11 @@ STORIES = {
             "*Dimmuborgir oggi*\nOggi, Dimmuborgir è una popolare attrazione turistica, parte del percorso del 'Diamond Circle' nel nord dell'Islanda. I visitatori possono esplorare i sentieri che si snodano tra le formazioni laviche, immergendosi nella bellezza naturale e nelle leggende che permeano questo luogo unico."
         ],
         "images": [
-            os.path.join(THIS_FOLDER, "figures", "story-dimmuborgir1.jpg"),
-            os.path.join(THIS_FOLDER, "figures", "story-dimmuborgir2.jpg"),
-            os.path.join(THIS_FOLDER, "figures", "story-dimmuborgir3.jpg"),
-            os.path.join(THIS_FOLDER, "figures", "story-dimmuborgir4.jpg"),
-            os.path.join(THIS_FOLDER, "figures", "story-dimmuborgir5.jpg")
+            os.path.join(THIS_FOLDER, "figures", "story-dimmuborgir.png"),
+            os.path.join(THIS_FOLDER, "figures", "story-dimmuborgir.png"),
+            os.path.join(THIS_FOLDER, "figures", "story-dimmuborgir.png"),
+            os.path.join(THIS_FOLDER, "figures", "story-dimmuborgir.png"),
+            os.path.join(THIS_FOLDER, "figures", "story-dimmuborgir.png")
         ]
     },
     "lagarfljot": {
@@ -947,11 +947,11 @@ STORIES = {
             "*Il Lagarfljótsormur oggi*\nOggi, il Lagarfljótsormur è una parte affascinante del folklore islandese. Il lago Lagarfljót è una popolare destinazione turistica, e la leggenda del mostro continua a incuriosire sia i locali che i visitatori. :contentReference[oaicite:5]{index=5}"
         ],
         "images": [
-            os.path.join(THIS_FOLDER, "figures", "story-lagarfljot1.jpg"),
-            os.path.join(THIS_FOLDER, "figures", "story-lagarfljot2.jpg"),
-            os.path.join(THIS_FOLDER, "figures", "story-lagarfljot3.jpg"),
-            os.path.join(THIS_FOLDER, "figures", "story-lagarfljot4.jpg"),
-            os.path.join(THIS_FOLDER, "figures", "story-lagarfljot5.jpg")
+            os.path.join(THIS_FOLDER, "figures", "story-lagarfljot.png"),
+            os.path.join(THIS_FOLDER, "figures", "story-lagarfljot.png"),
+            os.path.join(THIS_FOLDER, "figures", "story-lagarfljot.png"),
+            os.path.join(THIS_FOLDER, "figures", "story-lagarfljot.png"),
+            os.path.join(THIS_FOLDER, "figures", "story-lagarfljot.png")
         ]
     },
     "draugur": {
@@ -965,10 +965,10 @@ STORIES = {
         ],
         "images": [
             os.path.join(THIS_FOLDER, "figures", "Theodor_Kittelsen_-_Sjotrollet_1887_The_Sea_Troll.jpg"),
-            os.path.join(THIS_FOLDER, "figures", "story-draugur2.jpg"),
-            os.path.join(THIS_FOLDER, "figures", "story-draugur3.jpg"),
-            os.path.join(THIS_FOLDER, "figures", "story-draugur4.jpg"),
-            os.path.join(THIS_FOLDER, "figures", "story-draugur5.jpg")
+            os.path.join(THIS_FOLDER, "figures", "Theodor_Kittelsen_-_Sjotrollet_1887_The_Sea_Troll.jpg"),
+            os.path.join(THIS_FOLDER, "figures", "Theodor_Kittelsen_-_Sjotrollet_1887_The_Sea_Troll.jpg"),
+            os.path.join(THIS_FOLDER, "figures", "Theodor_Kittelsen_-_Sjotrollet_1887_The_Sea_Troll.jpg"),
+            os.path.join(THIS_FOLDER, "figures", "Theodor_Kittelsen_-_Sjotrollet_1887_The_Sea_Troll.jpg")
         ]
     },
     "marman": {
@@ -979,9 +979,9 @@ STORIES = {
             "*Il rilascio e la trasformazione*\nCommosso dalle parole del marman, il pescatore lo libera. Da quel giorno, tratta tutte le creature del mare con rispetto, diventando un uomo più saggio e umile."
         ],
         "images": [
-            os.path.join(THIS_FOLDER, "figures", "story-marman1.jpg"),
-            os.path.join(THIS_FOLDER, "figures", "story-marman2.jpg"),
-            os.path.join(THIS_FOLDER, "figures", "story-marman3.jpg")
+            os.path.join(THIS_FOLDER, "figures", "story-marman.png"),
+            os.path.join(THIS_FOLDER, "figures", "story-marman.png"),
+            os.path.join(THIS_FOLDER, "figures", "story-marman.png")
         ]
     },
     "saemundur": {
