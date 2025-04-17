@@ -846,7 +846,25 @@ STORIES = {
             os.path.join(THIS_FOLDER, "figures", "story-nykur2.jpg"),
             os.path.join(THIS_FOLDER, "figures", "story-nykur2.jpg")
         ]
-    }
+    },
+    "strega_barca_pietra": {
+    "title": "Skessan á Steinnökkvanum – La Strega sulla Barca di Pietra",
+    "pages": [
+        "*Il viaggio e l'inganno*\nIl principe Sigurd, dopo aver sposato una principessa straniera e aver avuto un figlio, decide di tornare nel suo regno. Durante la traversata, una calma improvvisa ferma la nave. Mentre Sigurd riposa sottocoperta, una strega su una barca di pietra si avvicina silenziosamente, rapisce la regina e il bambino, e assume l'aspetto della regina grazie a un incantesimo. La vera regina viene spedita, priva di sensi, verso il regno sotterraneo del fratello della strega. :contentReference[oaicite:1]{index=1}",
+        "*Sospetti e scoperte*\nLa falsa regina, ora a bordo della nave, cerca di calmare il bambino in lacrime, ma senza successo. Sigurd nota un cambiamento nel comportamento della moglie: è diventata fredda e distante. Al loro arrivo, Sigurd assume il trono, ma il figlio continua a piangere inconsolabilmente. Una nutrice viene incaricata di prendersi cura del bambino, e sotto la sua custodia, il piccolo finalmente trova pace.",
+        "*La verità emerge*\nDue giovani cortigiani, giocando a scacchi vicino alla stanza della regina, sentono strani rumori. Spiando attraverso una fessura, vedono la regina trasformarsi in una mostruosa trolla mentre sbadiglia. Un gigante a tre teste emerge dal pavimento, le porta un trogolo di carne, che lei divora avidamente. Dopo il pasto, la regina ritorna al suo aspetto umano. I giovani, terrorizzati, decidono di non rivelare ciò che hanno visto.",
+        "*Il ritorno della vera regina*\nNel frattempo, la nutrice del principe nota un evento straordinario: ogni notte, una donna vestita di bianco emerge dal pavimento, abbraccia il bambino e scompare. La terza notte, la donna sussurra: 'Due sono passate, ne resta una sola.' La nutrice informa Sigurd, che decide di affrontare la situazione. La notte seguente, armato di spada, attende la misteriosa figura. Quando la donna appare, lui riconosce la vera regina e spezza la catena che la lega. Un tremore scuote il palazzo: il gigante, legato all'altra estremità della catena, cade nel suo regno sotterraneo.",
+        "*Giustizia e riconciliazione*\nLa vera regina racconta a Sigurd l'inganno della strega e la sua prigionia. Sigurd ordina l'arresto della falsa regina, che viene condannata a morte per i suoi crimini. La vera regina riprende il suo posto accanto al re, e il regno celebra il ritorno dell'armonia."
+    ],
+    "images": [
+        os.path.join(THIS_FOLDER, "figures", "story-strega.jpg"),
+        os.path.join(THIS_FOLDER, "figures", "story-strega.jpg"),
+        os.path.join(THIS_FOLDER, "figures", "story-strega.jpg"),
+        os.path.join(THIS_FOLDER, "figures", "story-strega.jpg"),
+        os.path.join(THIS_FOLDER, "figures", "story-strega.jpg")
+    ]
+}
+
 
 
     # Altre storie possono essere aggiunte con una struttura simile, ad es. "kopakonan": { ... }
