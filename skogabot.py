@@ -5,7 +5,7 @@ import json
 from collections import Counter
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup, InputMediaPhoto
 from dotenv import load_dotenv
-from telegram.ext import Application, CommandHandler, CallbackQueryHandler, ContextTypes, MessageHandler, filters
+from telegram.ext import Application, CommandHandler, ConversationHandler, CallbackQueryHandler, ContextTypes, MessageHandler, filters
 
 # Custom libs
 from typedef import *
@@ -29,20 +29,20 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
     Comando /help: mostra le funzionalità disponibili.
     """
     help_text = (
-        "Ecco cosa posso fare per te:\n\n"
-        "/start - Avvia il bot e mostra il messaggio di benvenuto.\n"
-        "/help  - Mostra questo messaggio di aiuto.\n"
-        "/piano <num_giorno> - Visualizza il piano del giorno specifico.\n"
-        "/nanna <num_giorno> - Visualizza info sulla notte attuale.\n"
-        "/cacca <num_giorno> - Visualizza il calendario Cacca.\n"
-        "/weather <città>    - Mostra le previsioni meteo per la città richiesta (default: Reykjavik).\n"
-        "/volcano   - Controlla lo stato vulcanico attuale.\n"
-        "/curiosita - Ricevi una curiosità divertente del giorno.\n"
-        "/ahah      - Battutina cringina di ChatGPT\n"
-        "/car1 [stat] [reset] - Inizia uno stupendo gioco da macchina!\n"
-        "/car2                - Inizia uno stupendo gioco da macchina!\n"
-        "/subscribe_recipe    - Iscriviti per ricevere automaticamente le ricette del giorno (dal 19/04 al 27/04).\n"
-        "/leggi_storia        - Leggi una storia del folklore islandese.\n"
+        "/start  - Avvia il bot.\n"
+        "/help  - Mostra questo messaggio.\n"
+        "/piano  <num_giorno>  - Visualizza il piano del giorno.\n"
+        "/nanna <num_giorno>  - Visualizza info sulla notte.\n"
+        "/cacca   <num_giorno>  - Visualizza il calendario cacca.\n"
+        "/meteo <città>                - Mostra le previsioni meteo.\n"
+        "/vulcano   - Controlla lo stato vulcanico.\n"
+        "/curiosita - Curiosità cringina di ChatGPT.\n"
+        "/ahah       - Battutina cringina di ChatGPT\n"
+        "/car1 [stat] [reset] - Uno stupendo gioco da macchina!\n"
+        "/car2 [stat]              - Uno stupendo gioco da macchina!\n"
+        "/car3 [stat] [reset] - Uno stupendo gioco da macchina!\n"
+        "/fanta [stat] [reset]- Uno stupendo gioco da macchina!\n"
+        "/storia                     - Leggi una storia del folklore islandese.\n"
     )
     await update.message.reply_text(help_text)
 
@@ -326,8 +326,8 @@ async def car3(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
             # Bottoni per la risposta
             keyboard = [
                 [InlineKeyboardButton("Vero", callback_data="cargame3_vero"),
-                InlineKeyboardButton("Falso", callback_data="cargame3_falso"),
-                ]
+                 InlineKeyboardButton("Falso", callback_data="cargame3_falso"),
+                 ]
             ]
             reply_markup = InlineKeyboardMarkup(keyboard)
             # Invia la domanda e i bottoni
@@ -390,6 +390,94 @@ async def car3_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> N
         await context.bot.send_message(chat_id, reply)
 
 
+async def fanta(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    global PUNTEGGI_STUPIDINI_FANTA, FANTA_DICT, FANTA_USER_CHOSEN, FANTA_EVENT_CHOSEN
+    if len(context.args) > 0:
+        if context.args[0].startswith("stat"):
+            # Mostra statistiche
+            stats_text = "Statistiche del gioco:\n"
+            for player, score_list in PUNTEGGI_STUPIDINI_FANTA.items():
+                score = sum(score_list)
+                stats_text += f"🥇 {player}: {score} punti\n"
+            await update.message.reply_text(stats_text)
+        elif context.args[0] == "reset" and context.args[1] == "all":
+            # Reset tutto
+            for k in PUNTEGGI_STUPIDINI_FANTA.keys():
+                PUNTEGGI_STUPIDINI_FANTA[k] = [0] * len(FANTA_DICT)
+        elif context.args[0] == "reset":
+            # Reset [user] [key]
+            user = context.args[1]
+            try:
+                key = int(context.args[2])
+            except Exception as e:
+                await update.message.reply_text(f"Errore! Se vuoi annullare un evento del FantaIslanda usa la sintassi: \\fanta reset [nome_utente] [numero_evento]\n")
+            PUNTEGGI_STUPIDINI_FANTA[user][key] = 0
+        elif context.args[0] == "show":
+            text = "Ecco tutti i Bonus e i Malus!\n"
+            for item in list(FANTA_DICT.items()):
+                text += item[1][0]
+                text += ' - Punti: ' + str(item[1][1]) + '\n'
+            await update.message.reply_text(text)
+        elif context.args[0] == "add":
+            e = ' '.join(context.args[1:-1])
+            p = int(context.args[-1])
+            FANTA_DICT[len(FANTA_DICT)] = [e, p]
+            text = "Evento '" + str(e) + "' aggiunto con " + str(p) + " punti!"
+            for k in PUNTEGGI_STUPIDINI_FANTA.keys():
+                PUNTEGGI_STUPIDINI_FANTA[k].append(0)
+            await update.message.reply_text(text)
+        else:
+            await update.message.reply_text(f"Non so cosa tu mi stia chiedendo!\n")
+    else:
+        # Scelta 1: Quale persona?
+        keyboard = [
+            [InlineKeyboardButton("AleB", callback_data="fanta1_AleB"),
+             InlineKeyboardButton("AleD", callback_data="fanta1_AleD"),
+             InlineKeyboardButton("Bianca",    callback_data="fanta1_B")
+             ],
+            [InlineKeyboardButton("Dalia",    callback_data="fanta1_D"),
+             InlineKeyboardButton("Filippo",    callback_data="fanta1_F"),
+             InlineKeyboardButton("Marco2",   callback_data="fanta1_MG")
+             ],
+            [InlineKeyboardButton("MR",   callback_data="fanta1_MR"),
+             InlineKeyboardButton("Viola",    callback_data="fanta1_V")
+             ],
+        ]
+        reply_markup = InlineKeyboardMarkup(keyboard)
+        await update.message.reply_text(f"A quale persona vuoi aggiungere un Fanta Bonus o un Fanta Malus?\n", reply_markup=reply_markup)
+        return fanta_1
+        
+
+
+async def fanta_callback1(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    global FANTA_USER_CHOSEN
+    query = update.callback_query
+    await query.answer()
+
+    FANTA_USER_CHOSEN = query.data.split('_')[1]
+
+    # Scelta 2: Quale evento?
+    keyboard = [[InlineKeyboardButton(
+        item[1][0], callback_data="fanta2_" + str(item[0]))] for item in list(FANTA_DICT.items())]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    await query.edit_message_text(f"Quale Fanta Bonus o Fanta Malus vuoi aggiungere a " + FANTA_USER_CHOSEN + "?\n", reply_markup=reply_markup)
+    return fanta_2
+
+
+async def fanta_callback2(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    global FANTA_DICT, FANTA_EVENT_CHOSEN
+    query = update.callback_query
+    await query.answer()
+
+    k = int(query.data.split('_')[1])
+    FANTA_EVENT_CHOSEN = (k, FANTA_DICT[k])
+     # Notifica inserimento
+    PUNTEGGI_STUPIDINI_FANTA[FANTA_USER_CHOSEN][FANTA_EVENT_CHOSEN[0]
+                                                ] = FANTA_EVENT_CHOSEN[1][1]
+    await query.edit_message_text("Fanta Evento '" + str(FANTA_EVENT_CHOSEN[1][0]) + "' aggiunto a " + FANTA_USER_CHOSEN + "!\nPunti evento: " + str(FANTA_EVENT_CHOSEN[1][1]) + "\n", parse_mode='markdown')
+    return ConversationHandler.END
+
+
 async def leggi_storia(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     keyboard = []
     for story_id, story in STORIES.items():
@@ -397,8 +485,6 @@ async def leggi_storia(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
             story["title"], callback_data=f"select_{story_id}_0")])
     reply_markup = InlineKeyboardMarkup(keyboard)
     await update.message.reply_text("Scegli la storia che vuoi ascoltare:", reply_markup=reply_markup)
-
-# Callback per gestire la selezione della storia e la navigazione tra le pagine.
 
 
 async def story_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -501,8 +587,8 @@ def main() -> None:
     application.add_handler(CommandHandler("piano", piano))
     application.add_handler(CommandHandler("nanna", nanna))
     application.add_handler(CommandHandler("cacca", cacca))
-    application.add_handler(CommandHandler("weather", weather))
-    application.add_handler(CommandHandler("volcano", volcano))
+    application.add_handler(CommandHandler("meteo", weather))
+    application.add_handler(CommandHandler("vulcano", volcano))
     application.add_handler(CommandHandler("curiosita", curiosita))
     application.add_handler(CommandHandler("ahah", ahah))
     application.add_handler(CommandHandler("car1", car1))
@@ -514,11 +600,16 @@ def main() -> None:
     application.add_handler(CommandHandler("car3", car3))
     application.add_handler(CallbackQueryHandler(
         car3_callback, pattern=r"^(cargame3_).*"))
-    # subscription recipe of the day
+    # application.add_handler(CommandHandler("fanta", fanta))
+    application.add_handler(ConversationHandler(entry_points=[CommandHandler("fanta", fanta)],
+                            states={
+        fanta_1: [CallbackQueryHandler(fanta_callback1, pattern="^fanta1_")],
+        fanta_2: [CallbackQueryHandler(fanta_callback2, pattern="^fanta2_")],
+    },
+        fallbacks=[CommandHandler("unknown", unknown)]))
     application.add_handler(CommandHandler(
-        "subscribe_recipe", subscribe_recipe))
-
-    application.add_handler(CommandHandler("leggi_storia", leggi_storia))
+        "ricetta", subscribe_recipe))
+    application.add_handler(CommandHandler("storia", leggi_storia))
     application.add_handler(CallbackQueryHandler(
         story_callback, pattern=r"^(select_).*"))
 
