@@ -992,9 +992,9 @@ STORIES = {
             "*L'inganno finale*\nIn un'altra versione, Sæmundur cucì un pezzo di carne nel suo mantello. Quando il Diavolo cercò di afferrarlo, prese solo la carne, permettendo a Sæmundur di fuggire illeso."
         ],
         "images": [
-            os.path.join(THIS_FOLDER, "figures", "story-saemundur1.jpg"),
-            os.path.join(THIS_FOLDER, "figures", "story-saemundur2.jpg"),
-            os.path.join(THIS_FOLDER, "figures", "story-saemundur3.jpg")
+            os.path.join(THIS_FOLDER, "figures", "story-saemundur.png"),
+            os.path.join(THIS_FOLDER, "figures", "story-saemundur.png"),
+            os.path.join(THIS_FOLDER, "figures", "story-saemundur.png")
         ]
     },
     "diacono_myrka": {
@@ -1005,9 +1005,9 @@ STORIES = {
             "*La salvezza*\nGuðrún riuscì a salvarsi afferrando la corda della campana della chiesa, svegliando gli abitanti del villaggio. Il fantasma fuggì, lasciando dietro di sé solo il silenzio della notte."
         ],
         "images": [
-            os.path.join(THIS_FOLDER, "figures", "story-diacono_myrka1.jpg"),
-            os.path.join(THIS_FOLDER, "figures", "story-diacono_myrka2.jpg"),
-            os.path.join(THIS_FOLDER, "figures", "story-diacono_myrka3.jpg")
+            os.path.join(THIS_FOLDER, "figures", "story-diacono_myrka.png"),
+            os.path.join(THIS_FOLDER, "figures", "story-diacono_myrka.png"),
+            os.path.join(THIS_FOLDER, "figures", "story-diacono_myrka.png")
         ]
     },
     "kopakonan": {
@@ -1018,9 +1018,9 @@ STORIES = {
             "*Il ritorno al mare*\nUn giorno, la donna trovò la sua pelle nascosta, la indossò e tornò in mare, lasciando la sua famiglia umana per sempre."
         ],
         "images": [
-            os.path.join(THIS_FOLDER, "figures", "story-kopakonan1.jpg"),
-            os.path.join(THIS_FOLDER, "figures", "story-kopakonan2.jpg"),
-            os.path.join(THIS_FOLDER, "figures", "story-kopakonan3.jpg")
+            os.path.join(THIS_FOLDER, "figures", "story-kopakonan.png"),
+            os.path.join(THIS_FOLDER, "figures", "story-kopakonan.png"),
+            os.path.join(THIS_FOLDER, "figures", "story-kopakonan.png")
         ]
     },
     "alfadrottning": {
@@ -1031,9 +1031,9 @@ STORIES = {
             "*La liberazione*\nFinalmente, un giovane riuscì nell’impresa. La regina, libera, guidò il suo popolo in una danza di ringraziamento tra i fiordi, celebrando la fine della sua prigionia."
         ],
         "images": [
-            os.path.join(THIS_FOLDER, "figures", "story-alfadrottning1.jpg"),
-            os.path.join(THIS_FOLDER, "figures", "story-alfadrottning2.jpg"),
-            os.path.join(THIS_FOLDER, "figures", "story-alfadrottning3.jpg")
+            os.path.join(THIS_FOLDER, "figures", "story-alfadrottning.png"),
+            os.path.join(THIS_FOLDER, "figures", "story-alfadrottning.png"),
+            os.path.join(THIS_FOLDER, "figures", "story-alfadrottning.png")
         ]
     },
     "snotra": {
@@ -1044,9 +1044,9 @@ STORIES = {
             "*La scelta di Jón*\nNonostante la rivelazione, Jón decise di unirsi a Snotra nel suo mondo. Lasciò la vita umana per vivere con lei nel regno nascosto degli elfi, dove trovò saggezza e prosperità."
         ],
         "images": [
-            os.path.join(THIS_FOLDER, "figures", "story-snotra1.jpg"),
-            os.path.join(THIS_FOLDER, "figures", "story-snotra2.jpg"),
-            os.path.join(THIS_FOLDER, "figures", "story-snotra3.jpg")
+            os.path.join(THIS_FOLDER, "figures", "story-snotra.png"),
+            os.path.join(THIS_FOLDER, "figures", "story-snotra.png"),
+            os.path.join(THIS_FOLDER, "figures", "story-snotra.png")
         ]
     },
     "silfrunarstadir": {
@@ -1057,9 +1057,9 @@ STORIES = {
             "*Il custode delle tradizioni*\nTornato a casa, il pastore raccontò la sua avventura, diventando un custode delle antiche tradizioni e un avvertimento vivente contro le creature oscure delle valli nebbiose."
         ],
         "images": [
-            os.path.join(THIS_FOLDER, "figures", "story-silfrunarstadir1.jpg"),
-            os.path.join(THIS_FOLDER, "figures", "story-silfrunarstadir2.jpg"),
-            os.path.join(THIS_FOLDER, "figures", "story-silfrunarstadir3.jpg")
+            os.path.join(THIS_FOLDER, "figures", "story-silfrunarstadir.png"),
+            os.path.join(THIS_FOLDER, "figures", "story-silfrunarstadir.png"),
+            os.path.join(THIS_FOLDER, "figures", "story-silfrunarstadir.png")
         ]
     },
     "harpans_kraft": {
@@ -1070,13 +1070,11 @@ STORIES = {
             "*Il potere della musica*\nDa allora, si crede che la musica abbia il potere di tenere lontani gli spiriti maligni e proteggere gli innamorati, e l'arpa divenne simbolo di amore e salvezza."
         ],
         "images": [
-            os.path.join(THIS_FOLDER, "figures", "story-harpans_kraft1.jpg"),
-            os.path.join(THIS_FOLDER, "figures", "story-harpans_kraft2.jpg"),
-            os.path.join(THIS_FOLDER, "figures", "story-harpans_kraft3.jpg")
+            os.path.join(THIS_FOLDER, "figures", "story-harpans_kraft.png"),
+            os.path.join(THIS_FOLDER, "figures", "story-harpans_kraft.png"),
+            os.path.join(THIS_FOLDER, "figures", "story-harpans_kraft.png")
         ]
     }
-
-
 
     # Altre storie possono essere aggiunte con una struttura simile, ad es. "kopakonan": { ... }
 }
