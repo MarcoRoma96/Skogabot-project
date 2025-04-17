@@ -800,6 +800,54 @@ STORIES = {
             os.path.join(THIS_FOLDER, "figures", "story-selkie-pag3.png"),
             os.path.join(THIS_FOLDER, "figures", "story-selkie-pag4.png")
         ]
+    },
+    "huldufolk":{
+        "title": "La Leggenda del Popolo Nascosto (Huldufólk)",
+        "pages": [
+            "In Islanda, si narra di esseri misteriosi chiamati Huldufólk, ovvero 'popolo nascosto'. Queste creature, simili agli elfi, vivono in armonia con la natura, nascoste agli occhi umani. Abitano tra le rocce, le colline e i paesaggi incontaminati dell'isola, conducendo una vita parallela alla nostra. Si dice che siano visibili solo a pochi fortunati o in momenti particolari, come durante il solstizio d'estate. ",
+            "Il popolo islandese ha sempre mostrato grande rispetto per gli Huldufólk. Durante la costruzione di strade o edifici, è comune modificare i progetti per evitare di disturbare le loro presunte dimore. Ci sono racconti di macchinari che si guastano inspiegabilmente o di incidenti evitati quando si presta attenzione a non invadere i loro territori. ",
+            "Molti islandesi affermano di aver avuto incontri con il popolo nascosto. Si racconta di bambini che giocano con amici invisibili o di viaggiatori che ricevono aiuto misterioso durante tempeste improvvise. Queste storie, tramandate di generazione in generazione, rafforzano la credenza nella presenza degli Huldufólk e nell'importanza di vivere in armonia con la natura. ",
+            "Secondo un racconto, un giorno, un contadino di nome Jón stava lavorando nei campi quando vide una bellissima donna danzare tra le rocce. Era una huldufólk. Jón rimase incantato dalla sua bellezza e decise di seguirla.",
+            "La donna lo portò in un mondo incantato, dove la musica e la danza regnavano sovrane. Jón trascorse giorni meravigliosi con lei, dimenticando il suo lavoro e la sua vita quotidiana.",
+            "Quando finalmente tornò a casa, scoprì che erano passati anni. La sua fattoria era in rovina e la sua famiglia lo aveva dato per disperso. Da quel giorno, Jón raccontò la sua storia a chiunque volesse ascoltarla, avvertendo tutti di non sottovalutare il potere del popolo nascosto."
+        ],
+        "images": [
+            os.path.join(THIS_FOLDER, "figures", "story-huldufolk.jpg"),
+            os.path.join(THIS_FOLDER, "figures", "story-huldufolk.jpg"),
+            os.path.join(THIS_FOLDER, "figures", "story-huldufolk.jpg"),
+            os.path.join(THIS_FOLDER, "figures", "story-huldufolk.jpg"),
+            os.path.join(THIS_FOLDER, "figures", "story-huldufolk.jpg"),
+            os.path.join(THIS_FOLDER, "figures", "story-huldufolk.jpg")
+        ]
+    },
+    "draugr": {
+    "title": "Draugr – Il Non-Morto Vendicativo",
+    "pages": [
+        "*Il guardiano della tomba* \nNelle gelide terre d'Islanda, si racconta di creature non morte chiamate Draugar. Questi esseri, una volta uomini, si rifiutano di trovare pace nella morte. Restano nei loro tumuli, vigilando sui tesori sepolti e tormentando chi osa avvicinarsi. Non sono semplici spiriti: i Draugar possiedono corpi fisici, spesso gonfi e maleodoranti, con una forza sovrumana e la capacità di crescere di dimensioni a piacimento. ",
+        "*Poteri oscuri* \nI Draugar non si limitano a custodire le loro tombe. Sono noti per la loro abilità nel cambiare forma, diventando animali o nebbia, e per la loro capacità di entrare nei sogni dei vivi, portando follia e morte. Alcuni racconti narrano di Draugar che escono dalle loro tombe per attaccare i vivi, spinti da invidia o desiderio di vendetta. La loro presenza è spesso annunciata da un odore nauseabondo e da un senso opprimente di terrore.",
+        "*Protezioni e rituali* \nPer proteggersi dai Draugar, gli islandesi adottavano vari rituali. Si credeva che seppellire i morti con le mani legate o con oggetti sacri potesse impedire loro di tornare. Alcuni tumuli venivano circondati da pietre magiche o rune protettive. Inoltre, era pratica comune seppellire i defunti lontano dalle abitazioni, per evitare che i Draugar potessero tornare a tormentare i vivi. "
+    ],
+        "images": [
+            os.path.join(THIS_FOLDER, "figures", "story-draugr.jpg"),
+            os.path.join(THIS_FOLDER, "figures", "story-draugr.jpg"),
+            os.path.join(THIS_FOLDER, "figures", "story-draugr.jpg")
+        ]
+
+    },
+    "nykur": {
+        "tilte": "Nykur – Il Cavallo d’Acqua",
+        "pages": [
+            "*L’incontro ingannevole* \nIn Islanda, tra le nebbie che avvolgono laghi e fiumi, si cela una creatura misteriosa: il Nykur, un cavallo d’acqua dalle sembianze affascinanti. Apparentemente simile a un normale cavallo grigio, il Nykur si distingue per un dettaglio inquietante: i suoi zoccoli sono rivolti all’indietro. Questo essere leggendario attira i viandanti ignari, offrendo loro un passaggio attraverso acque pericolose. Ma chiunque salga sulla sua groppa si ritrova incollato al suo dorso, incapace di scendere. Il Nykur allora si lancia nelle profondità, trascinando la sua vittima verso una fine tragica. ",
+            "*Le metamorfosi del Nykur* \nIl Nykur non è solo un cavallo d’acqua; è una creatura mutaforma. Può assumere l’aspetto di un giovane affascinante per sedurre le sue vittime o trasformarsi in un enorme salmone o in un toro selvaggio. Tuttavia, mantiene sempre un elemento distintivo: gli zoccoli invertiti. In alcune leggende, il Nykur appare come una creatura mostruosa con dodici zampe o come un essere massiccio con la pelle pendente. ",
+            "*Difendersi dal Nykur* \nFortunatamente, esistono modi per proteggersi dal Nykur. Se si sospetta che un cavallo sia in realtà un Nykur, pronunciare ad alta voce il suo nome lo costringerà a liberare la sua vittima e a fuggire nelle acque. Inoltre, il Nykur teme il fuoco e l’acqua santa. In alcune storie, si racconta che una giovane ragazza, trascinata nel sonno dal Nykur, riuscì a salvarsi pronunciando il suo nome, costringendolo a ritirarsi. "
+        ],
+        "images": [
+            os.path.join(THIS_FOLDER, "figures", "story-nykur1.jpg"),
+            os.path.join(THIS_FOLDER, "figures", "story-nykur2.jpg"),
+            os.path.join(THIS_FOLDER, "figures", "story-nykur2.jpg")
+        ]
     }
+
+
     # Altre storie possono essere aggiunte con una struttura simile, ad es. "kopakonan": { ... }
 }
