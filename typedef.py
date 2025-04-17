@@ -863,7 +863,196 @@ STORIES = {
         os.path.join(THIS_FOLDER, "figures", "story-strega.jpg"),
         os.path.join(THIS_FOLDER, "figures", "story-strega.jpg")
     ]
-}
+},
+    "bukolla": {
+        "title": "Búkolla – La Mucca Magica",
+        "pages": [
+            "*Il ragazzo e la mucca scomparsa*\nIn un remoto angolo d'Islanda, vivevano un uomo e una donna con il loro unico figlio. Nonostante la presenza del ragazzo, i genitori non gli mostravano affetto. La loro unica fonte di sostentamento era una mucca di nome Búkolla. Un giorno, Búkolla scomparve misteriosamente. I genitori, infuriati, ordinarono al figlio di trovarla e di non tornare senza di lei.",
+            "*La ricerca di Búkolla*\nIl ragazzo partì, portando con sé solo del cibo e un paio di scarpe nuove. Durante il cammino, si fermava e chiamava: 'Muggisci ora, mia Búkolla, se sei viva!' Dopo il terzo richiamo, udì il muggito provenire da sotto i suoi piedi. Scoprì una grotta dove Búkolla era incatenata. La liberò e insieme iniziarono il viaggio di ritorno.",
+            "*L'inseguimento dei troll*\nMentre tornavano, una gigantesca trolla e sua figlia iniziarono a inseguirli. Spaventato, il ragazzo chiese a Búkolla cosa fare. Lei gli disse di prendere un pelo dalla sua coda e posarlo a terra, pronunciando: 'Diventa un fiume così largo che solo un uccello possa attraversarlo.' Immediatamente, un vasto fiume si formò tra loro e le troll. Tuttavia, le troll non si arresero. La più giovane andò a prendere il toro del padre, che bevve tutto il fiume.",
+            "*Il muro di fuoco*\nIl ragazzo, ancora in fuga, chiese nuovamente consiglio a Búkolla. Lei gli disse di prendere un altro pelo e posarlo a terra, dicendo: 'Diventa una fiamma così alta che solo un uccello possa volare sopra di essa.' Un muro di fuoco si eresse, ma le troll usarono il toro per spegnerlo, facendogli urinare sopra.",
+            "*La montagna e la salvezza*\nPer l'ultima volta, Búkolla consigliò al ragazzo di prendere un pelo e dire: 'Diventa una montagna così alta che solo un uccello possa sorvolarla.' Una montagna imponente si formò. La trolla maggiore, determinata, iniziò a scavare un tunnel con un trapano magico. Tuttavia, nel tentativo di attraversarlo, rimase incastrata e si trasformò in pietra. Il ragazzo e Búkolla tornarono a casa sani e salvi, accolti con gioia dai genitori."
+        ],
+        "images": [
+            os.path.join(THIS_FOLDER, "figures", "story-bukolla-pag1.png"),
+            os.path.join(THIS_FOLDER, "figures", "story-bukolla-pag2.png"),
+            os.path.join(THIS_FOLDER, "figures", "story-bukolla-pag3.png"),
+            os.path.join(THIS_FOLDER, "figures", "story-bukolla-pag4.png"),
+            os.path.join(THIS_FOLDER, "figures", "story-bukolla-pag5.png")
+        ]
+    },
+    "gryla": {
+        "title": "Grýla – L’Ogressa del Natale",
+        "pages": [
+            "*La leggenda di Grýla*\nGrýla è una figura temibile del folklore islandese, descritta come una gigantesca trolla con un insaziabile appetito per i bambini disobbedienti. Vive in una caverna nelle montagne islandesi e, durante il periodo natalizio, scende nei villaggi per catturare i piccoli che si sono comportati male, portandoli nella sua tana per cucinarli in un enorme calderone. :contentReference[oaicite:1]{index=1}",
+            "*La famiglia di Grýla*\nGrýla è sposata con Leppalúði, un troll pigro che raramente lascia la caverna. Insieme hanno tredici figli noti come i Jólasveinar o 'Yule Lads'. Questi tredici troll compaiono uno dopo l'altro nei tredici giorni precedenti al Natale, ognuno con un comportamento particolare, come rubare cibo o spiare attraverso le finestre. :contentReference[oaicite:2]{index=2}",
+            "*Il Jólakötturinn – Il Gatto di Natale*\nOltre ai suoi figli, Grýla possiede anche un enorme gatto nero chiamato Jólakötturinn. Questo felino mostruoso si aggira durante il periodo natalizio e divora chiunque non abbia ricevuto nuovi vestiti per Natale, punendo così i pigri che non hanno lavorato abbastanza durante l'anno. :contentReference[oaicite:3]{index=3}",
+            "*L'evoluzione della leggenda*\nOriginariamente, Grýla non era associata al Natale. Le prime menzioni risalgono al XIII secolo, dove era descritta come una creatura che mendicava cibo dai genitori, minacciando di portare via i loro figli se non le veniva dato nulla. Solo successivamente, nel XVII secolo, la sua figura fu legata alle festività natalizie, diventando la madre dei Jólasveinar. :contentReference[oaicite:4]{index=4}",
+            "*Grýla oggi*\nNonostante le sue origini spaventose, Grýla è ancora una figura popolare in Islanda. Viene spesso rappresentata in racconti, canzoni e decorazioni natalizie, servendo come monito per i bambini affinché si comportino bene durante l'anno. La sua leggenda continua a essere una parte integrante delle tradizioni natalizie islandesi."
+        ],
+        "images": [
+            os.path.join(THIS_FOLDER, "figures", "story-gryla1.png"),
+            os.path.join(THIS_FOLDER, "figures", "story-gryla2.png"),
+            os.path.join(THIS_FOLDER, "figures", "story-gryla3.png"),
+            os.path.join(THIS_FOLDER, "figures", "story-gryla4.png"),
+            os.path.join(THIS_FOLDER, "figures", "story-gryla5.png")
+        ]
+    },
+    "dimmuborgir": {
+        "title": "Dimmuborgir – La Fortezza Oscura",
+        "pages": [
+            "*Le origini di Dimmuborgir*\nCirca 2.300 anni fa, un'eruzione vulcanica nella regione del lago Mývatn diede origine a un vasto campo di lava. Il flusso lavico incontrò un lago, causando l'ebollizione dell'acqua e la formazione di colonne di vapore che modellarono la lava in strutture uniche. Il risultato fu Dimmuborgir, un labirinto di formazioni laviche che ricordano castelli e torri, da cui il nome 'Fortezza Oscura'.",
+            "*Dimora di creature leggendarie*\nSecondo il folklore islandese, Dimmuborgir è abitata da esseri soprannaturali come elfi e troll. Tra questi, la più famosa è Grýla, una trolla che, insieme al marito Leppalúði, vive nelle caverne di Dimmuborgir. La coppia ha tredici figli noti come i Jólasveinar o 'Yule Lads', che durante il periodo natalizio scendono nei villaggi per fare scherzi ai bambini.",
+            "*Portale verso l'inferno*\nIn alcune leggende cristiane nordiche, Dimmuborgir è considerata il luogo dove Satana cadde sulla Terra dopo essere stato espulso dal Paradiso. Si dice che da lì abbia creato le catacombe dell'inferno, rendendo Dimmuborgir un punto di connessione tra il nostro mondo e gli inferi.",
+            "*La Kirkjan – La Chiesa di Lava*\nAll'interno di Dimmuborgir si trova una formazione chiamata 'Kirkjan' o 'La Chiesa', una grotta naturale con archi che ricordano le navate di una cattedrale. Questo luogo suggestivo è talvolta utilizzato per concerti e cerimonie, aggiungendo un tocco mistico alla già affascinante atmosfera di Dimmuborgir.",
+            "*Dimmuborgir oggi*\nOggi, Dimmuborgir è una popolare attrazione turistica, parte del percorso del 'Diamond Circle' nel nord dell'Islanda. I visitatori possono esplorare i sentieri che si snodano tra le formazioni laviche, immergendosi nella bellezza naturale e nelle leggende che permeano questo luogo unico."
+        ],
+        "images": [
+            os.path.join(THIS_FOLDER, "figures", "story-dimmuborgir1.jpg"),
+            os.path.join(THIS_FOLDER, "figures", "story-dimmuborgir2.jpg"),
+            os.path.join(THIS_FOLDER, "figures", "story-dimmuborgir3.jpg"),
+            os.path.join(THIS_FOLDER, "figures", "story-dimmuborgir4.jpg"),
+            os.path.join(THIS_FOLDER, "figures", "story-dimmuborgir5.jpg")
+        ]
+    },
+    "lagarfljot": {
+        "title": "Lagarfljót – Il Serpente del Lago",
+        "pages": [
+            "*La leggenda del Lagarfljótsormur*\nNel folklore islandese, il Lagarfljótsormur è un mostro lacustre che si dice abiti nel lago Lagarfljót, situato vicino alla città di Egilsstaðir. La leggenda risale almeno al 1345, quando fu registrata per la prima volta negli annali islandesi. Secondo la storia, una giovane ragazza ricevette un anello d'oro da sua madre, che le consigliò di posizionarlo sotto un piccolo verme (un tipo di mini-drago) in una cassa, credendo che ciò avrebbe fatto crescere sia il verme che l'oro. Tuttavia, il verme crebbe rapidamente, diventando così grande da rompere la cassa. Spaventata, la ragazza gettò il verme e l'anello nel lago, dove la creatura continuò a crescere, diventando il mostro leggendario del lago. :contentReference[oaicite:1]{index=1}",
+            "*Avvistamenti nel corso dei secoli*\nNel 1589, si dice che il serpente abbia sollevato il suo dorso così in alto sopra il lago che una nave a vela piena avrebbe potuto passarci sotto. Quando la creatura si tuffò nuovamente nell'acqua, l'impatto fu così massiccio che la terra tremò. Nel XVII secolo, ci furono 14 avvistamenti del serpente. :contentReference[oaicite:2]{index=2}",
+            "*Avvistamenti moderni*\nNel 1963, operai che costruivano una centrale idroelettrica lungo il fiume che alimenta il Lagarfljót riferirono di aver visto una grande figura simile a un verme muoversi controcorrente. Questo avvistamento è spesso citato perché le condizioni rendevano meno probabili le illusioni ottiche. :contentReference[oaicite:3]{index=3}",
+            "*Il video del 2012*\nNel febbraio 2012, un agricoltore di nome Hjörtur Kjerúlf filmò un fenomeno molto strano nel lago Lagarfljót: una forma serpentina che sembrava nuotare nelle acque ghiacciate. Il video attirò l'attenzione internazionale e nel 2014 una commissione locale dichiarò che non c'era motivo di dubitare dell'esistenza della creatura. :contentReference[oaicite:4]{index=4}",
+            "*Il Lagarfljótsormur oggi*\nOggi, il Lagarfljótsormur è una parte affascinante del folklore islandese. Il lago Lagarfljót è una popolare destinazione turistica, e la leggenda del mostro continua a incuriosire sia i locali che i visitatori. :contentReference[oaicite:5]{index=5}"
+        ],
+        "images": [
+            os.path.join(THIS_FOLDER, "figures", "story-lagarfljot1.jpg"),
+            os.path.join(THIS_FOLDER, "figures", "story-lagarfljot2.jpg"),
+            os.path.join(THIS_FOLDER, "figures", "story-lagarfljot3.jpg"),
+            os.path.join(THIS_FOLDER, "figures", "story-lagarfljot4.jpg"),
+            os.path.join(THIS_FOLDER, "figures", "story-lagarfljot5.jpg")
+        ]
+    },
+    "draugur": {
+        "title": "Draugur – Il Fantasma dei Mari",
+        "pages": [
+            "*Il ritorno degli inquieti*\nNel folklore islandese, il Draugur è un non-morto che ritorna dalla tomba per tormentare i vivi. A differenza dei fantasmi incorporei, i Draugar possiedono un corpo fisico e conservano ricordi e abilità della vita passata. Spesso sono associati a persone malvagie o avide, che dopo la morte non trovano pace e tornano per vendicarsi o proteggere i loro beni sepolti. :contentReference[oaicite:1]{index=1}",
+            "*Poteri e caratteristiche*\nI Draugar sono noti per la loro forza sovrumana e la capacità di aumentare le proprie dimensioni a volontà. Emanano un odore nauseabondo di decomposizione e possono uccidere i vivi in vari modi: schiacciandoli, divorandoli o inducendoli alla follia. Alcuni Draugar possiedono poteri magici, come la capacità di cambiare forma, controllare il tempo atmosferico e predire il futuro. :contentReference[oaicite:2]{index=2}",
+            "*Il Draugur dei mari*\nNella tradizione norvegese, il termine Draugur è spesso associato ai fantasmi di marinai annegati, noti come 'Draugr del mare'. Queste entità appaiono su imbarcazioni fantasma o lungo le coste, annunciando tempeste imminenti o la morte di qualcuno. Si dice che indossino abiti da pescatore e abbiano la testa avvolta in alghe. :contentReference[oaicite:3]{index=3}",
+            "*Episodi nelle saghe*\nLe saghe islandesi raccontano numerosi incontri con i Draugar. Nell'Eyrbyggja saga, ad esempio, un pastore viene ucciso da un Draugur e ritorna come non-morto per infestare la fattoria. In un altro racconto, il protagonista Grettir Ásmundarson combatte contro il Draugur Glámr, che lo maledice prima di essere distrutto. :contentReference[oaicite:4]{index=4}",
+            "*Affrontare un Draugur*\nPer sconfiggere un Draugur, spesso non bastano le armi comuni. Gli eroi delle saghe ricorrono a rituali specifici: bruciare il corpo del non-morto, seppellirlo in luoghi remoti o costruire barriere intorno alla tomba. In alcuni casi, l'intervento di figure religiose o l'uso di oggetti sacri è necessario per placare l'anima inquieta. :contentReference[oaicite:5]{index=5}"
+        ],
+        "images": [
+            os.path.join(THIS_FOLDER, "figures", "Theodor_Kittelsen_-_Sjotrollet_1887_The_Sea_Troll.jpg"),
+            os.path.join(THIS_FOLDER, "figures", "story-draugur2.jpg"),
+            os.path.join(THIS_FOLDER, "figures", "story-draugur3.jpg"),
+            os.path.join(THIS_FOLDER, "figures", "story-draugur4.jpg"),
+            os.path.join(THIS_FOLDER, "figures", "story-draugur5.jpg")
+        ]
+    },
+    "marman": {
+        "title": "L’Uomo Marinaio – Il Marman",
+        "pages": [
+            "*L’incontro con il Marman*\nUn pescatore islandese cattura una creatura marina metà uomo e metà pesce, nota come marman. La creatura, parlando con voce umana, implora il pescatore di essere liberata, promettendo in cambio saggezza e previsioni sul futuro.",
+            "*La lezione di umiltà*\nIl marman rivela al pescatore eventi futuri e lo ammonisce per aver maltrattato il suo cane. Gli insegna che ogni creatura, grande o piccola, merita rispetto, e che l’arroganza può portare alla rovina.",
+            "*Il rilascio e la trasformazione*\nCommosso dalle parole del marman, il pescatore lo libera. Da quel giorno, tratta tutte le creature del mare con rispetto, diventando un uomo più saggio e umile."
+        ],
+        "images": [
+            os.path.join(THIS_FOLDER, "figures", "story-marman1.jpg"),
+            os.path.join(THIS_FOLDER, "figures", "story-marman2.jpg"),
+            os.path.join(THIS_FOLDER, "figures", "story-marman3.jpg")
+        ]
+    },
+    "saemundur": {
+        "title": "Sæmundur il Saggio e il Diavolo",
+        "pages": [
+            "*Il patto oscuro*\nSæmundur Sigfússon, noto come 'il Saggio', desiderava apprendere le arti magiche. Si recò in Germania per studiare alla 'Scuola Nera', dove fece un patto con il Diavolo per ottenere conoscenze proibite.",
+            "*Il ritorno in Islanda*\nDopo anni di studio, Sæmundur chiese al Diavolo di riportarlo in Islanda. Il Diavolo si trasformò in una foca per trasportarlo, ma Sæmundur lo colpì con una Bibbia appena giunti a riva, rompendo il patto e liberandosi dalla sua influenza.",
+            "*L'inganno finale*\nIn un'altra versione, Sæmundur cucì un pezzo di carne nel suo mantello. Quando il Diavolo cercò di afferrarlo, prese solo la carne, permettendo a Sæmundur di fuggire illeso."
+        ],
+        "images": [
+            os.path.join(THIS_FOLDER, "figures", "story-saemundur1.jpg"),
+            os.path.join(THIS_FOLDER, "figures", "story-saemundur2.jpg"),
+            os.path.join(THIS_FOLDER, "figures", "story-saemundur3.jpg")
+        ]
+    },
+    "diacono_myrka": {
+        "title": "Djákninn á Myrká – Il Diacono di Myrká",
+        "pages": [
+            "*La promessa infranta*\nIl diacono di Myrká promise a Guðrún di prenderla a Natale, ma morì annegato nel fiume Hörgá prima di mantenere la promessa.",
+            "*Il ritorno spettrale*\nLa notte di Natale, Guðrún sentì bussare alla porta. Era il diacono, con la testa fasciata, venuto a prenderla. Durante il tragitto, si rese conto che era uno spettro intenzionato a portarla nella tomba.",
+            "*La salvezza*\nGuðrún riuscì a salvarsi afferrando la corda della campana della chiesa, svegliando gli abitanti del villaggio. Il fantasma fuggì, lasciando dietro di sé solo il silenzio della notte."
+        ],
+        "images": [
+            os.path.join(THIS_FOLDER, "figures", "story-diacono_myrka1.jpg"),
+            os.path.join(THIS_FOLDER, "figures", "story-diacono_myrka2.jpg"),
+            os.path.join(THIS_FOLDER, "figures", "story-diacono_myrka3.jpg")
+        ]
+    },
+    "kopakonan": {
+        "title": "Kópakonan – La Donna delle Foche",
+        "pages": [
+            "*La notte delle foche*\nNelle Fær Øer, si crede che le foche siano esseri umani che, una volta l’anno, nella notte sacra, tornano sulla terra, si spogliano della pelle di foca e danzano come esseri umani fino all’alba.",
+            "*Il furto della pelle*\nUn uomo, vedendo una di queste donne, rubò la sua pelle di foca, impedendole di tornare in mare. La costrinse a sposarlo e vissero insieme per anni, avendo figli.",
+            "*Il ritorno al mare*\nUn giorno, la donna trovò la sua pelle nascosta, la indossò e tornò in mare, lasciando la sua famiglia umana per sempre."
+        ],
+        "images": [
+            os.path.join(THIS_FOLDER, "figures", "story-kopakonan1.jpg"),
+            os.path.join(THIS_FOLDER, "figures", "story-kopakonan2.jpg"),
+            os.path.join(THIS_FOLDER, "figures", "story-kopakonan3.jpg")
+        ]
+    },
+    "alfadrottning": {
+        "title": "Álfadrottning í Álögum – La Regina degli Elfi in Maledizione",
+        "pages": [
+            "*La maledizione*\nUna regina degli elfi fu colpita da un incantesimo che le impediva di trovare pace. Costretta a vagare tra i mondi, cercava un modo per spezzare la maledizione.",
+            "*L’attesa del salvatore*\nLa leggenda narra che solo un mortale puro di cuore, durante una notte sacra, poteva liberarla. Molti tentarono, ma fallirono.",
+            "*La liberazione*\nFinalmente, un giovane riuscì nell’impresa. La regina, libera, guidò il suo popolo in una danza di ringraziamento tra i fiordi, celebrando la fine della sua prigionia."
+        ],
+        "images": [
+            os.path.join(THIS_FOLDER, "figures", "story-alfadrottning1.jpg"),
+            os.path.join(THIS_FOLDER, "figures", "story-alfadrottning2.jpg"),
+            os.path.join(THIS_FOLDER, "figures", "story-alfadrottning3.jpg")
+        ]
+    },
+    "snotra": {
+        "title": "Snotra Álfkona – La Saggia Donna Elfica",
+        "pages": [
+            "*L'incontro misterioso*\nIn una notte d'inverno, Jón, un giovane vedovo di Nes nel Borgarfjörður, incontrò una donna di straordinaria bellezza che raccoglieva fieno nei campi. Si chiamava Snotra, e nessuno conosceva le sue origini. Ogni vigilia di Natale, Snotra scompariva misteriosamente, per poi riapparire la notte di Natale.",
+            "*Il segreto rivelato*\nJón, incuriosito, decise di seguirla durante una delle sue sparizioni. La vide entrare in una collina e scomparire. Scoprì così che Snotra era un'álfkona, una donna elfica, legata al mondo degli umani da un destino misterioso.",
+            "*La scelta di Jón*\nNonostante la rivelazione, Jón decise di unirsi a Snotra nel suo mondo. Lasciò la vita umana per vivere con lei nel regno nascosto degli elfi, dove trovò saggezza e prosperità."
+        ],
+        "images": [
+            os.path.join(THIS_FOLDER, "figures", "story-snotra1.jpg"),
+            os.path.join(THIS_FOLDER, "figures", "story-snotra2.jpg"),
+            os.path.join(THIS_FOLDER, "figures", "story-snotra3.jpg")
+        ]
+    },
+    "silfrunarstadir": {
+        "title": "Il Pastore di Silfrúnarstaðir",
+        "pages": [
+            "*La nebbia ingannevole*\nUn pastore di Silfrúnarstaðir si perse in una valle avvolta dalla nebbia. Lì incontrò dei troll che cercarono di ingannarlo, offrendogli cibo e bevande per farlo restare con loro.",
+            "*La fuga astuta*\nIl pastore, sospettando un inganno, gettò dietro di sé un bastone che si trasformò in un fitto bosco, impedendo ai troll di seguirlo. Riuscì così a fuggire e tornare al villaggio.",
+            "*Il custode delle tradizioni*\nTornato a casa, il pastore raccontò la sua avventura, diventando un custode delle antiche tradizioni e un avvertimento vivente contro le creature oscure delle valli nebbiose."
+        ],
+        "images": [
+            os.path.join(THIS_FOLDER, "figures", "story-silfrunarstadir1.jpg"),
+            os.path.join(THIS_FOLDER, "figures", "story-silfrunarstadir2.jpg"),
+            os.path.join(THIS_FOLDER, "figures", "story-silfrunarstadir3.jpg")
+        ]
+    },
+    "harpans_kraft": {
+        "title": "Harpans Kraft – La Forza dell’Arpa",
+        "pages": [
+            "*Il rapimento*\nDurante una festa di nozze, una giovane sposa fu rapita da un nøkk, uno spirito acquatico, e trascinata nel fiume. Il marito, disperato, afferrò la sua arpa e iniziò a suonare.",
+            "*La melodia salvifica*\nLa musica dell'arpa era così potente e commovente che il nøkk fu costretto a risalire dalle profondità del fiume, restituendo la sposa al marito.",
+            "*Il potere della musica*\nDa allora, si crede che la musica abbia il potere di tenere lontani gli spiriti maligni e proteggere gli innamorati, e l'arpa divenne simbolo di amore e salvezza."
+        ],
+        "images": [
+            os.path.join(THIS_FOLDER, "figures", "story-harpans_kraft1.jpg"),
+            os.path.join(THIS_FOLDER, "figures", "story-harpans_kraft2.jpg"),
+            os.path.join(THIS_FOLDER, "figures", "story-harpans_kraft3.jpg")
+        ]
+    }
 
 
 
