@@ -402,7 +402,7 @@ async def car3_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> N
 
 
 async def fanta(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    global PUNTEGGI_STUPIDINI_FANTA, FANTA_DICT, FANTA_USER_CHOSEN, FANTA_EVENT_CHOSEN
+    global PUNTEGGI_STUPIDINI_FANTA, FANTA_DICT_BONUS, FANTA_DICT_MALUS, FANTA_USER_CHOSEN, FANTA_EVENT_CHOSEN
     if len(context.args) > 0:
         if context.args[0].startswith("stat"):
             # Mostra statistiche
@@ -417,7 +417,7 @@ async def fanta(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
             elif context.args[1] == "all":
                 # Reset tutto
                 for k in PUNTEGGI_STUPIDINI_FANTA.keys():
-                    PUNTEGGI_STUPIDINI_FANTA[k] = [0] * len(FANTA_DICT)
+                    PUNTEGGI_STUPIDINI_FANTA[k] = [0] * (100 + len(FANTA_DICT_MALUS))
             else:
                 # Reset [user] [key]
                 user = context.args[1]
@@ -429,17 +429,38 @@ async def fanta(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
                     await update.message.reply_text(f"Errore! Se vuoi annullare un evento del FantaIslanda usa la sintassi: /fanta reset [nome_utente] [numero_evento]\n")
         elif context.args[0] == "show":
             text = "Ecco tutti i Bonus e i Malus!\n"
-            for item in list(FANTA_DICT.items()):
-                text += str(item[0]) + ": '" + item[1][0] + "'"
+            text += "\n------ Bonus ------\n"
+            for item in list(FANTA_DICT_BONUS.items()):
+                text += str(item[0]) + ": " + item[1][0]
+                text += ' - Punti: ' + str(item[1][1]) + '\n'
+            text += "\n------ Malus ------\n"
+            for item in list(FANTA_DICT_MALUS.items()):
+                text += str(item[0]) + ": " + item[1][0]
                 text += ' - Punti: ' + str(item[1][1]) + '\n'
             await update.message.reply_text(text)
         elif context.args[0] == "add":
             e = ' '.join(context.args[1:-1])
             p = int(context.args[-1])
-            FANTA_DICT[max(FANTA_DICT.keys()) + 1] = [e, p]
-            text = "Evento '" + str(e) + "' aggiunto con " + str(p) + " punti!\n"
-            for k in PUNTEGGI_STUPIDINI_FANTA.keys():
-                PUNTEGGI_STUPIDINI_FANTA[k].append(0)
+            if p > 0:
+                for i in range(100):
+                    try:
+                        item = FANTA_DICT_BONUS[i]
+                    except KeyError:
+                        FANTA_DICT_BONUS[i] = [e, p]
+                        break
+                # FANTA_DICT_BONUS[max(FANTA_DICT_BONUS.keys()) + 1] = [e, p]
+                text = "Bonus '" + str(e) + "' aggiunto con " + str(p) + " punti!\n"
+            else:
+                for i in range(100, 200):
+                    try:
+                        item = FANTA_DICT_MALUS[i]
+                    except KeyError:
+                        FANTA_DICT_MALUS[i] = [e, p]
+                        break
+                # FANTA_DICT_MALUS[max(FANTA_DICT_MALUS.keys()) + 1] = [e, p]
+                text = "Malus '" + str(e) + "' aggiunto con " + str(p) + " punti!\n"
+                for k in PUNTEGGI_STUPIDINI_FANTA.keys():
+                    PUNTEGGI_STUPIDINI_FANTA[k].append(0)
             await update.message.reply_text(text)
         elif context.args[0] == "del":
             if len(context.args) == 1:
@@ -447,16 +468,25 @@ async def fanta(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
             else:
                 e = int(context.args[1])
                 try:
-                    FANTA_DICT.pop(e)
+                    if e < 100:
+                        FANTA_DICT_BONUS.pop(e)
+                    else:
+                        FANTA_DICT_MALUS.pop(e)
                 except Exception as e:
                     await update.message.reply_text("Errore! Non riesco a cancellare l'evento " + str(e) + "\n")
                 # Reset punteggi giocatori: se l'evento è tolto, i punti dell'evento sono cancellati
                 for k in PUNTEGGI_STUPIDINI_FANTA.keys():
                     PUNTEGGI_STUPIDINI_FANTA[k][e] = 0
+                # Slittamento tutti gli altri eventi indietro di 1, a partire dall'evento tolto
+                # for item in FANTA_DICT_BONUS.items():
+                #     if item[0] > e:
+                #         FANTA_DICT_BONUS[item[0]-1] = [item[1][0], int(item[1][1])]
+                # for item in FANTA_DICT_MALUS.items():
+                #     if item[0] > e:
+                #         FANTA_DICT_MALUS[item[0]-1] = [item[1][0], int(item[1][1])]
+                # for item in PUNTEGGI_STUPIDINI_FANTA.keys():
+                #     PUNTEGGI_STUPIDINI_FANTA[item] = PUNTEGGI_STUPIDINI_FANTA[item][:e]+PUNTEGGI_STUPIDINI_FANTA[item][e-1:]
                 await update.message.reply_text("Evento " + str(e) + " cancellato!\n")
-                
-
-
         else:
             await update.message.reply_text(f"Non so cosa tu mi stia chiedendo!\n")
     else:
@@ -488,7 +518,7 @@ async def fanta_callback1(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
 
     # Scelta 2: Quale evento?
     keyboard = [[InlineKeyboardButton(
-        item[1][0], callback_data="fanta2_" + str(item[0]))] for item in list(FANTA_DICT.items())]
+        item[1][0], callback_data="fanta2_" + str(item[0]))] for item in (list(FANTA_DICT_BONUS.items())+list(FANTA_DICT_MALUS.items()))]
     reply_markup = InlineKeyboardMarkup(keyboard)
     await query.edit_message_text(f"Quale Fanta Bonus o Fanta Malus vuoi aggiungere a " + FANTA_USER_CHOSEN + "?\n", reply_markup=reply_markup)
     return fanta_2
@@ -500,7 +530,10 @@ async def fanta_callback2(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
     await query.answer()
 
     k = int(query.data.split('_')[1])
-    FANTA_EVENT_CHOSEN = (k, FANTA_DICT[k])
+    if k < 100:
+        FANTA_EVENT_CHOSEN = (k, FANTA_DICT_BONUS[k])
+    else:
+        FANTA_EVENT_CHOSEN = (k, FANTA_DICT_MALUS[k])
     # Notifica inserimento
     PUNTEGGI_STUPIDINI_FANTA[FANTA_USER_CHOSEN][FANTA_EVENT_CHOSEN[0]
                                                 ] = FANTA_EVENT_CHOSEN[1][1]

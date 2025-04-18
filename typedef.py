@@ -545,24 +545,97 @@ PUNTEGGI_STUPIDINI3 = {
 }
 USER_SEGRETO3 = -1
 
-
-FANTA_DICT = {
-    0: ["comprare la cosa più strana che c’è sotto le 725 corone islandesi", 5],
+# Bonus: chiave tra 0 e 100
+FANTA_DICT_BONUS = {
+    0: ["Comprare la cosa più strana che c’è sotto le 725 corone islandesi", 5],
     1: ["Uscire in costume da bagno in mezzo alla neve", 5], 
-    2: ["il primo che vede l’aurora boreale", 5], 
-    3: ["parlare con la un turista australiano", 5], 
+    2: ["Vedere l’aurora boreale", 5], 
+    3: ["Parlare con un turista australiano", 5], 
+    4: ["Riuscire a fare centro nel lancio dell'accetta", 5],
+    5: ["Mangiare carne di squalo standard", 5],
+    6: ["Vincere il premio 'Miglior playlist dell’Islanda'", 5],
+    7: ["Dormire con MR", 5],
+    8: ["Avvistata un'aurora boreale", 10],
+    9: ["Immersione completa in una hot spring", 5],
+    10: ["Hai pronunciato correttamente il nome di una città islandese al primo colpo", 3],
+    11: ["Hai fatto amicizia con un locale", 4],
+    12: ["Hai trovato una pecora sul ciglio della strada e le hai dato un nome", 2],
+    13: ["Foto epica sotto una cascata", 5],
+    14: ["Hai resistito al vento islandese senza lamentarti per un giorno intero", 6],
+    15: ["Hai mangiato lo squalo fermentato senza sputarlo", 10],
+    16: ["Hai guidato nel nulla senza sbagliare strada", 4],
+    17: ["Hai camminato su un campo di lava senza inciampare", 4],
+    18: ["Hai assaggiato un pylsur (hot dog islandese) e l'hai definito 'il migliore della vita'", 3],
+    19: ["Hai fatto il bagno nell’oceano Atlantico senza urlare", 8],
+    20: ["Hai scattato una foto ad un cavallo islandese e lui ha sorriso", 6],
+    21: ["Hai imparato a dire 'takk' e lo hai usato almeno 5 volte al giorno", 2],
+    22: ["Hai trovato una chiesetta sperduta nel nulla e ci hai fatto un video con sottofondo epico", 5],
+    23: ["Hai resistito a non postare storie Instagram per 24 ore", 5],
+    24: ["Hai acceso il riscaldamento dell’auto in modo strategico", 2],
+    25: ["Hai preparato il caffè nel thermos per tutto il gruppo", 3],
+    26: ["Hai fatto pipì in mezzo alla natura e ti sei sentito in armonia col cosmo", 4],
+    27: ["Hai visto un geyser esplodere proprio al momento giusto per la foto", 6],
+    28: ["Hai raccolto una pietra vulcanica da portare a casa come portafortuna", 3],
+    29: ["Hai cucinato qualcosa in una cucina di ostello e nessuno si è lamentato", 4],
+    30: ["Hai fatto il pieno alla macchina *prima* che accendesse la spia", 5],
+    31: ["Hai guidato nel vento laterale islandese senza andare fuori strada", 7],
+    32: ["Hai trovato un luogo segreto non segnato su Google Maps", 8],
+    33: ["Hai riconosciuto un paesaggio da una scena di Game of Thrones", 2],
+    34: ["Hai svegliato tutti nel cuore della notte per l’aurora e avevi ragione", 10],
+    35: ["Hai fatto una playlist da viaggio che ha gasato tutti", 3],
+    36: ["Hai fatto pipì dietro una roccia senza essere visto né congelato", 2],
+}
+
+
+# Malus: chiave tra 100 e 200
+FANTA_DICT_MALUS = {
+    100: ["Hai messo la sveglia per l’aurora… ma ti sei riaddormentato", -5],
+    101: ["Hai dimenticato i guanti e hai perso la sensibilità alle dita", -5],
+    102: ["Attacco di diarrea", -5],
+    103: ["Rimanere con i vestiti bagnati dopo la prima cascata", -5],
+    104: ["Dimenticare qualcosa in albergo tra un giorno e l’altro", -5],
+    105: ["Fermare la macchina per fare la cacca", -5],
+    106: ["Hai chiamato Reykjavík 'Reikjavic'", -3],
+    107: ["Hai perso l’equilibrio camminando sul ghiaccio", -4],
+    108: ["Ti sei bagnato completamente cercando di fare una foto vicino a una cascata", -6],
+    109: ["Hai spaventato una pecora suonando il clacson", -2],
+    110: ["Hai chiesto se esistono i McDonald’s in Islanda", -3],
+    111: ["Hai toccato l'acqua del mare senza motivo e hai urlato 'è fredda!'", -1],
+    112: ["Hai dimenticato di fare il pieno nel mezzo del nulla", -7],
+    113: ["Hai indossato jeans sotto la pioggia", -2],
+    114: ["Ti sei lamentato del prezzo di una birra", -3],
+    115: ["Hai scambiato un cavallo islandese per un pony e l'hai detto ad alta voce", -3],
+    116: ["Hai messo le mani nude nella neve per fare una palla e te ne sei pentito subito", -2],
+    117: ["Hai tentato di scalare una collina senza ramponi e sei rotolato giù", -6],
+    118: ["Hai dimenticato di ricaricare la GoPro nel giorno più epico del viaggio", -5],
+    119: ["Hai messo Spotify a tutto volume disturbando il silenzio mistico islandese", -4],
+    120: ["Hai fatto una battuta su Elsa di Frozen davanti a un ghiacciaio", -3],
+    121: ["Hai aperto la portiera dell’auto col vento e hai quasi perso l’auto", -7],
+    122: ["Hai chiesto 'quando andiamo a vedere il vulcano attivo?' mentre ne stavate già osservando uno", -2],
+    123: ["Hai comprato acqua in bottiglia invece di bere quella del rubinetto", -3],
+    124: ["Hai confuso muschio con tappeto erboso e ci sei saltato sopra", -4],
+    125: ["Hai versato zolfo addosso agli altri mentre cercavi di annusare un geyser", -4],
+    126: ["Hai cercato di usare Google Maps in mezzo al nulla senza segnale", -2],
+    127: ["Hai provato a camminare su muschio islandese nonostante i cartelli", -6],
+    128: ["Hai dimenticato l’adattatore della corrente e hai caricato solo il tuo telefono", -3],
+    129: ["Hai fatto cadere lo zaino in una pozza geotermica", -5],
+    130: ["Hai scambiato un elfo per un troll e hai offeso una leggenda locale", -2],
+    131: ["Hai spoilerato a tutti l'aurora... che però non è apparsa", -4],
+    132: ["Hai rotto una regola non scritta del gruppo (tipo: 'niente musica alle 7')", -3],
+    133: ["Hai lasciato la macchina fotografica accesa e si è scaricata", -2],
+
 }
 
 
 PUNTEGGI_STUPIDINI_FANTA = {
-    "AleB": [0] * len(FANTA_DICT),
-    "AleD": [0] * len(FANTA_DICT),
-    "B": [0] * len(FANTA_DICT),
-    "D": [0] * len(FANTA_DICT),
-    "F": [0] * len(FANTA_DICT),
-    "MG": [0] * len(FANTA_DICT),
-    "MR": [0] * len(FANTA_DICT),
-    "V": [0] * len(FANTA_DICT)
+    "AleB": [0] * (100 + len(FANTA_DICT_MALUS)),
+    "AleD": [0] * (100 + len(FANTA_DICT_MALUS)),
+    "B": [0] * (100 + len(FANTA_DICT_MALUS)),
+    "D": [0] * (100 + len(FANTA_DICT_MALUS)),
+    "F": [0] * (100 + len(FANTA_DICT_MALUS)),
+    "MG": [0] * (100 + len(FANTA_DICT_MALUS)),
+    "MR": [0] * (100 + len(FANTA_DICT_MALUS)),
+    "V": [0] * (100 + len(FANTA_DICT_MALUS))
 }
 
 FANTA_USER_CHOSEN = ""
