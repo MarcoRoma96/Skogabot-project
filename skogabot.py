@@ -10,7 +10,7 @@ from telegram.ext import Application, CommandHandler, ConversationHandler, Callb
 # Custom libs
 from typedef import *
 from functions import *
-
+from state_manager import save_state, load_state
 
 # Comandi del Bot
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -160,7 +160,7 @@ async def scheduled_recipe(context: ContextTypes.DEFAULT_TYPE):
     global RECIPE_INDEX
     today = datetime.date.today()
     start_date = datetime.date(2025, 4, 14)
-    end_date = datetime.date(2025, 4, 27)
+    end_date = datetime.date(2025, 4, 30)
     if today < start_date or today > end_date:
         # Se siamo fuori dal range, se siamo dopo il 27 aprile, il job può rimuoversi.
         if today > end_date:
@@ -178,7 +178,7 @@ async def scheduled_recipe(context: ContextTypes.DEFAULT_TYPE):
 async def subscribe_recipe(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """
     Comando /subscribe_recipe: iscrive la chat corrente per ricevere automaticamente i messaggi programmati
-    (ricette a mezzogiorno e alle 19:30 dal 19/04 al 27/04).
+    (ricette a mezzogiorno e alle 19:30 dal 19/04 al 29/04).
     """
     chat_id = update.effective_chat.id
     job_queue = context.job_queue
@@ -193,13 +193,6 @@ async def subscribe_recipe(update: Update, context: ContextTypes.DEFAULT_TYPE) -
     job_queue.run_daily(
         callback=scheduled_recipe,
         time=datetime.time(19, 30, tzinfo=TIMEZONE),
-        data=chat_id,
-        name=f"recipe_evening_{chat_id}"
-    )
-
-    job_queue.run_daily(
-        callback=scheduled_recipe,
-        time=datetime.time(20, 5, tzinfo=TIMEZONE),
         data=chat_id,
         name=f"recipe_evening_{chat_id}"
     )
@@ -219,6 +212,7 @@ async def car1(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         elif context.args[0] == "reset":
             for k in PUNTEGGI_STUPIDINI1.keys():
                 PUNTEGGI_STUPIDINI1[k] = 0
+                save_state(PUNTEGGI_STUPIDINI1, "PUNTEGGI_STUPIDINI1")
     else:
         domanda = random.choice(CARGAMES_STUPIDINI_DI_CHATGPT)
         VOTI_GIOCHINO_AUTO1 = {}  # Reset: necessario?
@@ -269,6 +263,7 @@ async def car1_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> N
         for w in winner:
             reply += "🥇 " + str(w[0]) + " (" + str(w[1]) + " punti)\n"
             PUNTEGGI_STUPIDINI1[w[0]] += 1
+            save_state(PUNTEGGI_STUPIDINI1, "PUNTEGGI_STUPIDINI1")
         await context.bot.send_message(chat_id, reply)
 
 
@@ -324,6 +319,7 @@ async def car3(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         elif context.args[0] == "reset":
             for k in PUNTEGGI_STUPIDINI3.keys():
                 PUNTEGGI_STUPIDINI3[k] = 0
+                save_state(PUNTEGGI_STUPIDINI3, "PUNTEGGI_STUPIDINI3")
         else:
             segreto = ' '.join(context.args)
             USER_SEGRETO3 = update.message.from_user.name[-2:]
@@ -398,6 +394,7 @@ async def car3_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> N
             PUNTEGGI_STUPIDINI3[CONV[USER_SEGRETO3]] += t
         elif sol == "falso" and (f-1) == t:
             reply = "Nessuna maggioranza! Nessun punto da assegnare."
+        save_state(PUNTEGGI_STUPIDINI3, "PUNTEGGI_STUPIDINI3")
         await context.bot.send_message(chat_id, reply)
 
 
@@ -418,12 +415,14 @@ async def fanta(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
                 # Reset tutto
                 for k in PUNTEGGI_STUPIDINI_FANTA.keys():
                     PUNTEGGI_STUPIDINI_FANTA[k] = [0] * (100 + len(FANTA_DICT_MALUS))
+                save_state(PUNTEGGI_STUPIDINI_FANTA, "PUNTEGGI_STUPIDINI_FANTA")
             else:
                 # Reset [user] [key]
                 user = context.args[1]
                 try:
                     key = int(context.args[2])
                     PUNTEGGI_STUPIDINI_FANTA[user][key] = 0
+                    save_state(PUNTEGGI_STUPIDINI_FANTA, "PUNTEGGI_STUPIDINI_FANTA")
                     await update.message.reply_text(f"Rimossi punti assegnati a {user} per {key}\n")
                 except Exception as e:
                     await update.message.reply_text(f"Errore! Se vuoi annullare un evento del FantaIslanda usa la sintassi: /fanta reset [nome_utente] [numero_evento]\n")
@@ -461,6 +460,7 @@ async def fanta(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
                 text = "Malus '" + str(e) + "' aggiunto con " + str(p) + " punti!\n"
                 for k in PUNTEGGI_STUPIDINI_FANTA.keys():
                     PUNTEGGI_STUPIDINI_FANTA[k].append(0)
+            save_state(PUNTEGGI_STUPIDINI_FANTA, "PUNTEGGI_STUPIDINI_FANTA")
             await update.message.reply_text(text)
         elif context.args[0] == "del":
             if len(context.args) == 1:
@@ -486,6 +486,7 @@ async def fanta(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
                 #         FANTA_DICT_MALUS[item[0]-1] = [item[1][0], int(item[1][1])]
                 # for item in PUNTEGGI_STUPIDINI_FANTA.keys():
                 #     PUNTEGGI_STUPIDINI_FANTA[item] = PUNTEGGI_STUPIDINI_FANTA[item][:e]+PUNTEGGI_STUPIDINI_FANTA[item][e-1:]
+                save_state(PUNTEGGI_STUPIDINI_FANTA, "PUNTEGGI_STUPIDINI_FANTA")
                 await update.message.reply_text("Evento " + str(e) + " cancellato!\n")
         else:
             await update.message.reply_text(f"Non so cosa tu mi stia chiedendo!\n")
@@ -516,12 +517,71 @@ async def fanta_callback1(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
 
     FANTA_USER_CHOSEN = query.data.split('_')[1]
 
-    # Scelta 2: Quale evento?
-    keyboard = [[InlineKeyboardButton(
-        item[1][0], callback_data="fanta2_" + str(item[0]))] for item in (list(FANTA_DICT_BONUS.items())+list(FANTA_DICT_MALUS.items()))]
-    reply_markup = InlineKeyboardMarkup(keyboard)
-    await query.edit_message_text(f"Quale Fanta Bonus o Fanta Malus vuoi aggiungere a " + FANTA_USER_CHOSEN + "?\n", reply_markup=reply_markup)
+    # Scelta 2: Quale evento? (Paginazione)
+    events = list(FANTA_DICT_BONUS.items()) + list(FANTA_DICT_MALUS.items())
+    page = 0  # Pagina iniziale
+    items_per_page = 10  # Numero di eventi per pagina
+    total_pages = (len(events) + items_per_page - 1) // items_per_page
+
+    # Funzione per creare i pulsanti della pagina
+    def create_keyboard(page):
+        start = page * items_per_page
+        end = start + items_per_page
+        keyboard = [[InlineKeyboardButton(
+            item[1][0], callback_data="fanta2_" + str(item[0]))] for item in events[start:end]]
+
+        # Aggiungi pulsanti per navigare tra le pagine
+        navigation_buttons = []
+        if page > 0:
+            navigation_buttons.append(InlineKeyboardButton("◀ Indietro", callback_data=f"fanta1_page_{page-1}"))
+        if page < total_pages - 1:
+            navigation_buttons.append(InlineKeyboardButton("Avanti ▶", callback_data=f"fanta1_page_{page+1}"))
+        if navigation_buttons:
+            keyboard.append(navigation_buttons)
+
+        return InlineKeyboardMarkup(keyboard)
+
+    # Invia la prima pagina
+    reply_markup = create_keyboard(page)
+    await query.edit_message_text(f"Quale Fanta Bonus o Fanta Malus vuoi aggiungere a {FANTA_USER_CHOSEN}?\n", reply_markup=reply_markup)
     return fanta_2
+
+
+async def fanta_callback1_pagination(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    global FANTA_USER_CHOSEN
+    query = update.callback_query
+    await query.answer()
+
+    # Recupera la pagina richiesta
+    data = query.data.split('_')
+    page = int(data[-1])
+
+    # Scelta 2: Quale evento? (Paginazione)
+    events = list(FANTA_DICT_BONUS.items()) + list(FANTA_DICT_MALUS.items())
+    items_per_page = 10  # Numero di eventi per pagina
+    total_pages = (len(events) + items_per_page - 1) // items_per_page
+
+    # Funzione per creare i pulsanti della pagina
+    def create_keyboard(page):
+        start = page * items_per_page
+        end = start + items_per_page
+        keyboard = [[InlineKeyboardButton(
+            item[1][0], callback_data="fanta2_" + str(item[0]))] for item in events[start:end]]
+
+        # Aggiungi pulsanti per navigare tra le pagine
+        navigation_buttons = []
+        if page > 0:
+            navigation_buttons.append(InlineKeyboardButton("◀ Indietro", callback_data=f"fanta1_page_{page-1}"))
+        if page < total_pages - 1:
+            navigation_buttons.append(InlineKeyboardButton("Avanti ▶", callback_data=f"fanta1_page_{page+1}"))
+        if navigation_buttons:
+            keyboard.append(navigation_buttons)
+
+        return InlineKeyboardMarkup(keyboard)
+
+    # Invia la pagina richiesta
+    reply_markup = create_keyboard(page)
+    await query.edit_message_text(f"Quale Fanta Bonus o Fanta Malus vuoi aggiungere a {FANTA_USER_CHOSEN}?\n", reply_markup=reply_markup)
 
 
 async def fanta_callback2(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -537,17 +597,67 @@ async def fanta_callback2(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
     # Notifica inserimento
     PUNTEGGI_STUPIDINI_FANTA[FANTA_USER_CHOSEN][FANTA_EVENT_CHOSEN[0]
                                                 ] = FANTA_EVENT_CHOSEN[1][1]
+    save_state(PUNTEGGI_STUPIDINI_FANTA, "PUNTEGGI_STUPIDINI_FANTA")
     await query.edit_message_text("Fanta Evento '" + str(FANTA_EVENT_CHOSEN[1][0]) + "' aggiunto a " + FANTA_USER_CHOSEN + "!\nPunti evento: " + str(FANTA_EVENT_CHOSEN[1][1]) + "\n", parse_mode='markdown')
     return ConversationHandler.END
 
 
 async def leggi_storia(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    keyboard = []
-    for story_id, story in STORIES.items():
-        keyboard.append([InlineKeyboardButton(
-            story["title"], callback_data=f"select_{story_id}_0")])
-    reply_markup = InlineKeyboardMarkup(keyboard)
-    await update.message.reply_text("Scegli la storia che vuoi ascoltare:", reply_markup=reply_markup)
+    stories_per_page = 5  # Number of stories per page
+    page = 0  # Start with the first page
+    total_pages = (len(STORIES) + stories_per_page - 1) // stories_per_page
+
+    def create_keyboard(page):
+        start = page * stories_per_page
+        end = start + stories_per_page
+        keyboard = [[InlineKeyboardButton(
+            story["title"], callback_data=f"select_{story_id}_0")] for story_id, story in list(STORIES.items())[start:end]]
+
+        # Add navigation buttons
+        navigation_buttons = []
+        if page > 0:
+            navigation_buttons.append(InlineKeyboardButton("◀ Indietro", callback_data=f"story_page_{page-1}"))
+        if page < total_pages - 1:
+            navigation_buttons.append(InlineKeyboardButton("Avanti ▶", callback_data=f"story_page_{page+1}"))
+        if navigation_buttons:
+            keyboard.append(navigation_buttons)
+
+        return InlineKeyboardMarkup(keyboard)
+
+    reply_markup = create_keyboard(page)
+    await update.message.reply_text(f"Scegli la storia che vuoi ascoltare: (page 1/{total_pages})", reply_markup=reply_markup)
+
+
+async def story_pagination(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    query = update.callback_query
+    await query.answer()
+
+    # Extract the requested page number
+    data = query.data.split('_')
+    page = int(data[-1])
+
+    stories_per_page = 5  # Number of stories per page
+    total_pages = (len(STORIES) + stories_per_page - 1) // stories_per_page
+
+    def create_keyboard(page):
+        start = page * stories_per_page
+        end = start + stories_per_page
+        keyboard = [[InlineKeyboardButton(
+            story["title"], callback_data=f"select_{story_id}_0")] for story_id, story in list(STORIES.items())[start:end]]
+
+        # Add navigation buttons
+        navigation_buttons = []
+        if page > 0:
+            navigation_buttons.append(InlineKeyboardButton("◀ Indietro", callback_data=f"story_page_{page-1}"))
+        if page < total_pages - 1:
+            navigation_buttons.append(InlineKeyboardButton("Avanti ▶", callback_data=f"story_page_{page+1}"))
+        if navigation_buttons:
+            keyboard.append(navigation_buttons)
+
+        return InlineKeyboardMarkup(keyboard)
+
+    reply_markup = create_keyboard(page)
+    await query.edit_message_text(f"Scegli la storia che vuoi ascoltare: (page {page+1}/{total_pages})", reply_markup=reply_markup)
 
 
 async def story_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -605,6 +715,19 @@ async def story_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         await query.edit_message_text(text=text, parse_mode="Markdown", reply_markup=reply_markup)
 
 
+
+async def ripristina(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """
+    Comando /ripristina: ricarica da disco lo stato salvato.
+    Utile in caso di crash o perdita di memoria.
+    """
+    try:
+        load_state()
+        await update.message.reply_text("✅ Stato ripristinato con successo dal file.")
+    except Exception as e:
+        await update.message.reply_text(f"❌ Errore durante il ripristino: {e}")
+
+
 async def unknown(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """
     Gestisce comandi sconosciuti.
@@ -639,6 +762,16 @@ def main() -> None:
     Sostituisci 'YOUR_TELEGRAM_BOT_TOKEN' con il token fornito da BotFather.
     """
 
+    # se il file dello stato precedente del bot esiste, carica lo stato delle variabili che contiene
+    if os.path.exists("bot_state.json"):
+        try:
+            print(PUNTEGGI_STUPIDINI1)
+            load_state()
+            print("Stato precedente caricato correttamente.")
+        except Exception as e:
+            logger.error(f"Errore nel caricamento dello stato: {e}")
+
+        print(PUNTEGGI_STUPIDINI1)
     token = load_token()
 
     # Crea l'istanza dell'applicazione Telegram
@@ -670,11 +803,20 @@ def main() -> None:
         fanta_2: [CallbackQueryHandler(fanta_callback2, pattern="^fanta2_")],
     },
         fallbacks=[CommandHandler("unknown", unknown)]))
+    # gestione pulsanti cambio pagina fanta
+    application.add_handler(CallbackQueryHandler(
+        fanta_callback1_pagination, pattern=r"^(fanta1_page_).*"))
+
     application.add_handler(CommandHandler(
         "ricetta", subscribe_recipe))
     application.add_handler(CommandHandler("storia", leggi_storia))
+    # gestione pulsanti cambio pagina storia
+    application.add_handler(CallbackQueryHandler(
+        story_pagination, pattern=r"^(story_page_).*"))
     application.add_handler(CallbackQueryHandler(
         story_callback, pattern=r"^(select_).*"))
+    
+    application.add_handler(CommandHandler("ripristina", ripristina))
 
     # Handler per comandi sconosciuti
     application.add_handler(MessageHandler(filters.COMMAND, unknown))

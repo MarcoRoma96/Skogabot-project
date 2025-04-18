@@ -1,6 +1,17 @@
 # Itinerario statico: messaggi definiti a mano (hard-coded)
 import os
 
+# if previous state file exists, then True
+PREVIOUS_STATE_FILE_EXISTS = os.path.exists("bot_state.json")
+prev_state_dict = {}
+# Se il file esiste, carica le variabili di stato
+if PREVIOUS_STATE_FILE_EXISTS:
+    import json
+
+    with open("bot_state.json", "r", encoding="utf-8") as f:
+        prev_state_dict = json.load(f)
+            
+
 
 STATIC_ITINERARY = {
     "1": (
@@ -218,7 +229,7 @@ weather_code_mapping = {
 }
 
 # Indice globale per inviare la ricetta successiva
-RECIPE_INDEX = 0
+RECIPE_INDEX = prev_state_dict["RECIPE_INDEX"] if PREVIOUS_STATE_FILE_EXISTS and "RECIPE_INDEX" in prev_state_dict else 0
 
 SLEEPING_PLACES = {
     "1": "https://www.booking.com/Share-kCiEwO - https://maps.app.goo.gl/MLYAZZLjycgMxsv18",
@@ -522,7 +533,7 @@ NOMI_VIAGGIATORI = ["Ale B", "Ale D", "Bianca",
 
 NUM_GIOCATORI = 8
 
-PUNTEGGI_STUPIDINI1 = {
+PUNTEGGI_STUPIDINI1 = prev_state_dict["PUNTEGGI_STUPIDINI1"] if PREVIOUS_STATE_FILE_EXISTS and "PUNTEGGI_STUPIDINI1" in prev_state_dict else {
     "AleB": 0,
     "AleD": 0,
     "B": 0,
@@ -533,7 +544,7 @@ PUNTEGGI_STUPIDINI1 = {
     "V": 0
 }
 
-PUNTEGGI_STUPIDINI3 = {
+PUNTEGGI_STUPIDINI3 = prev_state_dict["PUNTEGGI_STUPIDINI3"] if PREVIOUS_STATE_FILE_EXISTS and "PUNTEGGI_STUPIDINI3" in prev_state_dict else {
     "AleB": 0,
     "AleD": 0,
     "B": 0,
@@ -546,7 +557,7 @@ PUNTEGGI_STUPIDINI3 = {
 USER_SEGRETO3 = -1
 
 # Bonus: chiave tra 0 e 100
-FANTA_DICT_BONUS = {
+FANTA_DICT_BONUS = {int(k): v for k, v in prev_state_dict["FANTA_DICT_BONUS"].items()} if PREVIOUS_STATE_FILE_EXISTS and "FANTA_DICT_BONUS" in prev_state_dict else {
     0: ["Comprare la cosa più strana che c’è sotto le 725 corone islandesi", 5],
     1: ["Uscire in costume da bagno in mezzo alla neve", 5], 
     2: ["Vedere l’aurora boreale", 5], 
@@ -588,7 +599,7 @@ FANTA_DICT_BONUS = {
 
 
 # Malus: chiave tra 100 e 200
-FANTA_DICT_MALUS = {
+FANTA_DICT_MALUS = {int(k): v for k, v in prev_state_dict["FANTA_DICT_MALUS"].items()} if PREVIOUS_STATE_FILE_EXISTS and "FANTA_DICT_MALUS" in prev_state_dict else {
     100: ["Hai messo la sveglia per l’aurora… ma ti sei riaddormentato", -5],
     101: ["Hai dimenticato i guanti e hai perso la sensibilità alle dita", -5],
     102: ["Attacco di diarrea", -5],
@@ -627,7 +638,7 @@ FANTA_DICT_MALUS = {
 }
 
 
-PUNTEGGI_STUPIDINI_FANTA = {
+PUNTEGGI_STUPIDINI_FANTA = prev_state_dict["PUNTEGGI_STUPIDINI_FANTA"] if PREVIOUS_STATE_FILE_EXISTS and "PUNTEGGI_STUPIDINI_FANTA" in prev_state_dict else {
     "AleB": [0] * (100 + len(FANTA_DICT_MALUS)),
     "AleD": [0] * (100 + len(FANTA_DICT_MALUS)),
     "B": [0] * (100 + len(FANTA_DICT_MALUS)),
@@ -638,8 +649,8 @@ PUNTEGGI_STUPIDINI_FANTA = {
     "V": [0] * (100 + len(FANTA_DICT_MALUS))
 }
 
-FANTA_USER_CHOSEN = ""
-FANTA_EVENT_CHOSEN = "" # Oggetto "Evento" (elemento di FANTA_DICT)
+FANTA_USER_CHOSEN = prev_state_dict["FANTA_USER_CHOSEN"] if PREVIOUS_STATE_FILE_EXISTS and "FANTA_USER_CHOSEN" in prev_state_dict else ""
+FANTA_EVENT_CHOSEN = prev_state_dict["FANTA_EVENT_CHOSEN"] if PREVIOUS_STATE_FILE_EXISTS and "FANTA_EVENT_CHOSEN" in prev_state_dict else "" # Oggetto "Evento" (elemento di FANTA_DICT)
 fanta_1, fanta_2 = range(2)
 
 CONV = {
