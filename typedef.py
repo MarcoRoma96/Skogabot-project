@@ -547,8 +547,10 @@ USER_SEGRETO3 = -1
 
 
 FANTA_DICT = {
-    0: ["test1", 5],
-    1: ["test2", 10],
+    0: ["comprare la cosa più strana che c’è sotto le 725 corone islandesi", 5],
+    1: ["Uscire in costume da bagno in mezzo alla neve", 5], 
+    2: ["il primo che vede l’aurora boreale", 5], 
+    3: ["parlare con la un turista australiano", 5], 
 }
 
 
@@ -1077,4 +1079,76 @@ STORIES = {
             os.path.join(THIS_FOLDER, "figures", "story-harpans_kraft.png")
         ]
     }
+}
+
+
+HELP = {
+    "general":
+            "/start  - Avvia il bot.\n"
+            "/help  - Mostra questo messaggio.\n"
+            "/piano  <num_giorno>  - Visualizza il piano del giorno.\n"
+            "/nanna <num_giorno>  - Visualizza info sulla notte.\n"
+            "/cacca   <num_giorno>  - Visualizza il calendario cacca.\n"
+            "/meteo <città>                - Mostra le previsioni meteo.\n"
+            "/vulcano   - Controlla lo stato vulcanico.\n"
+            "/curiosita - Curiosità cringina di ChatGPT.\n"
+            "/ahah       - Battutina cringina di ChatGPT\n"
+            "/car1 [stat] [reset] - Uno stupendo gioco da macchina!\n"
+            "/car2 [stat]              - Uno stupendo gioco da macchina!\n"
+            "/car3 [stat] [reset] - Uno stupendo gioco da macchina!\n"
+            "/fanta [stat] [reset]- Uno stupendo gioco da viaggio!\n"
+            "/giocatori                   - Visualizza o modifica il numero di giocatori.\n"
+            "/storia                     - Leggi una storia del folklore islandese.\n",
+    "start": "Beh niente di specifico. Semplicemente accende il Bot!\n",
+    "help": "Vuoi l'help dell'help??\n",
+    "piano": "Comando: \\piano GIORNO\n"
+            "Visualizza il piano del giorno!\n"
+            "Argomenti:\n  GIORNO: da 1 a 9\n",
+    "nanna": "Comando: \\nanna [GIORNO]\n"
+            "Visualizza informazioni su dove dormire!\n"
+            "Argomenti:\n  Giorno: da 1 a 9\n"
+            "  Se il numero del giorno non è indicato, mostra le info per la notte attuale.\n",
+    "cacca": "Comando: \\cacca GIORNO\n"
+            "Visualizza informazioni sul calendario Cacca!\n"
+            "Argomenti:\n  GIORNO: da 1 a 9\n",
+    "meteo": "Comando: \\meteo [CITTA']\n"
+            "Argomenti:\n  CITTA': Nome della città\n"
+            "  Se la città non è indicata, mostra le info per Rejkiavik.\n",
+    "vulcano": "Simula il recupero dello status vulcanico. \nA caso. TOTALMENTE a caso.\nGrazie Marco roma per questo tuo prezioso contributo. A caso.\n",
+    "curiosita": "Invia una curiosità 'divertente' del giorno. Grazie ChatGPT!\n",
+    "ahah": "Invia una battutina cringina. Grazie ChatGPT!\n",
+    "car1": "Comando: \\car1 [stat|reset]\n"
+            "In questo entusiasmante gioco da macchina, vi verrà chiesto chi tra di voi sia "
+            "il più probabile che finisca in una determinata situazione. \nVotate saggiamente! "
+            "Il più votato perde!\n"
+            "Opzioni:\n  reset: Reset di tutte le statistiche\n"
+            "  stat: Mostra le statistiche\n",
+    "car2": "Comando: \\car2\n"
+            "In questo entusiasmante gioco da macchina, vi verrà chiesto quanto sia proabile che "
+            "qualcuno di voi finisca in una determinata situazione. \nVotate saggiamente!\n"
+            "In questo gioco non ci sono punteggi e statistiche!\n",
+    "car3": "Comando: \\car3 [stat|reset] SEGRETO\n"
+            "In questo entusiasmante gioco da macchina, dovrete indovinare se il segreto scritto da "
+            "uno di voi è vero o falso. \nVotate saggiamente!\n"
+            "Se la maggior parte dei giocatori indovina, a ciascuno viene dato 1 punto.\n"
+            "Se la maggior parte dei giocatori non indovina, al sussurratore di segreti vengono dati tanti punti "
+            "quanto i giocatori che ha ingannato.\n"
+            "Se tutti indovinano, al sussurratore di segreti vengono sottratti tanti punti quanto i giocatori!\n"
+            "Opzioni:\n  reset: Reset di tutte le statistiche\n"
+            "  stat: Mostra le statistiche\n",
+    "fanta": "Comando: \\fanta [stat|reset [all|USER KEY] | show | add EVENTO PUNTI | del KEY]\n"
+            "Benvenuti al FantaIslanda! Qua potete vedere e aggiungere bonus e malus, assegnarli ai giocatori"
+            " e vedere chi sta scalando la FantaClassifica!\n"
+            "Opzioni:\n  stat: Mostra tutte le statistiche\n"
+            "  reset all: Resetta tutte le statistiche\n"
+            "  reset USER KEY: Elimina l'evento con indice KEY dall'utente USER\n"
+            "  show: Mostra tutti i Bonus e i Malus\n"
+            "  add EVENTO PUNTI: Aggiunge l'evento con il punteggio indicato. "
+            "Il punteggio deve essere un numero e deve essere l'ultima cosa scritta nel comando\n"
+            "  del KEY: Elimina l'evento con indice KEY\n",
+    "giocatori": "Comando: \\giocatori [numero]\n"
+            "Visualizza o imposta il numero di giocatori per i giochini da auto."
+            "Opzioni:\n  [numero]: Numero di giocatori\n"
+            "  Se il numero non è indicato, mostra quello attuale.\n",
+    "storia": "Racconta una storia del folklore islandese!\n"
 }

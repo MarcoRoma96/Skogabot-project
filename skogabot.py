@@ -25,37 +25,18 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
 
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    global HELP
     """
     Comando /help: mostra le funzionalità disponibili.
     """
     if len(context.args) == 0:
-        help_text = (
-            "/start  - Avvia il bot.\n"
-            "/help  - Mostra questo messaggio.\n"
-            "/piano  <num_giorno>  - Visualizza il piano del giorno.\n"
-            "/nanna <num_giorno>  - Visualizza info sulla notte.\n"
-            "/cacca   <num_giorno>  - Visualizza il calendario cacca.\n"
-            "/meteo <città>                - Mostra le previsioni meteo.\n"
-            "/vulcano   - Controlla lo stato vulcanico.\n"
-            "/curiosita - Curiosità cringina di ChatGPT.\n"
-            "/ahah       - Battutina cringina di ChatGPT\n"
-            "/car1 [stat] [reset] - Uno stupendo gioco da macchina!\n"
-            "/car2 [stat]              - Uno stupendo gioco da macchina!\n"
-            "/car3 [stat] [reset] - Uno stupendo gioco da macchina!\n"
-            "/fanta [stat] [reset]- Uno stupendo gioco da viaggio!\n"
-            "/giocatori                   - Visualizza o modifica il numero di giocatori.\n"
-            "/storia                     - Leggi una storia del folklore islandese.\n"
-        )
-    # else:
-    #     try:
-    #         n = int(context.args[0])
-    #     except Exception as e:
-    #         reply = "Errore! Non riesco a leggere il numero che hai inserito.\n"
-    #     NUM_GIOCATORI = n
-    #     reply = "Numero di giocatori modificato in: " + str(NUM_GIOCATORI) + "\n"
-    # await update.message.reply_text(f"{reply}", parse_mode='markdown')
-
-    await update.message.reply_text(help_text)
+        text = HELP["general"]
+    else:
+        try:
+            text = HELP[context.args[0]]
+        except Exception as e:
+            text = "Errore! Non riesco a capire cosa tu mi stia chiedendo, riprova. Help me to help you!"
+    await update.message.reply_text(text)
 
 
 async def piano(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
