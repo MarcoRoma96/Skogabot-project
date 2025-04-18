@@ -520,6 +520,8 @@ LO_SAI_CHE = [
 NOMI_VIAGGIATORI = ["Ale B", "Ale D", "Bianca",
                     "Dalia", "Filippo", "Marco2", "MarcoRoma", "Viola"]
 
+NUM_GIOCATORI = 8
+
 PUNTEGGI_STUPIDINI1 = {
     "AleB": 0,
     "AleD": 0,
@@ -869,10 +871,10 @@ STORIES = {
             os.path.join(THIS_FOLDER, "figures", "story-nykur2.jpg")
         ]
     },
-    "strega_barca_pietra": {
+    "stregaBarcaPietra": {
         "title": "Skessan á Steinnökkvanum – La Strega sulla Barca di Pietra",
         "pages": [
-            "*Il viaggio e l'inganno*\nIl principe Sigurd, dopo aver sposato una principessa straniera e aver avuto un figlio, decide di tornare nel suo regno. Durante la traversata, una calma improvvisa ferma la nave. Mentre Sigurd riposa sottocoperta, una strega su una barca di pietra si avvicina silenziosamente, rapisce la regina e il bambino, e assume l'aspetto della regina grazie a un incantesimo. La vera regina viene spedita, priva di sensi, verso il regno sotterraneo del fratello della strega. :contentReference[oaicite:1]{index=1}",
+            "*Il viaggio e l'inganno*\nIl principe Sigurd, dopo aver sposato una principessa straniera e aver avuto un figlio, decide di tornare nel suo regno. Durante la traversata, una calma improvvisa ferma la nave. Mentre Sigurd riposa sottocoperta, una strega su una barca di pietra si avvicina silenziosamente, rapisce la regina e il bambino, e assume l'aspetto della regina grazie a un incantesimo. La vera regina viene spedita, priva di sensi, verso il regno sotterraneo del fratello della strega.",
             "*Sospetti e scoperte*\nLa falsa regina, ora a bordo della nave, cerca di calmare il bambino in lacrime, ma senza successo. Sigurd nota un cambiamento nel comportamento della moglie: è diventata fredda e distante. Al loro arrivo, Sigurd assume il trono, ma il figlio continua a piangere inconsolabilmente. Una nutrice viene incaricata di prendersi cura del bambino, e sotto la sua custodia, il piccolo finalmente trova pace.",
             "*La verità emerge*\nDue giovani cortigiani, giocando a scacchi vicino alla stanza della regina, sentono strani rumori. Spiando attraverso una fessura, vedono la regina trasformarsi in una mostruosa trolla mentre sbadiglia. Un gigante a tre teste emerge dal pavimento, le porta un trogolo di carne, che lei divora avidamente. Dopo il pasto, la regina ritorna al suo aspetto umano. I giovani, terrorizzati, decidono di non rivelare ciò che hanno visto.",
             "*Il ritorno della vera regina*\nNel frattempo, la nutrice del principe nota un evento straordinario: ogni notte, una donna vestita di bianco emerge dal pavimento, abbraccia il bambino e scompare. La terza notte, la donna sussurra: 'Due sono passate, ne resta una sola.' La nutrice informa Sigurd, che decide di affrontare la situazione. La notte seguente, armato di spada, attende la misteriosa figura. Quando la donna appare, lui riconosce la vera regina e spezza la catena che la lega. Un tremore scuote il palazzo: il gigante, legato all'altra estremità della catena, cade nel suo regno sotterraneo.",
@@ -906,10 +908,10 @@ STORIES = {
     "gryla": {
         "title": "Grýla – L’Ogressa del Natale",
         "pages": [
-            "*La leggenda di Grýla*\nGrýla è una figura temibile del folklore islandese, descritta come una gigantesca trolla con un insaziabile appetito per i bambini disobbedienti. Vive in una caverna nelle montagne islandesi e, durante il periodo natalizio, scende nei villaggi per catturare i piccoli che si sono comportati male, portandoli nella sua tana per cucinarli in un enorme calderone. :contentReference[oaicite:1]{index=1}",
-            "*La famiglia di Grýla*\nGrýla è sposata con Leppalúði, un troll pigro che raramente lascia la caverna. Insieme hanno tredici figli noti come i Jólasveinar o 'Yule Lads'. Questi tredici troll compaiono uno dopo l'altro nei tredici giorni precedenti al Natale, ognuno con un comportamento particolare, come rubare cibo o spiare attraverso le finestre. :contentReference[oaicite:2]{index=2}",
-            "*Il Jólakötturinn – Il Gatto di Natale*\nOltre ai suoi figli, Grýla possiede anche un enorme gatto nero chiamato Jólakötturinn. Questo felino mostruoso si aggira durante il periodo natalizio e divora chiunque non abbia ricevuto nuovi vestiti per Natale, punendo così i pigri che non hanno lavorato abbastanza durante l'anno. :contentReference[oaicite:3]{index=3}",
-            "*L'evoluzione della leggenda*\nOriginariamente, Grýla non era associata al Natale. Le prime menzioni risalgono al XIII secolo, dove era descritta come una creatura che mendicava cibo dai genitori, minacciando di portare via i loro figli se non le veniva dato nulla. Solo successivamente, nel XVII secolo, la sua figura fu legata alle festività natalizie, diventando la madre dei Jólasveinar. :contentReference[oaicite:4]{index=4}",
+            "*La leggenda di Grýla*\nGrýla è una figura temibile del folklore islandese, descritta come una gigantesca trolla con un insaziabile appetito per i bambini disobbedienti. Vive in una caverna nelle montagne islandesi e, durante il periodo natalizio, scende nei villaggi per catturare i piccoli che si sono comportati male, portandoli nella sua tana per cucinarli in un enorme calderone.",
+            "*La famiglia di Grýla*\nGrýla è sposata con Leppalúði, un troll pigro che raramente lascia la caverna. Insieme hanno tredici figli noti come i Jólasveinar o 'Yule Lads'. Questi tredici troll compaiono uno dopo l'altro nei tredici giorni precedenti al Natale, ognuno con un comportamento particolare, come rubare cibo o spiare attraverso le finestre.",
+            "*Il Jólakötturinn – Il Gatto di Natale*\nOltre ai suoi figli, Grýla possiede anche un enorme gatto nero chiamato Jólakötturinn. Questo felino mostruoso si aggira durante il periodo natalizio e divora chiunque non abbia ricevuto nuovi vestiti per Natale, punendo così i pigri che non hanno lavorato abbastanza durante l'anno.",
+            "*L'evoluzione della leggenda*\nOriginariamente, Grýla non era associata al Natale. Le prime menzioni risalgono al XIII secolo, dove era descritta come una creatura che mendicava cibo dai genitori, minacciando di portare via i loro figli se non le veniva dato nulla. Solo successivamente, nel XVII secolo, la sua figura fu legata alle festività natalizie, diventando la madre dei Jólasveinar.",
             "*Grýla oggi*\nNonostante le sue origini spaventose, Grýla è ancora una figura popolare in Islanda. Viene spesso rappresentata in racconti, canzoni e decorazioni natalizie, servendo come monito per i bambini affinché si comportino bene durante l'anno. La sua leggenda continua a essere una parte integrante delle tradizioni natalizie islandesi."
         ],
         "images": [
@@ -940,11 +942,11 @@ STORIES = {
     "lagarfljot": {
         "title": "Lagarfljót – Il Serpente del Lago",
         "pages": [
-            "*La leggenda del Lagarfljótsormur*\nNel folklore islandese, il Lagarfljótsormur è un mostro lacustre che si dice abiti nel lago Lagarfljót, situato vicino alla città di Egilsstaðir. La leggenda risale almeno al 1345, quando fu registrata per la prima volta negli annali islandesi. Secondo la storia, una giovane ragazza ricevette un anello d'oro da sua madre, che le consigliò di posizionarlo sotto un piccolo verme (un tipo di mini-drago) in una cassa, credendo che ciò avrebbe fatto crescere sia il verme che l'oro. Tuttavia, il verme crebbe rapidamente, diventando così grande da rompere la cassa. Spaventata, la ragazza gettò il verme e l'anello nel lago, dove la creatura continuò a crescere, diventando il mostro leggendario del lago. :contentReference[oaicite:1]{index=1}",
-            "*Avvistamenti nel corso dei secoli*\nNel 1589, si dice che il serpente abbia sollevato il suo dorso così in alto sopra il lago che una nave a vela piena avrebbe potuto passarci sotto. Quando la creatura si tuffò nuovamente nell'acqua, l'impatto fu così massiccio che la terra tremò. Nel XVII secolo, ci furono 14 avvistamenti del serpente. :contentReference[oaicite:2]{index=2}",
-            "*Avvistamenti moderni*\nNel 1963, operai che costruivano una centrale idroelettrica lungo il fiume che alimenta il Lagarfljót riferirono di aver visto una grande figura simile a un verme muoversi controcorrente. Questo avvistamento è spesso citato perché le condizioni rendevano meno probabili le illusioni ottiche. :contentReference[oaicite:3]{index=3}",
-            "*Il video del 2012*\nNel febbraio 2012, un agricoltore di nome Hjörtur Kjerúlf filmò un fenomeno molto strano nel lago Lagarfljót: una forma serpentina che sembrava nuotare nelle acque ghiacciate. Il video attirò l'attenzione internazionale e nel 2014 una commissione locale dichiarò che non c'era motivo di dubitare dell'esistenza della creatura. :contentReference[oaicite:4]{index=4}",
-            "*Il Lagarfljótsormur oggi*\nOggi, il Lagarfljótsormur è una parte affascinante del folklore islandese. Il lago Lagarfljót è una popolare destinazione turistica, e la leggenda del mostro continua a incuriosire sia i locali che i visitatori. :contentReference[oaicite:5]{index=5}"
+            "*La leggenda del Lagarfljótsormur*\nNel folklore islandese, il Lagarfljótsormur è un mostro lacustre che si dice abiti nel lago Lagarfljót, situato vicino alla città di Egilsstaðir. La leggenda risale almeno al 1345, quando fu registrata per la prima volta negli annali islandesi. Secondo la storia, una giovane ragazza ricevette un anello d'oro da sua madre, che le consigliò di posizionarlo sotto un piccolo verme (un tipo di mini-drago) in una cassa, credendo che ciò avrebbe fatto crescere sia il verme che l'oro. Tuttavia, il verme crebbe rapidamente, diventando così grande da rompere la cassa. Spaventata, la ragazza gettò il verme e l'anello nel lago, dove la creatura continuò a crescere, diventando il mostro leggendario del lago.",
+            "*Avvistamenti nel corso dei secoli*\nNel 1589, si dice che il serpente abbia sollevato il suo dorso così in alto sopra il lago che una nave a vela piena avrebbe potuto passarci sotto. Quando la creatura si tuffò nuovamente nell'acqua, l'impatto fu così massiccio che la terra tremò. Nel XVII secolo, ci furono 14 avvistamenti del serpente.",
+            "*Avvistamenti moderni*\nNel 1963, operai che costruivano una centrale idroelettrica lungo il fiume che alimenta il Lagarfljót riferirono di aver visto una grande figura simile a un verme muoversi controcorrente. Questo avvistamento è spesso citato perché le condizioni rendevano meno probabili le illusioni ottiche.",
+            "*Il video del 2012*\nNel febbraio 2012, un agricoltore di nome Hjörtur Kjerúlf filmò un fenomeno molto strano nel lago Lagarfljót: una forma serpentina che sembrava nuotare nelle acque ghiacciate. Il video attirò l'attenzione internazionale e nel 2014 una commissione locale dichiarò che non c'era motivo di dubitare dell'esistenza della creatura.",
+            "*Il Lagarfljótsormur oggi*\nOggi, il Lagarfljótsormur è una parte affascinante del folklore islandese. Il lago Lagarfljót è una popolare destinazione turistica, e la leggenda del mostro continua a incuriosire sia i locali che i visitatori."
         ],
         "images": [
             os.path.join(THIS_FOLDER, "figures", "story-lagarfljot.png"),
@@ -957,11 +959,11 @@ STORIES = {
     "draugur": {
         "title": "Draugur – Il Fantasma dei Mari",
         "pages": [
-            "*Il ritorno degli inquieti*\nNel folklore islandese, il Draugur è un non-morto che ritorna dalla tomba per tormentare i vivi. A differenza dei fantasmi incorporei, i Draugar possiedono un corpo fisico e conservano ricordi e abilità della vita passata. Spesso sono associati a persone malvagie o avide, che dopo la morte non trovano pace e tornano per vendicarsi o proteggere i loro beni sepolti. :contentReference[oaicite:1]{index=1}",
-            "*Poteri e caratteristiche*\nI Draugar sono noti per la loro forza sovrumana e la capacità di aumentare le proprie dimensioni a volontà. Emanano un odore nauseabondo di decomposizione e possono uccidere i vivi in vari modi: schiacciandoli, divorandoli o inducendoli alla follia. Alcuni Draugar possiedono poteri magici, come la capacità di cambiare forma, controllare il tempo atmosferico e predire il futuro. :contentReference[oaicite:2]{index=2}",
-            "*Il Draugur dei mari*\nNella tradizione norvegese, il termine Draugur è spesso associato ai fantasmi di marinai annegati, noti come 'Draugr del mare'. Queste entità appaiono su imbarcazioni fantasma o lungo le coste, annunciando tempeste imminenti o la morte di qualcuno. Si dice che indossino abiti da pescatore e abbiano la testa avvolta in alghe. :contentReference[oaicite:3]{index=3}",
-            "*Episodi nelle saghe*\nLe saghe islandesi raccontano numerosi incontri con i Draugar. Nell'Eyrbyggja saga, ad esempio, un pastore viene ucciso da un Draugur e ritorna come non-morto per infestare la fattoria. In un altro racconto, il protagonista Grettir Ásmundarson combatte contro il Draugur Glámr, che lo maledice prima di essere distrutto. :contentReference[oaicite:4]{index=4}",
-            "*Affrontare un Draugur*\nPer sconfiggere un Draugur, spesso non bastano le armi comuni. Gli eroi delle saghe ricorrono a rituali specifici: bruciare il corpo del non-morto, seppellirlo in luoghi remoti o costruire barriere intorno alla tomba. In alcuni casi, l'intervento di figure religiose o l'uso di oggetti sacri è necessario per placare l'anima inquieta. :contentReference[oaicite:5]{index=5}"
+            "*Il ritorno degli inquieti*\nNel folklore islandese, il Draugur è un non-morto che ritorna dalla tomba per tormentare i vivi. A differenza dei fantasmi incorporei, i Draugar possiedono un corpo fisico e conservano ricordi e abilità della vita passata. Spesso sono associati a persone malvagie o avide, che dopo la morte non trovano pace e tornano per vendicarsi o proteggere i loro beni sepolti.",
+            "*Poteri e caratteristiche*\nI Draugar sono noti per la loro forza sovrumana e la capacità di aumentare le proprie dimensioni a volontà. Emanano un odore nauseabondo di decomposizione e possono uccidere i vivi in vari modi: schiacciandoli, divorandoli o inducendoli alla follia. Alcuni Draugar possiedono poteri magici, come la capacità di cambiare forma, controllare il tempo atmosferico e predire il futuro.",
+            "*Il Draugur dei mari*\nNella tradizione norvegese, il termine Draugur è spesso associato ai fantasmi di marinai annegati, noti come 'Draugr del mare'. Queste entità appaiono su imbarcazioni fantasma o lungo le coste, annunciando tempeste imminenti o la morte di qualcuno. Si dice che indossino abiti da pescatore e abbiano la testa avvolta in alghe.",
+            "*Episodi nelle saghe*\nLe saghe islandesi raccontano numerosi incontri con i Draugar. Nell'Eyrbyggja saga, ad esempio, un pastore viene ucciso da un Draugur e ritorna come non-morto per infestare la fattoria. In un altro racconto, il protagonista Grettir Ásmundarson combatte contro il Draugur Glámr, che lo maledice prima di essere distrutto.",
+            "*Affrontare un Draugur*\nPer sconfiggere un Draugur, spesso non bastano le armi comuni. Gli eroi delle saghe ricorrono a rituali specifici: bruciare il corpo del non-morto, seppellirlo in luoghi remoti o costruire barriere intorno alla tomba. In alcuni casi, l'intervento di figure religiose o l'uso di oggetti sacri è necessario per placare l'anima inquieta."
         ],
         "images": [
             os.path.join(THIS_FOLDER, "figures", "Theodor_Kittelsen_-_Sjotrollet_1887_The_Sea_Troll.jpg"),
@@ -997,7 +999,7 @@ STORIES = {
             os.path.join(THIS_FOLDER, "figures", "story-saemundur.png")
         ]
     },
-    "diacono_myrka": {
+    "diaconoMyrka": {
         "title": "Djákninn á Myrká – Il Diacono di Myrká",
         "pages": [
             "*La promessa infranta*\nIl diacono di Myrká promise a Guðrún di prenderla a Natale, ma morì annegato nel fiume Hörgá prima di mantenere la promessa.",
@@ -1062,7 +1064,7 @@ STORIES = {
             os.path.join(THIS_FOLDER, "figures", "story-silfrunarstadir.png")
         ]
     },
-    "harpans_kraft": {
+    "harpansKraft": {
         "title": "Harpans Kraft – La Forza dell’Arpa",
         "pages": [
             "*Il rapimento*\nDurante una festa di nozze, una giovane sposa fu rapita da un nøkk, uno spirito acquatico, e trascinata nel fiume. Il marito, disperato, afferrò la sua arpa e iniziò a suonare.",
@@ -1075,6 +1077,4 @@ STORIES = {
             os.path.join(THIS_FOLDER, "figures", "story-harpans_kraft.png")
         ]
     }
-
-    # Altre storie possono essere aggiunte con una struttura simile, ad es. "kopakonan": { ... }
 }

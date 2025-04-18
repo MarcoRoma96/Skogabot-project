@@ -28,22 +28,33 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
     """
     Comando /help: mostra le funzionalità disponibili.
     """
-    help_text = (
-        "/start  - Avvia il bot.\n"
-        "/help  - Mostra questo messaggio.\n"
-        "/piano  <num_giorno>  - Visualizza il piano del giorno.\n"
-        "/nanna <num_giorno>  - Visualizza info sulla notte.\n"
-        "/cacca   <num_giorno>  - Visualizza il calendario cacca.\n"
-        "/meteo <città>                - Mostra le previsioni meteo.\n"
-        "/vulcano   - Controlla lo stato vulcanico.\n"
-        "/curiosita - Curiosità cringina di ChatGPT.\n"
-        "/ahah       - Battutina cringina di ChatGPT\n"
-        "/car1 [stat] [reset] - Uno stupendo gioco da macchina!\n"
-        "/car2 [stat]              - Uno stupendo gioco da macchina!\n"
-        "/car3 [stat] [reset] - Uno stupendo gioco da macchina!\n"
-        "/fanta [stat] [reset]- Uno stupendo gioco da macchina!\n"
-        "/storia                     - Leggi una storia del folklore islandese.\n"
-    )
+    if len(context.args) == 0:
+        help_text = (
+            "/start  - Avvia il bot.\n"
+            "/help  - Mostra questo messaggio.\n"
+            "/piano  <num_giorno>  - Visualizza il piano del giorno.\n"
+            "/nanna <num_giorno>  - Visualizza info sulla notte.\n"
+            "/cacca   <num_giorno>  - Visualizza il calendario cacca.\n"
+            "/meteo <città>                - Mostra le previsioni meteo.\n"
+            "/vulcano   - Controlla lo stato vulcanico.\n"
+            "/curiosita - Curiosità cringina di ChatGPT.\n"
+            "/ahah       - Battutina cringina di ChatGPT\n"
+            "/car1 [stat] [reset] - Uno stupendo gioco da macchina!\n"
+            "/car2 [stat]              - Uno stupendo gioco da macchina!\n"
+            "/car3 [stat] [reset] - Uno stupendo gioco da macchina!\n"
+            "/fanta [stat] [reset]- Uno stupendo gioco da viaggio!\n"
+            "/giocatori                   - Visualizza o modifica il numero di giocatori.\n"
+            "/storia                     - Leggi una storia del folklore islandese.\n"
+        )
+    # else:
+    #     try:
+    #         n = int(context.args[0])
+    #     except Exception as e:
+    #         reply = "Errore! Non riesco a leggere il numero che hai inserito.\n"
+    #     NUM_GIOCATORI = n
+    #     reply = "Numero di giocatori modificato in: " + str(NUM_GIOCATORI) + "\n"
+    # await update.message.reply_text(f"{reply}", parse_mode='markdown')
+
     await update.message.reply_text(help_text)
 
 
@@ -143,6 +154,20 @@ async def ahah(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     Comando /curiosita: invia una curiosità divertente del giorno.
     """
     reply = random.choice(BATTUTE_CRINGINE_DI_CHATGPT)
+    await update.message.reply_text(f"{reply}", parse_mode='markdown')
+
+
+async def giocatori(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    global NUM_GIOCATORI
+    if len(context.args) == 0:
+        reply = "I giocatori sono: " + str(NUM_GIOCATORI) + "\n"
+    else:
+        try:
+            n = int(context.args[0])
+        except Exception as e:
+            reply = "Errore! Non riesco a leggere il numero che hai inserito.\n"
+        NUM_GIOCATORI = n
+        reply = "Numero di giocatori modificato in: " + str(NUM_GIOCATORI) + "\n"
     await update.message.reply_text(f"{reply}", parse_mode='markdown')
 
 
@@ -249,10 +274,9 @@ async def car1_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> N
     VOTI_GIOCHINO_AUTO1[user_id] = query.data.split('_')[1]
 
     # Controlla se tutti hanno votato
-
     total_members = await context.bot.get_chat_member_count(chat_id)
     total_users = total_members - 1
-    if len(VOTI_GIOCHINO_AUTO1) >= total_users:
+    if len(VOTI_GIOCHINO_AUTO1) >= min([NUM_GIOCATORI, total_users]):
         order = Counter(VOTI_GIOCHINO_AUTO1.values()).most_common(8)
         max = -1
         winner = []
@@ -298,7 +322,7 @@ async def car2_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> N
 
     total_members = await context.bot.get_chat_member_count(chat_id)
     total_users = total_members - 1
-    if len(VOTI_GIOCHINO_AUTO2) >= total_users:
+    if len(VOTI_GIOCHINO_AUTO2) >= min([NUM_GIOCATORI, total_users]):
         sum = 0
         for el in VOTI_GIOCHINO_AUTO2.values():
             sum += int(el)
@@ -352,7 +376,8 @@ async def car3_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> N
 
     total_members = await context.bot.get_chat_member_count(chat_id)
     total_users = total_members - 1
-    if len(VOTI_GIOCHINO_AUTO3) >= total_users:
+    giocatori = min([NUM_GIOCATORI, total_users])
+    if len(VOTI_GIOCHINO_AUTO3) == giocatori:
         t = 0
         f = 0
         for el in VOTI_GIOCHINO_AUTO3.values():
@@ -364,29 +389,34 @@ async def car3_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> N
 
         if sol == "vero" and (t-1) > f:
             reply = "Congratulazioni! Il segreto era vero!\n" + \
-                str(t) + " persone hanno indovinato!\n"
+                str(t-1) + " persone hanno indovinato!\n"
             for u, r in VOTI_GIOCHINO_AUTO3.items():
                 if r == "vero" and u != USER_SEGRETO3:
                     PUNTEGGI_STUPIDINI3[CONV[u]] += 1
+            if t == giocatori:
+                reply += "Tutti hanno indovinato! Il segreto era troppo facile, " + str(giocatori) + " punti verranno decrementati al sussurratore di segreti."
+                PUNTEGGI_STUPIDINI3[USER_SEGRETO3] -= giocatori
         elif sol == "vero" and (t-1) < f:
             reply = "Oh no! Il segreto era vero ma non ci avete creduto! In " + \
-                str(t) + " avete sbagliato."
+                str(f) + " avete sbagliato."
             PUNTEGGI_STUPIDINI3[CONV[USER_SEGRETO3]] += f
         elif sol == "vero" and (t-1) == f:
-            reply = "Nessuna maggioranza! Questo non dovrebbe mai succedere..."
+            reply = "Nessuna maggioranza! Nessun punto da assegnare."
         elif sol == "falso" and (f-1) > t:
             reply = "Congratulazioni! Il segreto era Falso!\n" + \
-                str(f) + " persone hanno indovinato!\n"
+                str(f-1) + " persone hanno indovinato!\n"
             for u, r in VOTI_GIOCHINO_AUTO3.items():
                 if r == "falso" and u != USER_SEGRETO3:
                     PUNTEGGI_STUPIDINI3[CONV[u]] += 1
+            if f == giocatori:
+                reply += "Tutti hanno indovinato! Il segreto era troppo facile, " + str(giocatori) + " punti verranno decrementati al sussurratore di segreti."
+                PUNTEGGI_STUPIDINI3[USER_SEGRETO3] -= giocatori
         elif sol == "falso" and (f-1) < t:
             reply = "Oh no! Il segreto era falso e ci siete cascati! In " + \
-                str(f) + " avete sbagliato."
+                str(t) + " avete sbagliato."
             PUNTEGGI_STUPIDINI3[CONV[USER_SEGRETO3]] += t
         elif sol == "falso" and (f-1) == t:
-            reply = "Nessuna maggioranza! Questo non dovrebbe mai succedere..."
-        # TODO: se tutti indovinano, l'user sergreto perde punti!
+            reply = "Nessuna maggioranza! Nessun punto da assegnare."
         await context.bot.send_message(chat_id, reply)
 
 
@@ -404,7 +434,7 @@ async def fanta(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
             if len(context.args) <= 1:
                 await update.message.reply_text(f"Manca un parametro! Se vuoi annullare un evento del FantaIslanda usa la sintassi: /fanta reset [nome_utente] [numero_evento]\n")
             elif context.args[1] == "all":
-            # Reset tutto
+                # Reset tutto
                 for k in PUNTEGGI_STUPIDINI_FANTA.keys():
                     PUNTEGGI_STUPIDINI_FANTA[k] = [0] * len(FANTA_DICT)
             else:
@@ -419,17 +449,33 @@ async def fanta(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         elif context.args[0] == "show":
             text = "Ecco tutti i Bonus e i Malus!\n"
             for item in list(FANTA_DICT.items()):
-                text += item[1][0]
+                text += str(item[0]) + ": '" + item[1][0] + "'"
                 text += ' - Punti: ' + str(item[1][1]) + '\n'
             await update.message.reply_text(text)
         elif context.args[0] == "add":
             e = ' '.join(context.args[1:-1])
             p = int(context.args[-1])
-            FANTA_DICT[len(FANTA_DICT)] = [e, p]
-            text = "Evento '" + str(e) + "' aggiunto con " + str(p) + " punti!"
+            FANTA_DICT[max(FANTA_DICT.keys()) + 1] = [e, p]
+            text = "Evento '" + str(e) + "' aggiunto con " + str(p) + " punti!\n"
             for k in PUNTEGGI_STUPIDINI_FANTA.keys():
                 PUNTEGGI_STUPIDINI_FANTA[k].append(0)
             await update.message.reply_text(text)
+        elif context.args[0] == "del":
+            if len(context.args) == 1:
+                await update.message.reply_text("Errore! Specifica la chiave dell'evento da cancellare!\n")
+            else:
+                e = int(context.args[1])
+                try:
+                    FANTA_DICT.pop(e)
+                except Exception as e:
+                    await update.message.reply_text("Errore! Non riesco a cancellare l'evento " + str(e) + "\n")
+                # Reset punteggi giocatori: se l'evento è tolto, i punti dell'evento sono cancellati
+                for k in PUNTEGGI_STUPIDINI_FANTA.keys():
+                    PUNTEGGI_STUPIDINI_FANTA[k][e] = 0
+                await update.message.reply_text("Evento " + str(e) + " cancellato!\n")
+                
+
+
         else:
             await update.message.reply_text(f"Non so cosa tu mi stia chiedendo!\n")
     else:
@@ -450,7 +496,6 @@ async def fanta(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         reply_markup = InlineKeyboardMarkup(keyboard)
         await update.message.reply_text(f"A quale persona vuoi aggiungere un Fanta Bonus o un Fanta Malus?\n", reply_markup=reply_markup)
         return fanta_1
-        
 
 
 async def fanta_callback1(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -475,7 +520,7 @@ async def fanta_callback2(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
 
     k = int(query.data.split('_')[1])
     FANTA_EVENT_CHOSEN = (k, FANTA_DICT[k])
-     # Notifica inserimento
+    # Notifica inserimento
     PUNTEGGI_STUPIDINI_FANTA[FANTA_USER_CHOSEN][FANTA_EVENT_CHOSEN[0]
                                                 ] = FANTA_EVENT_CHOSEN[1][1]
     await query.edit_message_text("Fanta Evento '" + str(FANTA_EVENT_CHOSEN[1][0]) + "' aggiunto a " + FANTA_USER_CHOSEN + "!\nPunti evento: " + str(FANTA_EVENT_CHOSEN[1][1]) + "\n", parse_mode='markdown')
@@ -595,6 +640,7 @@ def main() -> None:
     application.add_handler(CommandHandler("vulcano", volcano))
     application.add_handler(CommandHandler("curiosita", curiosita))
     application.add_handler(CommandHandler("ahah", ahah))
+    application.add_handler(CommandHandler("giocatori", giocatori))
     application.add_handler(CommandHandler("car1", car1))
     application.add_handler(CallbackQueryHandler(
         car1_callback, pattern=r"^(cargame1_).*"))
@@ -604,7 +650,6 @@ def main() -> None:
     application.add_handler(CommandHandler("car3", car3))
     application.add_handler(CallbackQueryHandler(
         car3_callback, pattern=r"^(cargame3_).*"))
-    # application.add_handler(CommandHandler("fanta", fanta))
     application.add_handler(ConversationHandler(entry_points=[CommandHandler("fanta", fanta)],
                             states={
         fanta_1: [CallbackQueryHandler(fanta_callback1, pattern="^fanta1_")],
