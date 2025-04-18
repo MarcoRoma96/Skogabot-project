@@ -407,7 +407,14 @@ async def fanta(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
             for player, score_list in PUNTEGGI_STUPIDINI_FANTA.items():
                 score = sum(score_list)
                 stats_text += f"🥇 {player}: {score} punti\n"
-            await update.message.reply_text(stats_text)
+            #await update.message.reply_text(stats_text)
+            # Invio della foto con didascalia
+            with open(os.path.join(THIS_FOLDER, "figures", "fantaislanda-logo.png"), "rb") as logo:
+                await update.message.reply_photo(
+                    photo=logo,
+                    caption=stats_text,
+                    parse_mode="Markdown"
+                )
         elif context.args[0] == "reset":
             if len(context.args) <= 1:
                 await update.message.reply_text(f"Manca un parametro! Se vuoi annullare un evento del FantaIslanda usa la sintassi: /fanta reset [nome_utente] [numero_evento]\n")
