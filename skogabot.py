@@ -183,6 +183,11 @@ async def subscribe_recipe(update: Update, context: ContextTypes.DEFAULT_TYPE) -
     Comando /subscribe_recipe: iscrive la chat corrente per ricevere automaticamente i messaggi programmati
     (ricette a mezzogiorno e alle 19:30 dal 19/04 al 29/04).
     """
+
+    recipe_text = RECIPES[RECIPE_INDEX]
+    await context.bot.send_message(chat_id=chat_id, text=f"🍽️ *Ricetta del momento:*\n\n{recipe_text}")
+    RECIPE_INDEX += 1
+
     chat_id = update.effective_chat.id
     job_queue = context.job_queue
     # Pianifica il job per mezzogiorno (12:00)
