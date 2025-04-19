@@ -446,19 +446,26 @@ async def fanta(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         elif context.args[0] == "show":
             chat_id = update.message.chat_id
             text = "Ecco tutti i Bonus e i Malus!\n"
-            text += "\n------🟢🟢🟢 Bonus 🟢🟢🟢------\n"
-            # ct = 0
-            for item in list(FANTA_DICT_BONUS.items()):
-                text += str(item[0]) + ": " + item[1][0]
-                text += ' - Punti: ' + str(item[1][1]) + '\n'
-                # ct += 1
-                # if (ct % 20) == 0:
-            await context.bot.send_message(chat_id, text)
-            text = "\n------ 🔴🔴🔴 Malus 🔴🔴🔴 ------\n"
-            for item in list(FANTA_DICT_MALUS.items()):
-                text += str(item[0]) + ": " + item[1][0]
-                text += ' - Punti: ' + str(item[1][1]) + '\n'
-            await update.message.reply_text(text)
+            text += "\n🟢🟢🟢 Bonus 🟢🟢🟢\n"
+            for group in range(0, 5):
+                for item in list(FANTA_DICT_BONUS.items())[20 * group: 20 * (group + 1)]:
+                    text += str(item[0]) + ": " + item[1][0]
+                    text += ' - Punti: ' + str(item[1][1]) + '\n'
+                try:
+                    await context.bot.send_message(chat_id, text)
+                    text = ""
+                except Exception:
+                    None
+            text = "\n 🔴🔴🔴 Malus 🔴🔴🔴 \n"
+            for group in range(0, 5):
+                for item in list(FANTA_DICT_MALUS.items())[20 * group: 20 * (group + 1)]:
+                    text += str(item[0]) + ": " + item[1][0]
+                    text += ' - Punti: ' + str(item[1][1]) + '\n'
+                try:
+                    await context.bot.send_message(chat_id, text)
+                    text = ""
+                except Exception:
+                    None
         elif context.args[0] == "add":
             e = ' '.join(context.args[1:-1])
             p = int(context.args[-1])
